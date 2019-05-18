@@ -28,6 +28,8 @@ class EventsCalendar: FSCalendar, ICalendar {
         
         appearance.weekdayTextColor = UIColor.white
         appearance.headerTitleColor = UIColor.white
+        
+        contentMode = .scaleAspectFit
     }
     
     
@@ -44,6 +46,7 @@ class EventsCalendar: FSCalendar, ICalendar {
     func reloadEventData() {
         reloadData()
     }
+    
     
     
     final func recalculateRowsHeight(for height: CGFloat) {
@@ -181,11 +184,6 @@ extension EventsCalendar: FSCalendarDataSource, FSCalendarDelegate , FSCalendarD
     
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleDefaultColorFor date: Date) -> UIColor? {
         return eventsDelegate?.calendar(self, titleDefaultColorFor: date)
-    }
-    
-    
-    func calendar(_ calendar: FSCalendar, boundingRectWillChange bounds: CGRect, animated: Bool) {
-        
     }
 }
 

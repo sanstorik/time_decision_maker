@@ -50,6 +50,12 @@ struct RDAppointment {
 
 extension Array where Element == RDAppointment {
     func sortedByStartDate() -> [RDAppointment] {
+        let (wholeDay, regular) = sortedByStartDate()
+        return wholeDay + regular
+    }
+    
+    
+    func sortedByStartDate() -> ([RDAppointment], [RDAppointment]) {
         var wholeDayEvents = [RDAppointment]()
         var defaultEvents = [RDAppointment]()
         
@@ -61,7 +67,7 @@ extension Array where Element == RDAppointment {
             }
         }
         
-        return wholeDayEvents + defaultEvents.sortedByDate()
+        return (wholeDayEvents, defaultEvents.sortedByDate())
     }
     
     

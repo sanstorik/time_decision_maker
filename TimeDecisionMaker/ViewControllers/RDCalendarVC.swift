@@ -59,13 +59,12 @@ class RDCalendarVC: CommonVC {
     }
     
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        coordinator.animateAlongsideTransition(in: nil, animation: nil) { _ in
-            self.calendar.recalculateRowsHeight(for: size.height - 10)
-        }
-        
-        super.viewWillTransition(to: size, with: coordinator)
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return [.portrait, .portraitUpsideDown]
     }
+    
+    
+    override var shouldAutorotate: Bool { return false }
     
     
     private func filterAppointmentsBy(date: Date) -> [RDAppointment] {

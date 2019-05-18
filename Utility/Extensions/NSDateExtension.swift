@@ -123,6 +123,11 @@ extension Date {
     }
     
     
+    func readableDateTimeString() -> String {
+        return dateTimeFormatter.string(from: self)
+    }
+    
+    
     func readableTimeString() -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"

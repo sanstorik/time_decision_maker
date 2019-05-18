@@ -150,5 +150,15 @@ extension UINavigationController {
         if topViewController is QLPreviewController { return .lightContent }
         return topViewController?.preferredStatusBarStyle ?? super.preferredStatusBarStyle
     }
+    
+    
+    open override var shouldAutorotate: Bool {
+        return topViewController?.shouldAutorotate ?? true
+    }
+    
+    
+    open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return topViewController?.supportedInterfaceOrientations ?? .all
+    }
 }
 

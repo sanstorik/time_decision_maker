@@ -182,4 +182,5 @@ struct AppColors {
     static let messengerUsernameColor = UIColor(red: 192, green: 132, blue: 128)
     
     static let alertSheetDarkButtonColor = UIColor(red: 49, green: 164, blue: 236)
+    static let cellSelectionColor = UIColor.black.withAlphaComponent(0.3)
 }

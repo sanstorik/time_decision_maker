@@ -164,24 +164,24 @@ protocol HighlightableView: class {
 }
 
 extension HighlightableView where Self: UIView {
-    func runSelectColorAnimation(_ color: UIColor = UIColor.gray) {
+    func runSelectColorAnimation(_ color: UIColor = AppColors.cellSelectionColor) {
         if !highlightAnimationRunning {
             UIView.animate(withDuration: 0.2, animations: {
                 self.backgroundColor = color
             }) { _ in
                 UIView.animate(withDuration: 0.2) {
-                    self.backgroundColor = UIColor.white
+                    self.backgroundColor = AppColors.incomingMessageColor
                 }
             }
         }
     }
     
     
-    func changeColorOnUnhighlight(_ previousColor: UIColor = UIColor.gray) {
+    func changeColorOnUnhighlight(_ previousColor: UIColor = AppColors.cellSelectionColor) {
         highlightAnimationRunning = true
         backgroundColor = previousColor
-        UIView.animate(withDuration: 0.4, animations: {
-            self.backgroundColor = UIColor.white
+        UIView.animate(withDuration: 0.2, animations: {
+            self.backgroundColor = AppColors.incomingMessageColor
         }) { _ in
             self.highlightAnimationRunning = false
         }

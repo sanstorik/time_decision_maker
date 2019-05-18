@@ -3,7 +3,10 @@
 import UIKit
 
 
-class LabeledSwitch: UIView {
+class LabeledSwitch: UIView, HighlightableView {
+    var highlightAnimationRunning = false
+    
+    
     let label: UILabel = {
         let label = UILabel.defaultInit()
         label.font = UIFont.systemFont(ofSize: 16)
@@ -60,7 +63,7 @@ class LabeledSwitch: UIView {
         addSubview(booleanSwitchHolder)
         booleanSwitchHolder.addSubview(boolean)
         
-        label.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: -switchOffset).isActive = true
         label.trailingAnchor.constraint(equalTo: booleanSwitchHolder.leadingAnchor, constant: -10).isActive = true
         label.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         

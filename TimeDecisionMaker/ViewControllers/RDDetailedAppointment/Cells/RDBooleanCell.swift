@@ -21,8 +21,6 @@ class RDBooleanData: RDCellData {
 class RDBooleanCell: RDTemplateCell {
     override class var identifier: String { return "RDBooleanCell" }
     override var canBecomeHighlighted: Bool { return true }
-    
-    
     private var labeledSwitch: LabeledSwitch!
     
     
@@ -43,7 +41,7 @@ class RDBooleanCell: RDTemplateCell {
         labeledSwitch.translatesAutoresizingMaskIntoConstraints = false
         addSubview(labeledSwitch)
         
-        labeledSwitch.leadingAnchor.constraint(equalTo: leadingA, constant: leadingConstant).isActive = true
+        labeledSwitch.leadingAnchor.constraint(equalTo: leadingA).isActive = true
         labeledSwitch.trailingAnchor.constraint(equalTo: trailingA).isActive = true
         labeledSwitch.topAnchor.constraint(equalTo: topAnchor).isActive = true
         labeledSwitch.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
@@ -51,5 +49,15 @@ class RDBooleanCell: RDTemplateCell {
         labeledSwitch.didChangeValue = { [unowned self] in
             (self.data as? RDBooleanData)?.save($0)
         }
+    }
+    
+    
+    override func didUnhighlight() {
+        labeledSwitch.changeColorOnUnhighlight()
+    }
+    
+    
+    override func didSelect() {
+        labeledSwitch.runSelectColorAnimation()
     }
 }

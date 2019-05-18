@@ -5,20 +5,21 @@ import UIKit
 
 class RDCellData {
     var identifier: String { return RDTemplateCell.identifier }
+    var rowHeightMultiplier: CGFloat { return 0.06 }
+    final var indexPath: IndexPath?
 }
 
 
 class RDTemplateCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupViews()
-        contentView.backgroundColor = AppColors.incomingMessageColor
-        backgroundColor = AppColors.incomingMessageColor
+        commonInit()
     }
     
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError()
+        super.init(coder: aDecoder)
+        commonInit()
     }
     
     final let leadingConstant: CGFloat = 13
@@ -76,4 +77,11 @@ class RDTemplateCell: UITableViewCell {
     open func willBeginScrolling() { }
     
     open func scrollAnimationDidEnd() { }
+    
+    private func commonInit() {
+        setupViews()
+        backgroundColor = AppColors.incomingMessageColor
+        selectedBackgroundView = UIView()
+        selectedBackgroundView?.backgroundColor = AppColors.cellSelectionColor
+    }
 }

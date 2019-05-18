@@ -3,11 +3,10 @@
 import UIKit
 
 
-
 class RDPersonAppoinmentsVC: CommonVC {
     private let person: RDPerson
     private let date: Date
-    private var appointments: [RDAppointment]
+    private var appointments = [[RDAppointment]]()
     private var appointmentsTableView: UITableView!
     
     private var navigationTitle: String {
@@ -21,15 +20,14 @@ class RDPersonAppoinmentsVC: CommonVC {
     
     init(person: RDPerson, appointments: [RDAppointment], date: Date) {
         self.person = person
-        self.appointments = appointments.filterByDate(date).sortedByStartDate()
         self.date = date
         super.init(nibName: nil, bundle: nil)
+        updateModelFrom(appointments: appointments)
     }
     
     
     required init?(coder aDecoder: NSCoder) {
         self.person = RDPerson(appointmentsFilePath: nil)
-        self.appointments = []
         self.date = Date()
         super.init(coder: aDecoder)
     }
@@ -40,6 +38,17 @@ class RDPersonAppoinmentsVC: CommonVC {
         setupViews()
         setupBackground(AppColors.messengerBackgroundColor)
         setupNavigationBar(title: navigationTitle, bgColor: AppColors.incomingMessageColor)
+    }
+    
+    
+    private func updateModelFrom(appointments: [RDAppointment]) {
+        if self.appointments.count == 0 {
+            self.appointments = [[], []]
+        }
+        
+        let (wholeDay, regular) = appointments.filterByDate(date).sortedByStartDate()
+        self.appointments[0] = wholeDay
+        self.appointments[1] = regular
     }
 }
 
@@ -56,18 +65,27 @@ extension RDPersonAppoinmentsVC: FullScreenTableViewHolder {
 
 
 extension RDPersonAppoinmentsVC: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return appointments.count
     }
     
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return appointments[section].count
+    }
+    
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let detailedAppointmentVC = RDDetailedAppointmentVC(appointments[indexPath.row])
+        if let cell = tableView.cellForRow(at: indexPath) as? RDAppointmentCell {
+            cell.didSelect()
+        }
+        
+        let detailedAppointmentVC = RDDetailedAppointmentVC(appointments[indexPath.section][indexPath.row])
         detailedAppointmentVC.didChangeAppointment = { [weak self] in
             guard let _self = self else { return }
             
-            _self.appointments[indexPath.row] = RDAppointment(editModel: $0)
-            _self.appointments = _self.appointments.filterByDate(_self.date).sortedByStartDate()
+            _self.appointments[indexPath.section][indexPath.row] = RDAppointment(editModel: $0)
+            _self.updateModelFrom(appointments: _self.appointments.flatMap { $0 })
             _self.appointmentsTableView.reloadData()
         }
         
@@ -81,24 +99,38 @@ extension RDPersonAppoinmentsVC: UITableViewDelegate, UITableViewDataSource {
                 fatalError()
         }
         
-        cell.appointment = appointments[indexPath.row]
+        cell.appointment = appointments[indexPath.section][indexPath.row]
         cell.selectedBackgroundView = UIView()
-        cell.selectedBackgroundView?.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+        cell.selectedBackgroundView?.backgroundColor = AppColors.cellSelectionColor
         return cell
     }
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UIScreen.main.bounds.deviceHeight * 0.08
+        return UIScreen.main.bounds.deviceHeight * 0.07
+    }
+    
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 25
+    }
+    
+    
+    
+    func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) as? RDAppointmentCell {
+            cell.didUnhighlight()
+        }
     }
 }
 
 
 
 
-fileprivate class RDAppointmentCell: UITableViewCell {
+fileprivate class RDAppointmentCell: UITableViewCell, HighlightableView {
     class var identifier: String { return "RDAppointmentCell" }
     
+    var highlightAnimationRunning = false
     var appointment: RDAppointment? {
         didSet {
             if let _appointment = appointment {
@@ -115,22 +147,29 @@ fileprivate class RDAppointmentCell: UITableViewCell {
     
     private var separatorView: UIView!
     
-    private let timeLabel: UILabel = {
-        let label = UILabel.defaultInit()
-        label.font = UIFont.systemFont(ofSize: 15)
-        label.textColor = UIColor.white
-        label.textAlignment = .right
-        label.numberOfLines = 0
-        return label
+    private let timeLabel: UITextView = {
+        let tv = UITextView()
+        tv.translatesAutoresizingMaskIntoConstraints = false
+        tv.font = UIFont.systemFont(ofSize: 15)
+        tv.textColor = UIColor.white
+        tv.textAlignment = .right
+        tv.backgroundColor = .clear
+        tv.isUserInteractionEnabled = false
+        tv.isEditable = false
+        return tv
     }()
     
     
-    private let titleLabel: UILabel = {
-        let label = UILabel.defaultInit()
-        label.font = UIFont.systemFont(ofSize: 17)
-        label.textColor = UIColor.white
-        label.numberOfLines = 2
-        return label
+    private let titleLabel: UITextView = {
+        let tv = UITextView()
+        tv.translatesAutoresizingMaskIntoConstraints = false
+        tv.font = UIFont.systemFont(ofSize: 17)
+        tv.textColor = UIColor.white
+        tv.textAlignment = .left
+        tv.backgroundColor = .clear
+        tv.isUserInteractionEnabled = false
+        tv.isEditable = false
+        return tv
     }()
     
     
@@ -157,8 +196,6 @@ fileprivate class RDAppointmentCell: UITableViewCell {
     
     private func setupViews() {
         backgroundColor = AppColors.incomingMessageColor
-        contentView.backgroundColor = AppColors.incomingMessageColor
-        
         separatorView = UIView.separatorNoConstraints(
             self, color: UIColor.gray, heightAnchor, width: 1.2, multiplier: 0.9)
         
@@ -168,19 +205,29 @@ fileprivate class RDAppointmentCell: UITableViewCell {
         
         let constraints = [
             timeLabel.leadingAnchor.constraint(equalTo: leadingA, constant: frame.height * 0.1),
-            timeLabel.topAnchor.constraint(equalTo: topAnchor),
+            timeLabel.topAnchor.constraint(equalTo: topAnchor, constant: 3),
             timeLabel.widthAnchor.constraint(equalToConstant: frame.height * 1.5),
             timeLabel.heightAnchor.constraint(equalTo: heightAnchor),
             
             separatorView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -frame.height * 0.05),
-            separatorView.leadingAnchor.constraint(equalTo: timeLabel.trailingAnchor, constant: frame.height * 0.3),
+            separatorView.leadingAnchor.constraint(equalTo: timeLabel.trailingAnchor, constant: frame.height * 0.2),
             
             titleLabel.leadingAnchor.constraint(equalTo: separatorView.trailingAnchor, constant: 15),
-            titleLabel.topAnchor.constraint(equalTo: topAnchor),
+            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 2),
             titleLabel.heightAnchor.constraint(equalTo: heightAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor)
         ]
         
         NSLayoutConstraint.activate(constraints)
+    }
+    
+    
+    func didSelect() {
+        runSelectColorAnimation()
+    }
+    
+    
+    func didUnhighlight() {
+        changeColorOnUnhighlight()
     }
 }
