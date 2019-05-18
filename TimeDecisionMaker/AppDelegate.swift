@@ -13,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         
-        let entryVC = RDCalendarVC()
+        let entryVC = RDCalendarVC(person: RDPerson(filename: "A"))
         let navigationController = UINavigationController(rootViewController: entryVC)
         window?.rootViewController = navigationController
         

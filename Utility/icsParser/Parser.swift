@@ -20,38 +20,35 @@ internal class Parser {
         var currentAlarm: Alarm?
 
         for (_ , line) in icsContent.enumerated() {
-            switch line {
-            case "BEGIN:VCALENDAR":
+            if line.contains("BEGIN:VCALENDAR") {
                 inCalendar = true
                 currentCalendar = Calendar(withComponents: nil)
                 continue
-            case "END:VCALENDAR":
+            } else if line.contains("END:VCALENDAR") {
                 inCalendar = false
                 completeCal.append(currentCalendar)
                 currentCalendar = nil
                 continue
-            case "BEGIN:VEVENT":
+            } else if line.contains("BEGIN:VEVENT") {
                 inEvent = true
                 currentEvent = Event()
                 continue
-            case "END:VEVENT":
+            } else if line.contains("END:VEVENT") {
                 inEvent = false
                 currentCalendar?.append(component: currentEvent)
                 currentEvent = nil
                 continue
-            case "BEGIN:VALARM":
+            } else if line.contains("BEGIN:VALARM") {
                 inAlarm = true
                 currentAlarm = Alarm()
                 continue
-            case "END:VALARM":
+            } else if line.contains("END:VALARM") {
                 inAlarm = false
                 currentEvent?.append(component: currentAlarm)
                 currentAlarm = nil
                 continue
-            default:
-                break
             }
-
+            
             guard let (key, value) = line.toKeyValuePair(splittingOn: ":") else {
                 // print("(key, value) is nil") // DEBUG
                 continue
@@ -70,6 +67,6 @@ internal class Parser {
             }
         }
 
-        return completeCal.compactMap{ $0 }
+        return completeCal.compactMap { $0 }
     }
 }

@@ -15,6 +15,11 @@ extension String {
 
     /// Convert String to Date
     func toDate() -> Date? {
-        return iCal.dateFormatter.date(from: self)
+        return iCal.dateFormatter.date(from: removeAllWhitespacesAndNewlines())
+    }
+    
+    
+    func removeAllWhitespacesAndNewlines() -> String {
+        return String(filter { !" \n\t\r".contains($0) })
     }
 }

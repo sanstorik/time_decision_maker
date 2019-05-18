@@ -71,8 +71,6 @@ extension Event: IcsElement {
             dtstart = value.toDate()
         case "DTEND":
             dtend = value.toDate()
-        // case "ORGANIZER":
-        //     organizer
         case "SUMMARY":
             summary = value
         case "DESCRIPTION":

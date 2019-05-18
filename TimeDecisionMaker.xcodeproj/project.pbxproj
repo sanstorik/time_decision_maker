@@ -29,13 +29,15 @@
 		60DC4194228FF4940008DB8F /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DC4183228FF4940008DB8F /* StringExtension.swift */; };
 		60DC4195228FF4940008DB8F /* UIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DC4184228FF4940008DB8F /* UIExtensions.swift */; };
 		60DC4197228FF61B0008DB8F /* EventsCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DC4196228FF61B0008DB8F /* EventsCalendar.swift */; };
+		60DC4199229008010008DB8F /* RDAppointment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DC4198229008010008DB8F /* RDAppointment.swift */; };
+		60DDA7A522900A3100A42123 /* RDTimeDecisionMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DDA7A422900A3100A42123 /* RDTimeDecisionMaker.swift */; };
+		60DDA7A722900B6F00A42123 /* RDAppointmentsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DDA7A622900B6F00A42123 /* RDAppointmentsManager.swift */; };
+		60DDA7A92290198A00A42123 /* RDPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DDA7A82290198A00A42123 /* RDPerson.swift */; };
 		748F59A42270681B00B88B7D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748F59A32270681B00B88B7D /* AppDelegate.swift */; };
 		748F59A62270681B00B88B7D /* RDDecisionMakerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748F59A52270681B00B88B7D /* RDDecisionMakerVC.swift */; };
 		748F59AB2270681D00B88B7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 748F59AA2270681D00B88B7D /* Assets.xcassets */; };
 		748F59AE2270681D00B88B7D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 748F59AC2270681D00B88B7D /* LaunchScreen.storyboard */; };
 		748F59B92270681D00B88B7D /* TimeDecisionMakerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748F59B82270681D00B88B7D /* TimeDecisionMakerTests.swift */; };
-		748F59C72270687C00B88B7D /* RDTimeDecisionMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748F59C62270687C00B88B7D /* RDTimeDecisionMaker.swift */; };
-		748F59C82270687C00B88B7D /* RDTimeDecisionMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748F59C62270687C00B88B7D /* RDTimeDecisionMaker.swift */; };
 		748F59CA22706C6600B88B7D /* A.ics in Resources */ = {isa = PBXBuildFile; fileRef = 748F59C922706C6600B88B7D /* A.ics */; };
 		748F59CB22706C6600B88B7D /* A.ics in Resources */ = {isa = PBXBuildFile; fileRef = 748F59C922706C6600B88B7D /* A.ics */; };
 		748F59CE22706EB300B88B7D /* B.ics in Resources */ = {isa = PBXBuildFile; fileRef = 748F59CD22706EB300B88B7D /* B.ics */; };
@@ -75,6 +77,10 @@
 		60DC4183228FF4940008DB8F /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		60DC4184228FF4940008DB8F /* UIExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIExtensions.swift; sourceTree = "<group>"; };
 		60DC4196228FF61B0008DB8F /* EventsCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsCalendar.swift; sourceTree = "<group>"; };
+		60DC4198229008010008DB8F /* RDAppointment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RDAppointment.swift; sourceTree = "<group>"; };
+		60DDA7A422900A3100A42123 /* RDTimeDecisionMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RDTimeDecisionMaker.swift; sourceTree = "<group>"; };
+		60DDA7A622900B6F00A42123 /* RDAppointmentsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RDAppointmentsManager.swift; sourceTree = "<group>"; };
+		60DDA7A82290198A00A42123 /* RDPerson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RDPerson.swift; sourceTree = "<group>"; };
 		748F59A02270681B00B88B7D /* TimeDecisionMaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeDecisionMaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		748F59A32270681B00B88B7D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		748F59A52270681B00B88B7D /* RDDecisionMakerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RDDecisionMakerVC.swift; sourceTree = "<group>"; };
@@ -84,7 +90,6 @@
 		748F59B42270681D00B88B7D /* TimeDecisionMakerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TimeDecisionMakerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		748F59B82270681D00B88B7D /* TimeDecisionMakerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDecisionMakerTests.swift; sourceTree = "<group>"; };
 		748F59BA2270681D00B88B7D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		748F59C62270687C00B88B7D /* RDTimeDecisionMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RDTimeDecisionMaker.swift; sourceTree = "<group>"; };
 		748F59C922706C6600B88B7D /* A.ics */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = A.ics; sourceTree = "<group>"; };
 		748F59CD22706EB300B88B7D /* B.ics */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = B.ics; sourceTree = "<group>"; };
 		831C9C46CE5C8447971271C8 /* Pods-TimeDecisionMaker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeDecisionMaker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TimeDecisionMaker/Pods-TimeDecisionMaker.debug.xcconfig"; sourceTree = "<group>"; };
@@ -215,7 +220,7 @@
 			children = (
 				748F59CC22706E9400B88B7D /* Appointments */,
 				748F59A32270681B00B88B7D /* AppDelegate.swift */,
-				748F59C62270687C00B88B7D /* RDTimeDecisionMaker.swift */,
+				60DDA7A422900A3100A42123 /* RDTimeDecisionMaker.swift */,
 				748F59C42270685A00B88B7D /* ViewControllers */,
 				748F59C32270684E00B88B7D /* Storyboards */,
 				748F59C52270686400B88B7D /* Resources */,
@@ -264,6 +269,9 @@
 			children = (
 				748F59C922706C6600B88B7D /* A.ics */,
 				748F59CD22706EB300B88B7D /* B.ics */,
+				60DC4198229008010008DB8F /* RDAppointment.swift */,
+				60DDA7A622900B6F00A42123 /* RDAppointmentsManager.swift */,
+				60DDA7A82290198A00A42123 /* RDPerson.swift */,
 			);
 			path = Appointments;
 			sourceTree = "<group>";
@@ -475,15 +483,18 @@
 				60DC4190228FF4940008DB8F /* NSDateExtension.swift in Sources */,
 				60DC4192228FF4940008DB8F /* DeviceSizesExtensions.swift in Sources */,
 				60DC418C228FF4940008DB8F /* CalendarComponent.swift in Sources */,
-				748F59C72270687C00B88B7D /* RDTimeDecisionMaker.swift in Sources */,
 				748F59A62270681B00B88B7D /* RDDecisionMakerVC.swift in Sources */,
+				60DDA7A722900B6F00A42123 /* RDAppointmentsManager.swift in Sources */,
 				60DC418D228FF4940008DB8F /* IcsElement.swift in Sources */,
 				60DC4185228FF4940008DB8F /* iCal.swift in Sources */,
 				60DC418F228FF4940008DB8F /* ArrayExtensions.swift in Sources */,
 				60DC4187228FF4940008DB8F /* iCalError.swift in Sources */,
 				6064A54F228FECB700E54AB8 /* RDCalendarVC.swift in Sources */,
+				60DC4199229008010008DB8F /* RDAppointment.swift in Sources */,
 				748F59A42270681B00B88B7D /* AppDelegate.swift in Sources */,
 				6064A554228FED6C00E54AB8 /* NavigationBar.swift in Sources */,
+				60DDA7A92290198A00A42123 /* RDPerson.swift in Sources */,
+				60DDA7A522900A3100A42123 /* RDTimeDecisionMaker.swift in Sources */,
 				60DC4195228FF4940008DB8F /* UIExtensions.swift in Sources */,
 				60DC4194228FF4940008DB8F /* StringExtension.swift in Sources */,
 				60DC418A228FF4940008DB8F /* Alarm.swift in Sources */,
@@ -495,7 +506,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				748F59B92270681D00B88B7D /* TimeDecisionMakerTests.swift in Sources */,
-				748F59C82270687C00B88B7D /* RDTimeDecisionMaker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -685,7 +695,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = TimeDecisionMakerTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -707,7 +717,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = TimeDecisionMakerTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

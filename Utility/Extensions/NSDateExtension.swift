@@ -139,14 +139,22 @@ extension Date {
     }
     
     
-    func isBetween(from: NSDate, to: NSDate) -> Bool {
-        return (from.compare(self) == .orderedAscending || from.compare(self) == .orderedSame)
-            && (to.compare(self) == .orderedDescending || to.compare(self) == .orderedSame)
+    func isBetween(from start: Date, to end: Date) -> Bool {
+        let comparisonResultWithStart = Foundation.Calendar.current.compare(self, to: start, toGranularity: .day)
+        let comparisonResultWithEnd = Foundation.Calendar.current.compare(self, to: end, toGranularity: .day)
+        
+        return (comparisonResultWithStart == .orderedDescending || comparisonResultWithStart == .orderedSame)
+            && (comparisonResultWithEnd == .orderedAscending || comparisonResultWithEnd == .orderedSame)
     }
     
     
     func compareDay(to: Date) -> ComparisonResult {
         return Foundation.Calendar.current.compare(self, to: to as Date, toGranularity: .day)
+    }
+    
+    
+    func sameDay(with date: Date) -> Bool {
+        return compareDay(to: date) == .orderedSame
     }
 }
 
