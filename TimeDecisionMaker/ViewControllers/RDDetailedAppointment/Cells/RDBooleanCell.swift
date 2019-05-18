@@ -20,7 +20,7 @@ class RDBooleanData: RDCellData {
 
 class RDBooleanCell: RDTemplateCell {
     override class var identifier: String { return "RDBooleanCell" }
-    override var canBecomeHighlighted: Bool { return false }
+    override var canBecomeHighlighted: Bool { return true }
     
     
     private var labeledSwitch: LabeledSwitch!
@@ -48,7 +48,7 @@ class RDBooleanCell: RDTemplateCell {
         labeledSwitch.topAnchor.constraint(equalTo: topAnchor).isActive = true
         labeledSwitch.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         
-        labeledSwitch.didChangeValue = {
+        labeledSwitch.didChangeValue = { [unowned self] in
             (self.data as? RDBooleanData)?.save($0)
         }
     }

@@ -210,13 +210,13 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		60DDA7B022904F3600A42123 /* RDDetailedAppoitment */ = {
+		60DDA7B022904F3600A42123 /* RDDetailedAppointment */ = {
 			isa = PBXGroup;
 			children = (
 				60DDA7B122904F4700A42123 /* Cells */,
 				60DDA7AC229048E500A42123 /* RDDetailedAppointmentVC.swift */,
 			);
-			path = RDDetailedAppoitment;
+			path = RDDetailedAppointment;
 			sourceTree = "<group>";
 		};
 		60DDA7B122904F4700A42123 /* Cells */ = {
@@ -283,7 +283,7 @@
 		748F59C42270685A00B88B7D /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				60DDA7B022904F3600A42123 /* RDDetailedAppoitment */,
+				60DDA7B022904F3600A42123 /* RDDetailedAppointment */,
 				6064A550228FED0400E54AB8 /* Common */,
 				748F59A52270681B00B88B7D /* RDDecisionMakerVC.swift */,
 				6064A54E228FECB700E54AB8 /* RDCalendarVC.swift */,

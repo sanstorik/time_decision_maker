@@ -7,10 +7,13 @@ class RDDetailedAppointmentVC: CommonVC {
     private let appointment: RDAppointment
     private var tableView: UITableView!
     private var data = [[RDCellData]]()
+    private var editModel: RDAppointmentEditModel
+    var didChangeAppointment: ((RDAppointmentEditModel) -> Void)?
     
     
     init(_ appointment: RDAppointment) {
         self.appointment = appointment
+        self.editModel = RDAppointmentEditModel(appointment: appointment)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -32,18 +35,28 @@ class RDDetailedAppointmentVC: CommonVC {
         }
         
         let firstSection = [
-            RDTextFieldData(placeholder: "Title", save: { print($0) }) { "hello" },
-            RDTextFieldData(placeholder: "Location", save: { print($0) }) { "hello" }
+            RDTextFieldData(placeholder: "Title", save: { [unowned self] in
+                self.editModel.title = $0
+                self.navigationItem.title = $0
+            }) { [unowned self] in self.editModel.title },
+            RDTextFieldData(placeholder: "Location", save: { _ in }) { nil }
         ]
         
         let secondSection = [
-            RDBooleanData(title: "All-day", save: { print($0) }, retrieve: { true }),
-            RDTextFieldData(placeholder: "Location", save: { print($0) }) { "hello" }
+            RDBooleanData(title: "All-day", save: { [unowned self] in
+                self.editModel.isWholeDay = $0 }) { [unowned self] in self.editModel.isWholeDay },
+            RDTextFieldData(placeholder: "Location", save: { _ in }) { nil }
         ]
         
         data = [
             firstSection, secondSection
         ]
+    }
+    
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        didChangeAppointment?(editModel)
     }
 }
 
@@ -66,7 +79,7 @@ extension RDDetailedAppointmentVC: FullScreenTableViewHolder, UITableViewDataSou
                 fatalError()
         }
         
-        cell.setupFrom(data: dataForRow)
+        cell.data = dataForRow
         cell.selectedBackgroundView = UIView()
         cell.selectedBackgroundView?.backgroundColor = UIColor.black.withAlphaComponent(0.3)
         return cell

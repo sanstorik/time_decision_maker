@@ -29,6 +29,7 @@ class RDTextFieldCell: RDTemplateCell, UITextFieldDelegate {
         tf.translatesAutoresizingMaskIntoConstraints = false
         tf.font = UIFont.systemFont(ofSize: 17)
         tf.textColor = UIColor.white
+        tf.keyboardAppearance = .dark
         return tf
     }()
     

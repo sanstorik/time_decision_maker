@@ -6,8 +6,8 @@ import UIKit
 
 class RDPersonAppoinmentsVC: CommonVC {
     private let person: RDPerson
-    private let appointments: [RDAppointment]
     private let date: Date
+    private var appointments: [RDAppointment]
     private var appointmentsTableView: UITableView!
     
     private var navigationTitle: String {
@@ -63,6 +63,14 @@ extension RDPersonAppoinmentsVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detailedAppointmentVC = RDDetailedAppointmentVC(appointments[indexPath.row])
+        detailedAppointmentVC.didChangeAppointment = { [weak self] in
+            guard let _self = self else { return }
+            
+            _self.appointments[indexPath.row] = RDAppointment(editModel: $0)
+            _self.appointments = _self.appointments.filterByDate(_self.date).sortedByStartDate()
+            _self.appointmentsTableView.reloadData()
+        }
+        
         navigationController?.pushViewController(detailedAppointmentVC, animated: true)
     }
     
