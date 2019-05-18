@@ -19,6 +19,11 @@ extension String {
     }
     
     
+    func wholeDayToDate() -> Date? {
+        return iCal.wholeDayDateFormatter.date(from: removeAllWhitespacesAndNewlines())
+    }
+    
+    
     func removeAllWhitespacesAndNewlines() -> String {
         return String(filter { !" \n\t\r".contains($0) })
     }

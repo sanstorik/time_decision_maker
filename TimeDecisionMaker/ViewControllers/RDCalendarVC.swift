@@ -7,6 +7,7 @@ class RDCalendarVC: CommonVC {
     private let appointmentsManager = RDAppointmentsManager()
     private var appointments = [RDAppointment]()
     private let person: RDPerson
+    private var previouslySelectedDate: Date?
     
     
     init(person: RDPerson) {
@@ -33,11 +34,17 @@ class RDCalendarVC: CommonVC {
         super.viewWillAppear(animated)
         appointments = appointmentsManager.loadEvents(for: person)
         
-        if let firstAppointment = appointments.filter({ $0.start != nil }).min(by: { $0.start! < $1.start! }) {
-            calendar.selectDate(firstAppointment.start!)
+        let selectedDate: Date
+        if let cached = previouslySelectedDate {
+            selectedDate = cached
+        } else if let firstAppointment = appointments.filter({ $0.start != nil }).min(by: { $0.start! < $1.start! }) {
+            selectedDate = firstAppointment.start!
         } else {
-            calendar.selectDate(Date())
+            selectedDate = Date()
         }
+        
+        previouslySelectedDate = selectedDate
+        calendar.selectDate(selectedDate)
     }
     
     
@@ -62,24 +69,16 @@ class RDCalendarVC: CommonVC {
     
     
     private func filterAppointmentsBy(date: Date) -> [RDAppointment] {
-        return appointments.filter {
-            if let start = $0.start, let end = $0.end {
-                return date.isBetween(from: start, to: end)
-            } else if let start = $0.start {
-                return date.compareDay(to: start) == .orderedSame
-            } else if let end = $0.end {
-                return date.compareDay(to: end) == .orderedSame
-            }
-            
-            return false
-        }
+        return appointments.filterByDate(date)
     }
 }
 
 
 extension RDCalendarVC: EventsCalendarDelegate {
     func calendar(_ calendar: EventsCalendar, didSelect date: Date) {
-        
+        let personAppointmentsVC = RDPersonAppoinmentsVC(person: person, appointments: appointments, date: date)
+        navigationController?.pushViewController(personAppointmentsVC, animated: true)
+        previouslySelectedDate = date
     }
     
     

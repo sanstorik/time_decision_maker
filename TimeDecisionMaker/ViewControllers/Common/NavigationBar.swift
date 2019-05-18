@@ -7,7 +7,7 @@ protocol NavigationBar {
 
 extension NavigationBar where Self: UIViewController {
     func setupNavigationBar(title: String? = nil, withImage imageView: UIView? = nil) {
-        navigationBar(title: title ?? "", bgColor: UIColor.black, textColor: UIColor.white)
+        navigationBar(title: title ?? "", bgColor: UIColor.black, textColor: UIColor.white, hideBackButtonTitle: true)
         
         navigationItem.titleView = imageView
     }
@@ -22,12 +22,13 @@ extension NavigationBar where Self: UIViewController {
     }
     
     
-    func setupNavigationBar(title: String, bgColor: UIColor, textColor: UIColor = UIColor.white) {
-        navigationBar(title: title, bgColor: bgColor, textColor: textColor)
+    func setupNavigationBar(title: String, bgColor: UIColor, textColor: UIColor = UIColor.white,
+                            hideBackButtonTitle: Bool = true) {
+        navigationBar(title: title, bgColor: bgColor, textColor: textColor, hideBackButtonTitle: hideBackButtonTitle)
     }
     
     
-    fileprivate func navigationBar(title: String, bgColor: UIColor, textColor: UIColor) {
+    fileprivate func navigationBar(title: String, bgColor: UIColor, textColor: UIColor, hideBackButtonTitle: Bool) {
         navigationItem.title = title
         navigationController?.navigationBar.titleTextAttributes =
             [NSAttributedString.Key.foregroundColor: textColor,
@@ -37,9 +38,13 @@ extension NavigationBar where Self: UIViewController {
         navigationController?.navigationBar.tintColor = UIColor.white
         navigationController?.navigationBar.isOpaque = true
         navigationController?.navigationBar.isTranslucent = false
-        
-        self.navigationController?.navigationBar.topItem?.backBarButtonItem =
-            UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+
+        if hideBackButtonTitle {
+            self.navigationController?.navigationBar.topItem?.backBarButtonItem =
+                UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        } else {
+            self.navigationController?.navigationBar.topItem?.backBarButtonItem = nil
+        }
         
         setNeedsStatusBarAppearanceUpdate()
     }

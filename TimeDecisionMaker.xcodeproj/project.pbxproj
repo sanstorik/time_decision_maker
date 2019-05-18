@@ -33,6 +33,7 @@
 		60DDA7A522900A3100A42123 /* RDTimeDecisionMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DDA7A422900A3100A42123 /* RDTimeDecisionMaker.swift */; };
 		60DDA7A722900B6F00A42123 /* RDAppointmentsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DDA7A622900B6F00A42123 /* RDAppointmentsManager.swift */; };
 		60DDA7A92290198A00A42123 /* RDPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DDA7A82290198A00A42123 /* RDPerson.swift */; };
+		60DDA7AB22901E1900A42123 /* RDPersonAppointmentsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DDA7AA22901E1900A42123 /* RDPersonAppointmentsVC.swift */; };
 		748F59A42270681B00B88B7D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748F59A32270681B00B88B7D /* AppDelegate.swift */; };
 		748F59A62270681B00B88B7D /* RDDecisionMakerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748F59A52270681B00B88B7D /* RDDecisionMakerVC.swift */; };
 		748F59AB2270681D00B88B7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 748F59AA2270681D00B88B7D /* Assets.xcassets */; };
@@ -81,6 +82,7 @@
 		60DDA7A422900A3100A42123 /* RDTimeDecisionMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RDTimeDecisionMaker.swift; sourceTree = "<group>"; };
 		60DDA7A622900B6F00A42123 /* RDAppointmentsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RDAppointmentsManager.swift; sourceTree = "<group>"; };
 		60DDA7A82290198A00A42123 /* RDPerson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RDPerson.swift; sourceTree = "<group>"; };
+		60DDA7AA22901E1900A42123 /* RDPersonAppointmentsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RDPersonAppointmentsVC.swift; sourceTree = "<group>"; };
 		748F59A02270681B00B88B7D /* TimeDecisionMaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeDecisionMaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		748F59A32270681B00B88B7D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		748F59A52270681B00B88B7D /* RDDecisionMakerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RDDecisionMakerVC.swift; sourceTree = "<group>"; };
@@ -251,6 +253,7 @@
 				6064A550228FED0400E54AB8 /* Common */,
 				748F59A52270681B00B88B7D /* RDDecisionMakerVC.swift */,
 				6064A54E228FECB700E54AB8 /* RDCalendarVC.swift */,
+				60DDA7AA22901E1900A42123 /* RDPersonAppointmentsVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -482,6 +485,7 @@
 				60DC418B228FF4940008DB8F /* Parser.swift in Sources */,
 				60DC4190228FF4940008DB8F /* NSDateExtension.swift in Sources */,
 				60DC4192228FF4940008DB8F /* DeviceSizesExtensions.swift in Sources */,
+				60DDA7AB22901E1900A42123 /* RDPersonAppointmentsVC.swift in Sources */,
 				60DC418C228FF4940008DB8F /* CalendarComponent.swift in Sources */,
 				748F59A62270681B00B88B7D /* RDDecisionMakerVC.swift in Sources */,
 				60DDA7A722900B6F00A42123 /* RDAppointmentsManager.swift in Sources */,
@@ -566,6 +570,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = Z4K6A8NXGP;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -582,7 +587,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -627,6 +632,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = Z4K6A8NXGP;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -637,7 +643,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -652,16 +658,18 @@
 			baseConfigurationReference = 831C9C46CE5C8447971271C8 /* Pods-TimeDecisionMaker.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = Z4K6A8NXGP;
 				INFOPLIST_FILE = TimeDecisionMaker/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.rd.test.TimeDecisionMaker;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rd.test.TimeDecisionMaker1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -672,16 +680,18 @@
 			baseConfigurationReference = 865C572CEA85A1042291D354 /* Pods-TimeDecisionMaker.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = Z4K6A8NXGP;
 				INFOPLIST_FILE = TimeDecisionMaker/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.rd.test.TimeDecisionMaker;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rd.test.TimeDecisionMaker1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -694,6 +704,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Z4K6A8NXGP;
 				INFOPLIST_FILE = TimeDecisionMakerTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -716,6 +727,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Z4K6A8NXGP;
 				INFOPLIST_FILE = TimeDecisionMakerTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (

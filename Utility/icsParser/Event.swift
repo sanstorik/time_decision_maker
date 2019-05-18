@@ -17,6 +17,7 @@ public struct Event {
     // public var class: some enum type?
     public var dtstart: Date?
     public var dtend: Date?
+    public var isWholeDay = false
 
     public init(uid: String? = NSUUID().uuidString, dtstamp: Date? = Date()) {
         self.uid = uid
@@ -75,6 +76,9 @@ extension Event: IcsElement {
             summary = value
         case "DESCRIPTION":
             descr = value
+        case "DTSTART;VALUE=DATE":
+            dtstart = value.wholeDayToDate()
+            isWholeDay = true
         default:
             otherAttrs[attr] = value
         }

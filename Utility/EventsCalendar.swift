@@ -126,7 +126,9 @@ extension EventsCalendarDelegate {
 
 extension EventsCalendar: FSCalendarDataSource, FSCalendarDelegate , FSCalendarDelegateAppearance {
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        eventsDelegate?.calendar(self, didSelect: date)
+        let timeSizeOffset = TimeInterval(exactly: NSTimeZone.local.secondsFromGMT()) ?? 0
+        let dateWithTimeZone = Date(timeInterval: timeSizeOffset, since: date)
+        eventsDelegate?.calendar(self, didSelect: dateWithTimeZone)
     }
     
     

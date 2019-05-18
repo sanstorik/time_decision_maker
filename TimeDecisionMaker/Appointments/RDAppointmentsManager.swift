@@ -23,7 +23,8 @@ class RDAppointmentsManager {
         for calendar in calendars {
             for component in calendar.subComponents {
                 if let event = component as? Event {
-                    let appointment = RDAppointment(title: event.summary, start: event.dtstart, end: event.dtend)
+                    let appointment = RDAppointment(title: event.summary, start: event.dtstart,
+                                                    end: event.dtend, isWholeDay: event.isWholeDay)
                     appointments.append(appointment)
                 }
             }
