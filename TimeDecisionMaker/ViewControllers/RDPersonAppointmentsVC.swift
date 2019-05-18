@@ -44,29 +44,13 @@ class RDPersonAppoinmentsVC: CommonVC {
 }
 
 
-extension RDPersonAppoinmentsVC {
+extension RDPersonAppoinmentsVC: FullScreenTableViewHolder {
+    var separatorInset: UIEdgeInsets { return .zero }
+    
+    
     private func setupViews() {
-        appointmentsTableView = UITableView(frame: .zero, style: .grouped)
-        appointmentsTableView.translatesAutoresizingMaskIntoConstraints = false
-        appointmentsTableView.backgroundColor = UIColor.clear
-        appointmentsTableView.estimatedRowHeight = 0
-        appointmentsTableView.estimatedSectionFooterHeight = 0
-        appointmentsTableView.estimatedSectionHeaderHeight = 0
-        appointmentsTableView.separatorInset = .zero
-        
-        if #available(iOS 11, *) {
-            appointmentsTableView.insetsContentViewsToSafeArea = true
-        }
-        
-        view.addSubview(appointmentsTableView)
-        appointmentsTableView.topAnchor.constraint(equalTo: view.topSafeAnchorIOS11(self)).isActive = true
-        appointmentsTableView.bottomAnchor.constraint(equalTo: view.bottomSafeAnchorIOS11(self)).isActive = true
-        appointmentsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        appointmentsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        appointmentsTableView = setupTableView()
         appointmentsTableView.register(RDAppointmentCell.self, forCellReuseIdentifier: RDAppointmentCell.identifier)
-        
-        appointmentsTableView.dataSource = self
-        appointmentsTableView.delegate = self
     }
 }
 
@@ -74,6 +58,12 @@ extension RDPersonAppoinmentsVC {
 extension RDPersonAppoinmentsVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return appointments.count
+    }
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let detailedAppointmentVC = RDDetailedAppointmentVC(appointments[indexPath.row])
+        navigationController?.pushViewController(detailedAppointmentVC, animated: true)
     }
     
     
