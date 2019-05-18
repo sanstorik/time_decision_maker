@@ -15,9 +15,9 @@ class RDTimeDecisionMaker: NSObject {
     ///   - attendeeICSPath: path to personB file with events
     ///   - duration: desired duration of appointment
     /// - Returns: array of available time slots, empty array if none found
-    func suggestAppointments(organizerICS:String,
-                             attendeeICS:String,
-                             duration:TimeInterval) -> [DateInterval] {
+    func suggestAppointments(organizerICS: String,
+                             attendeeICS: String,
+                             duration: TimeInterval) -> [DateInterval] {
         return []
     }
 }

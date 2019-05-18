@@ -7,9 +7,30 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		12ACB945ACD941C82E724376 /* Pods_TimeDecisionMaker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2A53A7832E94E5043177DC8 /* Pods_TimeDecisionMaker.framework */; };
+		6064A54F228FECB700E54AB8 /* RDCalendarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6064A54E228FECB700E54AB8 /* RDCalendarVC.swift */; };
+		6064A552228FED1B00E54AB8 /* CommonVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6064A551228FED1B00E54AB8 /* CommonVC.swift */; };
+		6064A554228FED6C00E54AB8 /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6064A553228FED6C00E54AB8 /* NavigationBar.swift */; };
+		60DC4185228FF4940008DB8F /* iCal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DC4170228FF4930008DB8F /* iCal.swift */; };
+		60DC4186228FF4940008DB8F /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DC4171228FF4940008DB8F /* Event.swift */; };
+		60DC4187228FF4940008DB8F /* iCalError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DC4173228FF4940008DB8F /* iCalError.swift */; };
+		60DC4188228FF4940008DB8F /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DC4175228FF4940008DB8F /* Date.swift */; };
+		60DC4189228FF4940008DB8F /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DC4176228FF4940008DB8F /* String.swift */; };
+		60DC418A228FF4940008DB8F /* Alarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DC4177228FF4940008DB8F /* Alarm.swift */; };
+		60DC418B228FF4940008DB8F /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DC4178228FF4940008DB8F /* Parser.swift */; };
+		60DC418C228FF4940008DB8F /* CalendarComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DC417A228FF4940008DB8F /* CalendarComponent.swift */; };
+		60DC418D228FF4940008DB8F /* IcsElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DC417B228FF4940008DB8F /* IcsElement.swift */; };
+		60DC418E228FF4940008DB8F /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DC417C228FF4940008DB8F /* Calendar.swift */; };
+		60DC418F228FF4940008DB8F /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DC417E228FF4940008DB8F /* ArrayExtensions.swift */; };
+		60DC4190228FF4940008DB8F /* NSDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DC417F228FF4940008DB8F /* NSDateExtension.swift */; };
+		60DC4191228FF4940008DB8F /* UITableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DC4180228FF4940008DB8F /* UITableViewExtension.swift */; };
+		60DC4192228FF4940008DB8F /* DeviceSizesExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DC4181228FF4940008DB8F /* DeviceSizesExtensions.swift */; };
+		60DC4193228FF4940008DB8F /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DC4182228FF4940008DB8F /* UIViewExtensions.swift */; };
+		60DC4194228FF4940008DB8F /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DC4183228FF4940008DB8F /* StringExtension.swift */; };
+		60DC4195228FF4940008DB8F /* UIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DC4184228FF4940008DB8F /* UIExtensions.swift */; };
+		60DC4197228FF61B0008DB8F /* EventsCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DC4196228FF61B0008DB8F /* EventsCalendar.swift */; };
 		748F59A42270681B00B88B7D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748F59A32270681B00B88B7D /* AppDelegate.swift */; };
-		748F59A62270681B00B88B7D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748F59A52270681B00B88B7D /* ViewController.swift */; };
-		748F59A92270681B00B88B7D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 748F59A72270681B00B88B7D /* Main.storyboard */; };
+		748F59A62270681B00B88B7D /* RDDecisionMakerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748F59A52270681B00B88B7D /* RDDecisionMakerVC.swift */; };
 		748F59AB2270681D00B88B7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 748F59AA2270681D00B88B7D /* Assets.xcassets */; };
 		748F59AE2270681D00B88B7D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 748F59AC2270681D00B88B7D /* LaunchScreen.storyboard */; };
 		748F59B92270681D00B88B7D /* TimeDecisionMakerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748F59B82270681D00B88B7D /* TimeDecisionMakerTests.swift */; };
@@ -19,6 +40,7 @@
 		748F59CB22706C6600B88B7D /* A.ics in Resources */ = {isa = PBXBuildFile; fileRef = 748F59C922706C6600B88B7D /* A.ics */; };
 		748F59CE22706EB300B88B7D /* B.ics in Resources */ = {isa = PBXBuildFile; fileRef = 748F59CD22706EB300B88B7D /* B.ics */; };
 		748F59CF22706EB300B88B7D /* B.ics in Resources */ = {isa = PBXBuildFile; fileRef = 748F59CD22706EB300B88B7D /* B.ics */; };
+		C7FB7A60D7F769126E2FD515 /* Pods_TimeDecisionMakerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6BF488FE5FF49740FE16914 /* Pods_TimeDecisionMakerTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,10 +54,30 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6064A54E228FECB700E54AB8 /* RDCalendarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RDCalendarVC.swift; sourceTree = "<group>"; };
+		6064A551228FED1B00E54AB8 /* CommonVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonVC.swift; sourceTree = "<group>"; };
+		6064A553228FED6C00E54AB8 /* NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
+		60DC4170228FF4930008DB8F /* iCal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iCal.swift; sourceTree = "<group>"; };
+		60DC4171228FF4940008DB8F /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		60DC4173228FF4940008DB8F /* iCalError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iCalError.swift; sourceTree = "<group>"; };
+		60DC4175228FF4940008DB8F /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		60DC4176228FF4940008DB8F /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		60DC4177228FF4940008DB8F /* Alarm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alarm.swift; sourceTree = "<group>"; };
+		60DC4178228FF4940008DB8F /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
+		60DC417A228FF4940008DB8F /* CalendarComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarComponent.swift; sourceTree = "<group>"; };
+		60DC417B228FF4940008DB8F /* IcsElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IcsElement.swift; sourceTree = "<group>"; };
+		60DC417C228FF4940008DB8F /* Calendar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
+		60DC417E228FF4940008DB8F /* ArrayExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtensions.swift; sourceTree = "<group>"; };
+		60DC417F228FF4940008DB8F /* NSDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateExtension.swift; sourceTree = "<group>"; };
+		60DC4180228FF4940008DB8F /* UITableViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITableViewExtension.swift; sourceTree = "<group>"; };
+		60DC4181228FF4940008DB8F /* DeviceSizesExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceSizesExtensions.swift; sourceTree = "<group>"; };
+		60DC4182228FF4940008DB8F /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
+		60DC4183228FF4940008DB8F /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		60DC4184228FF4940008DB8F /* UIExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIExtensions.swift; sourceTree = "<group>"; };
+		60DC4196228FF61B0008DB8F /* EventsCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsCalendar.swift; sourceTree = "<group>"; };
 		748F59A02270681B00B88B7D /* TimeDecisionMaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeDecisionMaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		748F59A32270681B00B88B7D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		748F59A52270681B00B88B7D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		748F59A82270681B00B88B7D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		748F59A52270681B00B88B7D /* RDDecisionMakerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RDDecisionMakerVC.swift; sourceTree = "<group>"; };
 		748F59AA2270681D00B88B7D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		748F59AD2270681D00B88B7D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		748F59AF2270681D00B88B7D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -45,6 +87,12 @@
 		748F59C62270687C00B88B7D /* RDTimeDecisionMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RDTimeDecisionMaker.swift; sourceTree = "<group>"; };
 		748F59C922706C6600B88B7D /* A.ics */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = A.ics; sourceTree = "<group>"; };
 		748F59CD22706EB300B88B7D /* B.ics */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = B.ics; sourceTree = "<group>"; };
+		831C9C46CE5C8447971271C8 /* Pods-TimeDecisionMaker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeDecisionMaker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TimeDecisionMaker/Pods-TimeDecisionMaker.debug.xcconfig"; sourceTree = "<group>"; };
+		865C572CEA85A1042291D354 /* Pods-TimeDecisionMaker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeDecisionMaker.release.xcconfig"; path = "Pods/Target Support Files/Pods-TimeDecisionMaker/Pods-TimeDecisionMaker.release.xcconfig"; sourceTree = "<group>"; };
+		C6BF488FE5FF49740FE16914 /* Pods_TimeDecisionMakerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TimeDecisionMakerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D10E26BFB8AAF8C5DE827805 /* Pods-TimeDecisionMakerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeDecisionMakerTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TimeDecisionMakerTests/Pods-TimeDecisionMakerTests.debug.xcconfig"; sourceTree = "<group>"; };
+		E2A53A7832E94E5043177DC8 /* Pods_TimeDecisionMaker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TimeDecisionMaker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EB920C0934C323D556CB5606 /* Pods-TimeDecisionMakerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeDecisionMakerTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TimeDecisionMakerTests/Pods-TimeDecisionMakerTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +100,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12ACB945ACD941C82E724376 /* Pods_TimeDecisionMaker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,18 +108,96 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7FB7A60D7F769126E2FD515 /* Pods_TimeDecisionMakerTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6064A550228FED0400E54AB8 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				6064A551228FED1B00E54AB8 /* CommonVC.swift */,
+				6064A553228FED6C00E54AB8 /* NavigationBar.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		60DC416E228FF4930008DB8F /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				60DC4196228FF61B0008DB8F /* EventsCalendar.swift */,
+				60DC416F228FF4930008DB8F /* icsParser */,
+				60DC417D228FF4940008DB8F /* Extensions */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		60DC416F228FF4930008DB8F /* icsParser */ = {
+			isa = PBXGroup;
+			children = (
+				60DC4170228FF4930008DB8F /* iCal.swift */,
+				60DC4171228FF4940008DB8F /* Event.swift */,
+				60DC4172228FF4940008DB8F /* Enums */,
+				60DC4174228FF4940008DB8F /* Extensions */,
+				60DC4177228FF4940008DB8F /* Alarm.swift */,
+				60DC4178228FF4940008DB8F /* Parser.swift */,
+				60DC4179228FF4940008DB8F /* Protocols */,
+				60DC417C228FF4940008DB8F /* Calendar.swift */,
+			);
+			path = icsParser;
+			sourceTree = "<group>";
+		};
+		60DC4172228FF4940008DB8F /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				60DC4173228FF4940008DB8F /* iCalError.swift */,
+			);
+			path = Enums;
+			sourceTree = "<group>";
+		};
+		60DC4174228FF4940008DB8F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				60DC4175228FF4940008DB8F /* Date.swift */,
+				60DC4176228FF4940008DB8F /* String.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		60DC4179228FF4940008DB8F /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				60DC417A228FF4940008DB8F /* CalendarComponent.swift */,
+				60DC417B228FF4940008DB8F /* IcsElement.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		60DC417D228FF4940008DB8F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				60DC417E228FF4940008DB8F /* ArrayExtensions.swift */,
+				60DC417F228FF4940008DB8F /* NSDateExtension.swift */,
+				60DC4180228FF4940008DB8F /* UITableViewExtension.swift */,
+				60DC4181228FF4940008DB8F /* DeviceSizesExtensions.swift */,
+				60DC4182228FF4940008DB8F /* UIViewExtensions.swift */,
+				60DC4183228FF4940008DB8F /* StringExtension.swift */,
+				60DC4184228FF4940008DB8F /* UIExtensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		748F59972270681B00B88B7D = {
 			isa = PBXGroup;
 			children = (
 				748F59A22270681B00B88B7D /* TimeDecisionMaker */,
+				60DC416E228FF4930008DB8F /* Utility */,
 				748F59B72270681D00B88B7D /* TimeDecisionMakerTests */,
 				748F59A12270681B00B88B7D /* Products */,
+				DA87AB97E61245B879E62B40 /* Pods */,
+				B4EA0D5AD11732070BBA4D15 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -108,7 +235,6 @@
 		748F59C32270684E00B88B7D /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
-				748F59A72270681B00B88B7D /* Main.storyboard */,
 				748F59AC2270681D00B88B7D /* LaunchScreen.storyboard */,
 			);
 			path = Storyboards;
@@ -117,7 +243,9 @@
 		748F59C42270685A00B88B7D /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				748F59A52270681B00B88B7D /* ViewController.swift */,
+				6064A550228FED0400E54AB8 /* Common */,
+				748F59A52270681B00B88B7D /* RDDecisionMakerVC.swift */,
+				6064A54E228FECB700E54AB8 /* RDCalendarVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -140,6 +268,26 @@
 			path = Appointments;
 			sourceTree = "<group>";
 		};
+		B4EA0D5AD11732070BBA4D15 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E2A53A7832E94E5043177DC8 /* Pods_TimeDecisionMaker.framework */,
+				C6BF488FE5FF49740FE16914 /* Pods_TimeDecisionMakerTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DA87AB97E61245B879E62B40 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				831C9C46CE5C8447971271C8 /* Pods-TimeDecisionMaker.debug.xcconfig */,
+				865C572CEA85A1042291D354 /* Pods-TimeDecisionMaker.release.xcconfig */,
+				D10E26BFB8AAF8C5DE827805 /* Pods-TimeDecisionMakerTests.debug.xcconfig */,
+				EB920C0934C323D556CB5606 /* Pods-TimeDecisionMakerTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -147,9 +295,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 748F59BD2270681D00B88B7D /* Build configuration list for PBXNativeTarget "TimeDecisionMaker" */;
 			buildPhases = (
+				00E1D085946DA9D6FCE97D9F /* [CP] Check Pods Manifest.lock */,
 				748F599C2270681B00B88B7D /* Sources */,
 				748F599D2270681B00B88B7D /* Frameworks */,
 				748F599E2270681B00B88B7D /* Resources */,
+				4613711DBD2A5D8B3920D600 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -164,6 +314,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 748F59C02270681D00B88B7D /* Build configuration list for PBXNativeTarget "TimeDecisionMakerTests" */;
 			buildPhases = (
+				B897C14C44D06E6A081408FB /* [CP] Check Pods Manifest.lock */,
 				748F59B02270681D00B88B7D /* Sources */,
 				748F59B12270681D00B88B7D /* Frameworks */,
 				748F59B22270681D00B88B7D /* Resources */,
@@ -223,7 +374,6 @@
 				748F59AE2270681D00B88B7D /* LaunchScreen.storyboard in Resources */,
 				748F59CE22706EB300B88B7D /* B.ics in Resources */,
 				748F59AB2270681D00B88B7D /* Assets.xcassets in Resources */,
-				748F59A92270681B00B88B7D /* Main.storyboard in Resources */,
 				748F59CA22706C6600B88B7D /* A.ics in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -239,14 +389,104 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		00E1D085946DA9D6FCE97D9F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TimeDecisionMaker-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4613711DBD2A5D8B3920D600 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-TimeDecisionMaker/Pods-TimeDecisionMaker-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/FSCalendar/FSCalendar.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FSCalendar.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TimeDecisionMaker/Pods-TimeDecisionMaker-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B897C14C44D06E6A081408FB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TimeDecisionMakerTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		748F599C2270681B00B88B7D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				60DC4186228FF4940008DB8F /* Event.swift in Sources */,
+				60DC4193228FF4940008DB8F /* UIViewExtensions.swift in Sources */,
+				60DC4189228FF4940008DB8F /* String.swift in Sources */,
+				60DC4188228FF4940008DB8F /* Date.swift in Sources */,
+				60DC418E228FF4940008DB8F /* Calendar.swift in Sources */,
+				60DC4191228FF4940008DB8F /* UITableViewExtension.swift in Sources */,
+				60DC4197228FF61B0008DB8F /* EventsCalendar.swift in Sources */,
+				6064A552228FED1B00E54AB8 /* CommonVC.swift in Sources */,
+				60DC418B228FF4940008DB8F /* Parser.swift in Sources */,
+				60DC4190228FF4940008DB8F /* NSDateExtension.swift in Sources */,
+				60DC4192228FF4940008DB8F /* DeviceSizesExtensions.swift in Sources */,
+				60DC418C228FF4940008DB8F /* CalendarComponent.swift in Sources */,
 				748F59C72270687C00B88B7D /* RDTimeDecisionMaker.swift in Sources */,
-				748F59A62270681B00B88B7D /* ViewController.swift in Sources */,
+				748F59A62270681B00B88B7D /* RDDecisionMakerVC.swift in Sources */,
+				60DC418D228FF4940008DB8F /* IcsElement.swift in Sources */,
+				60DC4185228FF4940008DB8F /* iCal.swift in Sources */,
+				60DC418F228FF4940008DB8F /* ArrayExtensions.swift in Sources */,
+				60DC4187228FF4940008DB8F /* iCalError.swift in Sources */,
+				6064A54F228FECB700E54AB8 /* RDCalendarVC.swift in Sources */,
 				748F59A42270681B00B88B7D /* AppDelegate.swift in Sources */,
+				6064A554228FED6C00E54AB8 /* NavigationBar.swift in Sources */,
+				60DC4195228FF4940008DB8F /* UIExtensions.swift in Sources */,
+				60DC4194228FF4940008DB8F /* StringExtension.swift in Sources */,
+				60DC418A228FF4940008DB8F /* Alarm.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,14 +510,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		748F59A72270681B00B88B7D /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				748F59A82270681B00B88B7D /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		748F59AC2270681D00B88B7D /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -407,45 +639,53 @@
 		};
 		748F59BE2270681D00B88B7D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 831C9C46CE5C8447971271C8 /* Pods-TimeDecisionMaker.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = TimeDecisionMaker/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.rd.test.TimeDecisionMaker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
 		748F59BF2270681D00B88B7D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 865C572CEA85A1042291D354 /* Pods-TimeDecisionMaker.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = TimeDecisionMaker/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.rd.test.TimeDecisionMaker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
 		748F59C12270681D00B88B7D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D10E26BFB8AAF8C5DE827805 /* Pods-TimeDecisionMakerTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = TimeDecisionMakerTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -453,7 +693,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.rd.test.TimeDecisionMakerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TimeDecisionMaker.app/TimeDecisionMaker";
 			};
@@ -461,11 +701,13 @@
 		};
 		748F59C22270681D00B88B7D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EB920C0934C323D556CB5606 /* Pods-TimeDecisionMakerTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = TimeDecisionMakerTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -473,7 +715,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.rd.test.TimeDecisionMakerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TimeDecisionMaker.app/TimeDecisionMaker";
 			};
