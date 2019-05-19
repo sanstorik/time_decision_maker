@@ -14,7 +14,7 @@ class RDDetailedAppointmentVC: RDDynamicCellTableViewVC {
     }
     
     
-    init(_ appointment: RDAppointment) {
+    init(_ appointment: RDAppointment, readOnly: Bool = false) {
         self.appointment = appointment
         self.editModel = RDAppointmentEditModel(appointment: appointment)
         super.init(nibName: nil, bundle: nil)

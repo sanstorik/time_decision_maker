@@ -3,7 +3,7 @@
 import Foundation
 
 
-typealias PersonAppointments = (RDPerson, [RDAppointment])
+typealias PersonAppointments = (person: RDPerson, appointments: [RDAppointment])
 
 class RDAppointmentsManager {
     func loadEvents(for person: RDPerson) -> [RDAppointment] {

@@ -13,7 +13,8 @@ struct RDBookingSettings {
 
 
 class RDAppointmentSettingsVC: RDDynamicCellTableViewVC {
-    private let person: RDPerson
+    private let currentPerson: RDPerson
+    private let date: Date
     private var settings = RDBookingSettings()
     private let availablePersons: [PersonAppointments]
     private var selectedPerson: RDPerson?
@@ -23,8 +24,9 @@ class RDAppointmentSettingsVC: RDDynamicCellTableViewVC {
     }
     
     
-    init(person: RDPerson) {
-        self.person = person
+    init(person: RDPerson, date: Date) {
+        self.currentPerson = person
+        self.date = date
         self.availablePersons = RDAppointmentsManager().loadAllPersons()
         
         if availablePersons.count > 0 {
@@ -50,7 +52,7 @@ class RDAppointmentSettingsVC: RDDynamicCellTableViewVC {
         ]
         
         var secondSection = [RDCellData]()
-        let persons = availablePersons.map { $0.0 }
+        let persons = availablePersons.map { $0.0 }.filter { $0.appointmentsFilePath != currentPerson.appointmentsFilePath }
         for (index, person) in persons.enumerated() {
             let data = RDOptionPickerData(optionID: person.appointmentsFilePath, title: person.name, isSelected: { [unowned self] uid in
                 return self.selectedPerson?.appointmentsFilePath == person.appointmentsFilePath
@@ -69,11 +71,11 @@ class RDAppointmentSettingsVC: RDDynamicCellTableViewVC {
         let thirdSection = [
             RDButtonData(type: .action(title: "Select Appointment Time")) { [unowned self] in
                 if let _selectedPerson = self.selectedPerson {
-                    let firstData = self.availablePersons.first { $0.0.appointmentsFilePath == self.person.appointmentsFilePath }
-                    let secondData = self.availablePersons.first { $0.0.appointmentsFilePath == _selectedPerson.appointmentsFilePath }
+                    let firstData = self.availablePersons.first { $0.0.appointmentsFilePath == _selectedPerson.appointmentsFilePath }
+                    let secondData = self.availablePersons.first { $0.0.appointmentsFilePath == self.currentPerson.appointmentsFilePath }
                     
                     guard let _firstData = firstData, let _secondData = secondData else { return }
-                    let timeGraph = RDAppointmentTimeGraph(personsData: [_firstData, _secondData])
+                    let timeGraph = RDAppointmentTimeGraph(personsData: [_firstData, _secondData], date: self.date)
                     self.navigationController?.pushViewController(timeGraph, animated: true)
                 } else {
                     self.showAlert("Missing data", message: "A person must be selected")

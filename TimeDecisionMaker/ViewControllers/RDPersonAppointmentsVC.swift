@@ -60,7 +60,7 @@ class RDPersonAppoinmentsVC: CommonVC {
     
     
     @objc private func didClickBookingButton() {
-        let bookingSettings = RDAppointmentSettingsVC(person: person)
+        let bookingSettings = RDAppointmentSettingsVC(person: person, date: date)
         navigationController?.pushViewController(bookingSettings, animated: true)
         bookingButton.runSelectColorAnimation()
     }
