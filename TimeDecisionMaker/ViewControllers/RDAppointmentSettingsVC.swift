@@ -15,10 +15,12 @@ struct RDScheduledAppointmentSettings {
 
 
 class RDAppointmentSettingsVC: RDDynamicCellTableViewVC {
-    private let currentPersonData: PersonAppointments
-    private let availablePersons: [PersonAppointments]
+    private let appointmentsManager = RDAppointmentsManager()
+    private let currentPerson: RDPerson
+    private var currentPersonData: PersonAppointments
+    private var availablePersons = [PersonAppointments]()
     private var settings = RDScheduledAppointmentSettings()
-    private var selectedPerson: RDPerson?
+    
     
     override var navigationBarTitle: String? {
         return "Appointment settings"
@@ -26,37 +28,36 @@ class RDAppointmentSettingsVC: RDDynamicCellTableViewVC {
     
     
     init(person: RDPerson, date: Date) {
+        self.currentPerson = person
         self.settings.date = date
-        
-        var _currentPerson: PersonAppointments?
-        var _availablePersons = [PersonAppointments]()
-        let _personAppointments = RDAppointmentsManager().loadAllPersons()
-        _personAppointments.forEach {
-            if person.appointmentsFilePath == $0.person.appointmentsFilePath {
-                _currentPerson = $0
-            } else {
-                _availablePersons.append($0)
-            }
-        }
-        
-        self.currentPersonData = _currentPerson ?? (person, [])
-        self.availablePersons = _availablePersons
-        self.settings.date = date
-        
-        if availablePersons.count > 0 {
-            selectedPerson = availablePersons[0].person
-        }
+        self.currentPersonData =  (person, [])
         super.init(nibName: nil, bundle: nil)
     }
+    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError()
     }
     
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.availablePersons = []
+        
+        appointmentsManager.loadAllPersons().forEach {
+            if self.currentPerson.appointmentsFilePath == $0.person.appointmentsFilePath {
+                self.currentPersonData = $0
+            } else {
+                self.availablePersons.append($0)
+            }
+        }
+        
+        if settings.secondPerson == nil && availablePersons.count > 0 {
+            settings.secondPerson = availablePersons[0].person
+        }
+        
         setupData()
+        tableView.reloadData()
     }
     
     
@@ -69,13 +70,13 @@ class RDAppointmentSettingsVC: RDDynamicCellTableViewVC {
         let persons = availablePersons.map { $0.0 }
         for (index, person) in persons.enumerated() {
             let data = RDOptionPickerData(optionID: person.appointmentsFilePath, title: person.name, isSelected: { [unowned self] uid in
-                return self.selectedPerson?.appointmentsFilePath == person.appointmentsFilePath
+                return self.settings.secondPerson?.appointmentsFilePath == person.appointmentsFilePath
             }) { [unowned self] uid, isSelected in
                 if isSelected {
-                    self.selectedPerson = persons.first { $0.appointmentsFilePath == uid }
+                    self.settings.secondPerson = persons.first { $0.appointmentsFilePath == uid }
                     self.reloadOptionPickerCells(except: IndexPath(row: index, section: 1))
                 } else {
-                    self.selectedPerson = nil
+                    self.settings.secondPerson = nil
                 }
             }
             
@@ -84,7 +85,7 @@ class RDAppointmentSettingsVC: RDDynamicCellTableViewVC {
         
         let thirdSection = [
             RDButtonData(type: .action(title: "Set Appointment Time")) { [unowned self] in
-                if let _selectedPerson = self.selectedPerson {
+                if let _selectedPerson = self.settings.secondPerson {
                     let firstData = self.availablePersons.first { $0.0.appointmentsFilePath == _selectedPerson.appointmentsFilePath }
                     
                     guard let _firstData = firstData else { return }
