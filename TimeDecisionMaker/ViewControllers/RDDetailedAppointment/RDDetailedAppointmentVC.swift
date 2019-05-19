@@ -93,7 +93,7 @@ class RDDetailedAppointmentVC: RDDynamicCellTableViewVC {
         let data = RDDateLabelData(title: "Starts", isWholeDay: { [unowned self] in
             self.editModel.isWholeDay
         }) { [unowned self] in self.editModel.start }
-        data.setDidSelect {
+        data.setDidSelect { [unowned self] in
             let pickerData = RDDatePickerData(
                 minimumDate: { nil },
                 maximumDate: { [unowned self] in self.editModel.end },
@@ -117,7 +117,7 @@ class RDDetailedAppointmentVC: RDDynamicCellTableViewVC {
         let data = RDDateLabelData(title: "Ends", isWholeDay: { [unowned self] in
             self.editModel.isWholeDay
         }) { [unowned self] in self.editModel.end }
-        data.setDidSelect {
+        data.setDidSelect { [unowned self] in
             let pickerData = RDDatePickerData(
                 minimumDate: { [unowned self] in self.editModel.start },
                 maximumDate: { nil },
