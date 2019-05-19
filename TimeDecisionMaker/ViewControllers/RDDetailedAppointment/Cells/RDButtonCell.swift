@@ -7,13 +7,15 @@ import UIKit
 class RDButtonData: RDCellData {
     override var identifier: String { return RDButtonCell.identifier }
     
-    let title: String?
-    let value: String?
+    enum RDButtonType {
+        case list(title: String), action(title: String), valuePicker(title: String?, value: () -> String?)
+    }
+    
+    let type: RDButtonType
     let didSelect: () -> Void
     
-    init(title: String?, value: String?, didSelect: @escaping () -> Void) {
-        self.title = title
-        self.value = value
+    init(type: RDButtonType, didSelect: @escaping () -> Void) {
+        self.type = type
         self.didSelect = didSelect
     }
 }
@@ -28,14 +30,25 @@ class RDButtonCell: RDTemplateCell {
     override func setupFrom(data: RDCellData) {
         super.setupFrom(data: data)
         guard let buttonData = data as? RDButtonData else { return }
-        buttonView.label.text = buttonData.title
-        buttonView.valueLabel.text = buttonData.value
+        
+        switch buttonData.type {
+        case .action(let title):
+            buttonView.type = .action
+            buttonView.label.text = title
+        case .list(let title):
+            buttonView.type = .list
+            buttonView.label.text = title
+        case .valuePicker(let title, let value):
+            buttonView.type = .valuePicker
+            buttonView.label.text = title
+            buttonView.valueLabel.text = value()
+        }
     }
     
     
     override func setupViews() {
         super.setupViews()
-        buttonView = ButtonActionView(offset: leadingConstant, iconMultiplier: 0.5)
+        buttonView = ButtonActionView(offset: leadingConstant, iconMultiplier: 0.4)
         buttonView.translatesAutoresizingMaskIntoConstraints = false
         
         addSubview(buttonView)

@@ -8,12 +8,18 @@ class RDDatePickerData: RDCellData {
     override var identifier: String { return RDDatePickerCell.identifier }
     override var rowHeightMultiplier: CGFloat { return 0.24 }
     
-    let minimumDate: Date?
+    let maximumDate: () -> Date?
+    let minimumDate: () -> Date?
     let save: (Date) -> Void
     let retrieve: () -> Date?
+    let isWholeDay: () -> Bool
     
-    init(minimumDate: Date?, save: @escaping (Date) -> Void, retrieve: @escaping () -> Date?) {
+    init(minimumDate: @escaping () -> Date?,
+         maximumDate: @escaping () -> Date?, isWholeDay: @escaping () -> Bool,
+         save: @escaping (Date) -> Void, retrieve: @escaping () -> Date?) {
+        self.maximumDate = maximumDate
         self.minimumDate = minimumDate
+        self.isWholeDay = isWholeDay
         self.save = save
         self.retrieve = retrieve
     }
@@ -38,8 +44,10 @@ class RDDatePickerCell: RDTemplateCell {
     override func setupFrom(data: RDCellData) {
         super.setupFrom(data: data)
         guard let datePickerData = data as? RDDatePickerData else { return }
-        datePicker.minimumDate = datePickerData.minimumDate
+        datePicker.minimumDate = datePickerData.minimumDate()
+        datePicker.maximumDate = datePickerData.maximumDate()
         datePicker.date = datePickerData.retrieve() ?? Date()
+        datePicker.datePickerMode = datePickerData.isWholeDay() ? .date : .dateAndTime
     }
     
     

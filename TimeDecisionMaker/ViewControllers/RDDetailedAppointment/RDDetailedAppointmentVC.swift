@@ -8,6 +8,7 @@ class RDDetailedAppointmentVC: CommonVC {
     private var tableView: UITableView!
     private var data = [[RDCellData]]()
     private var editModel: RDAppointmentEditModel
+    private var presentedPickerIndexPath: IndexPath?
     var didChangeAppointment: ((RDAppointmentEditModel) -> Void)?
     
     
@@ -46,25 +47,33 @@ class RDDetailedAppointmentVC: CommonVC {
         
         let secondSection = [
             RDBooleanData(title: "All-day", save: { [unowned self] in
-                self.editModel.isWholeDay = $0 }) { [unowned self] in self.editModel.isWholeDay },
+                self.editModel.isWholeDay = $0
+                self.reloadDateCell()
+            }) { [unowned self] in self.editModel.isWholeDay },
             createStartDateData(),
             createEndDateData(),
-            RDButtonData(title: "Repeat",  value: "Never") { },
-            RDButtonData(title: "Travel time", value: "None") { }
+            RDButtonData(type: .valuePicker(title: "Repeat", value: { "Never" })) { },
+            RDButtonData(type: .valuePicker(title: "Travel time", value: { "None" })) { },
         ]
         
         let thirdSection = [
-            RDButtonData(title: "Calendar", value: "Home") { },
-            RDButtonData(title: "Invitees", value: "None") { }
+            RDButtonData(type: .valuePicker(title: "Calendar", value: { "None" })) { },
+            RDButtonData(type: .valuePicker(title: "Invitees", value: { "None" })) { }
         ]
         
         let fourthSection = [
-            RDButtonData(title: "Alert", value: "None") { },
-            RDButtonData(title: "Show as", value: "Busy") { }
+            RDButtonData(type: .valuePicker(title: "Alert", value: { "None" })) { },
+            RDButtonData(type: .valuePicker(title: "Show as", value: { "Busy" })) { }
+        ]
+        
+        let fifthSection = [
+            RDButtonData(type: .action(title: "Delete event")) { [unowned self] in
+                self.showAlert("ERROR-404", message: "Feature is not implemented yet")
+            }
         ]
         
         data = [
-            firstSection, secondSection, thirdSection, fourthSection
+            firstSection, secondSection, thirdSection, fourthSection, fifthSection
         ]
     }
     
@@ -76,10 +85,14 @@ class RDDetailedAppointmentVC: CommonVC {
     
     
     private func createStartDateData() -> RDDateLabelData {
-        let data = RDDateLabelData(title: "Starts") { [unowned self] in self.editModel.start }
+        let data = RDDateLabelData(title: "Starts", isWholeDay: { [unowned self] in
+            self.editModel.isWholeDay
+        }) { [unowned self] in self.editModel.start }
         data.setDidSelect {
             let pickerData = RDDatePickerData(
-                minimumDate: nil,
+                minimumDate: { nil },
+                maximumDate: { [unowned self] in self.editModel.end },
+                isWholeDay: { [unowned self] in self.editModel.isWholeDay },
                 save: { [unowned self] in
                     self.editModel.start = $0
                     
@@ -96,10 +109,14 @@ class RDDetailedAppointmentVC: CommonVC {
     
     
     private func createEndDateData() -> RDDateLabelData {
-        let data = RDDateLabelData(title: "Ends") { [unowned self] in self.editModel.end }
+        let data = RDDateLabelData(title: "Ends", isWholeDay: { [unowned self] in
+            self.editModel.isWholeDay
+        }) { [unowned self] in self.editModel.end }
         data.setDidSelect {
             let pickerData = RDDatePickerData(
-                minimumDate: self.editModel.start,
+                minimumDate: { [unowned self] in self.editModel.start },
+                maximumDate: { nil },
+                isWholeDay: { [unowned self] in self.editModel.isWholeDay },
                 save: { [unowned self] in
                     self.editModel.end = $0
                     
@@ -121,9 +138,11 @@ class RDDetailedAppointmentVC: CommonVC {
         if isPresented {
             forceHideOtherDatePickers(except: indexPath)
             self.data[indexPath.section].insert(data, at: pickerIndexPath.row)
+            self.presentedPickerIndexPath = pickerIndexPath
             tableView.insertRows(at: [pickerIndexPath], with: .fade)
         } else {
             self.data[indexPath.section].remove(at: pickerIndexPath.row)
+            self.presentedPickerIndexPath = nil
             tableView.deleteRows(at: [pickerIndexPath], with: .fade)
         }
     }
@@ -139,8 +158,24 @@ class RDDetailedAppointmentVC: CommonVC {
             dataCell.forceHideDatePicker()
         }
     }
+    
+    
+    private func reloadDateCell() {
+        let cellsToReload = tableView.visibleCells.filter { $0 is RDDateLabelCell || $0 is RDDatePickerCell }
+        let indexPaths = cellsToReload.compactMap { tableView.indexPath(for: $0) }
+        tableView.reloadRows(at: indexPaths, with: .none)
+    }
+    
+    
+    private func updatedCellIndexPathIncludingPresentedDatePicker(_ indexPath: IndexPath) -> IndexPath {
+        if let _pickerIndexPath = presentedPickerIndexPath, indexPath.section == _pickerIndexPath.section,
+            indexPath.row >= _pickerIndexPath.row {
+            return IndexPath(row: indexPath.row - 1, section: indexPath.section)
+        } else {
+            return indexPath
+        }
+    }
 }
-
 
 extension RDDetailedAppointmentVC: FullScreenTableViewHolder, UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -160,7 +195,7 @@ extension RDDetailedAppointmentVC: FullScreenTableViewHolder, UITableViewDataSou
                 fatalError()
         }
         
-        dataForRow.indexPath = indexPath
+        dataForRow.indexPath = updatedCellIndexPathIncludingPresentedDatePicker(indexPath)
         cell.data = dataForRow
         return cell
     }

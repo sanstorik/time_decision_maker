@@ -8,12 +8,14 @@ class RDDateLabelData: RDCellData {
     override var identifier: String { return RDDateLabelCell.identifier }
     
     let title: String?
+    let isWholeDay: () -> Bool
     let retrieve: () -> Date?
     var isDatePickerPresented = false
     private(set) var didSelect: ((_ isPickerPresented: Bool, _ at: IndexPath) -> Void)?
     
-    init(title: String?, retrieve: @escaping () -> Date?) {
+    init(title: String?, isWholeDay: @escaping () -> Bool, retrieve: @escaping () -> Date?) {
         self.title = title
+        self.isWholeDay = isWholeDay
         self.retrieve = retrieve
     }
     
@@ -41,9 +43,11 @@ class RDDateLabelCell: RDTemplateCell, HighlightableView {
     override func setupFrom(data: RDCellData) {
         super.setupFrom(data: data)
         guard let dateLabelData = data as? RDDateLabelData else { return }
-        
         label.text = dateLabelData.title
-        label.rightSideLabel.text = dateLabelData.retrieve()?.readableDateTimeString()
+        label.rightSideLabel.text = dateLabelData.isWholeDay() ?
+            dateLabelData.retrieve()?.readableDateString()
+            :
+            dateLabelData.retrieve()?.readableDateTimeString()
         updateLabelsAppearences(isPickerPresented: dateLabelData.isDatePickerPresented)
     }
     
