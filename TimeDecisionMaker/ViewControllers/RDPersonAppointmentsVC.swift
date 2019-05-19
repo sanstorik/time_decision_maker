@@ -9,6 +9,7 @@ class RDPersonAppoinmentsVC: CommonVC {
     private var appointments = [[RDAppointment]]()
     private var appointmentsTableView: UITableView!
     private let appointmentsManager = RDAppointmentsManager()
+    private var bookingButton: ButtonActionView!
     
     private var navigationTitle: String {
         if let name = person.name {
@@ -58,6 +59,11 @@ class RDPersonAppoinmentsVC: CommonVC {
         appointmentsManager.updateEvents(for: person, changing: [updatedAppointment])
         appointmentsTableView.reloadData()
     }
+    
+    
+    @objc private func didClickBookingButton() {
+        bookingButton.runSelectColorAnimation()
+    }
 }
 
 
@@ -66,8 +72,38 @@ extension RDPersonAppoinmentsVC: FullScreenTableViewHolder {
     
     
     private func setupViews() {
-        appointmentsTableView = setupTableView()
+        bookingButton = ButtonActionView(offset: 0, iconMultiplier: 0)
+        bookingButton.label.text = "Book an appointment"
+        bookingButton.translatesAutoresizingMaskIntoConstraints = false
+        bookingButton.type = .action
+        
+        view.addSubview(bookingButton)
+        bookingButton.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        bookingButton.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        bookingButton.bottomAnchor.constraint(equalTo: view.bottomSafeAnchorIOS11(self)).isActive = true
+        bookingButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        bookingButton.backgroundColor = AppColors.incomingMessageColor
+        bookingButton.addTapClick(target: self, action: #selector(didClickBookingButton))
+        
+        let separator = UIView()
+        separator.translatesAutoresizingMaskIntoConstraints = false
+        separator.layer.borderColor = UIColor.black.cgColor
+        separator.layer.borderWidth = 0.5
+        let separatorConstraints = [
+            separator.leadingAnchor.constraint(equalTo: bookingButton.leadingAnchor),
+            separator.trailingAnchor.constraint(equalTo: bookingButton.trailingAnchor),
+            separator.heightAnchor.constraint(equalToConstant: 1),
+            separator.bottomAnchor.constraint(equalTo: bookingButton.topAnchor)
+        ]
+        
+        view.addSubview(separator)
+        NSLayoutConstraint.activate(separatorConstraints)
+
+        appointmentsTableView = setupTableView(bottomAnchor: bookingButton.topAnchor)
         appointmentsTableView.register(RDAppointmentCell.self, forCellReuseIdentifier: RDAppointmentCell.identifier)
+        
+        view.bringSubviewToFront(bookingButton)
+        view.bringSubviewToFront(separator)
     }
 }
 

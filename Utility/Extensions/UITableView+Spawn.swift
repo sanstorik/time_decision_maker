@@ -4,14 +4,14 @@ import UIKit
 
 protocol FullScreenTableViewHolder: class {
     var separatorInset: UIEdgeInsets { get }
-    func setupTableView() -> UITableView
+    func setupTableView(bottomAnchor: NSLayoutYAxisAnchor) -> UITableView
 }
 
 extension FullScreenTableViewHolder where Self: CommonVC & UITableViewDelegate & UITableViewDataSource {
     var separatorInset: UIEdgeInsets { return UIEdgeInsets(top: 0, left: 13, bottom: 0, right: 0) }
     
     
-    func setupTableView() -> UITableView {
+    func setupTableView(bottomAnchor: NSLayoutYAxisAnchor) -> UITableView {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.backgroundColor = UIColor.clear
@@ -26,7 +26,7 @@ extension FullScreenTableViewHolder where Self: CommonVC & UITableViewDelegate &
         
         view.addSubview(tableView)
         tableView.topAnchor.constraint(equalTo: view.topSafeAnchorIOS11(self)).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.bottomSafeAnchorIOS11(self)).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         

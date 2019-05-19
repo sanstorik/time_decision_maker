@@ -28,7 +28,7 @@ class RDDetailedAppointmentVC: CommonVC {
         super.viewDidLoad()
         setupBackground(AppColors.messengerBackgroundColor)
         setupNavigationBar(title: appointment.title ?? "Appointment", bgColor: AppColors.incomingMessageColor)
-        tableView = setupTableView()
+        tableView = setupTableView(bottomAnchor: view.bottomSafeAnchorIOS11(self))
         let customCells: [RDTemplateCell.Type] = [RDTextFieldCell.self, RDBooleanCell.self,
                                                   RDDateLabelCell.self, RDDatePickerCell.self,
                                                   RDButtonCell.self]

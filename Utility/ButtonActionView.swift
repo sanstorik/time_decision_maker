@@ -65,6 +65,14 @@ class ButtonActionView: UIView, HighlightableView {
     }
     
     
+    func addTapClick(target: Any, action: Selector) {
+        let tap = UITapGestureRecognizer()
+        tap.addTarget(target, action: action)
+        isUserInteractionEnabled = true
+        addGestureRecognizer(tap)
+    }
+    
+    
     private func setupViews() {
         addSubview(label)
         addSubview(arrow)
