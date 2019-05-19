@@ -11,12 +11,12 @@ class RDTimeGraph: UIView {
     let hourlineLeadingOffset: CGFloat = 63
     let oneHourHeight: CGFloat = 60
     let oneMinuteHeight: CGFloat = 1
-    let date: Date
+    let settings: RDScheduledAppointmentSettings
     
     private(set) var innerAppointmentViews = [RDGraphAppointmentView]()
     
-    init(date: Date) {
-        self.date = date
+    init(settings: RDScheduledAppointmentSettings) {
+        self.settings = settings
         super.init(frame: .zero)
     }
     
@@ -37,13 +37,13 @@ class RDTimeGraph: UIView {
         let topConstant: CGFloat
         let heightConstant: CGFloat
         
-        switch appointment.dateTypeFor(day: date) {
+        switch appointment.dateTypeFor(day: settings.date) {
         case .startingAndEndingToday(let start, let end):
             topConstant = appointmentStartingInsetFor(date: start)
             heightConstant = appointmentHeightFor(start: start, end: end)
         case .endingToday(let end):
             topConstant = zeroHourStartingHeight
-            heightConstant = appointmentHeightFor(start: date, end: end)
+            heightConstant = appointmentHeightFor(start: settings.date, end: end)
         case .startingToday(let start):
             topConstant = appointmentStartingInsetFor(date: start)
             let (hours, minutes) = start.retrieveHoursAndMinutes()

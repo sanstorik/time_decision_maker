@@ -3,7 +3,6 @@ import UIKit
 
 
 class RDGraphAppointmentView: UIView {
-    
     var person: RDPerson?
     var appointment: RDAppointment? {
         didSet {

@@ -89,7 +89,7 @@ class RDCalendarVC: CommonVC {
 
 extension RDCalendarVC: EventsCalendarDelegate {
     func calendar(_ calendar: EventsCalendar, didSelect date: Date) {
-        let personAppointmentsVC = RDPersonAppoinmentsVC(person: person, appointments: appointments, date: date)
+        let personAppointmentsVC = RDPersonAppoinmentsVC(person: person, date: date)
         navigationController?.pushViewController(personAppointmentsVC, animated: true)
         previouslySelectedDate = date
     }

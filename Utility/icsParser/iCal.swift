@@ -34,7 +34,11 @@ public enum iCal {
                 icsResult.append($0.toCal())
             }
             
-            try? icsResult.write(to: url, atomically: true, encoding: .utf8)
+            do {
+                try icsResult.write(to: url, atomically: true, encoding: .utf8)
+            } catch let error {
+                print(error)
+            }
         }
     }
     

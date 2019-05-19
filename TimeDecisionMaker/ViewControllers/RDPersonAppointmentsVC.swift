@@ -20,11 +20,10 @@ class RDPersonAppoinmentsVC: CommonVC {
     }
     
     
-    init(person: RDPerson, appointments: [RDAppointment], date: Date) {
+    init(person: RDPerson, date: Date) {
         self.person = person
         self.date = date
         super.init(nibName: nil, bundle: nil)
-        updateModelFrom(appointments: appointments)
     }
     
     
@@ -41,6 +40,13 @@ class RDPersonAppoinmentsVC: CommonVC {
     }
     
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateModelFrom(appointments: appointmentsManager.loadEvents(for: person))
+        appointmentsTableView.reloadData()
+    }
+    
+    
     private func updateModelFrom(appointments: [RDAppointment]) {
         self.appointments = []
         let (wholeDay, regular) = appointments.filterByDate(date).sortedByStartDate()
@@ -52,10 +58,7 @@ class RDPersonAppoinmentsVC: CommonVC {
     private func didUpdateAppointment(_ editModel: RDAppointmentEditModel, at indexPath: IndexPath) {
         let updatedAppointment = RDAppointment(editModel: editModel)
         appointments[indexPath.section][indexPath.row] = updatedAppointment
-        
-        updateModelFrom(appointments: appointments.flatMap { $0 })
         appointmentsManager.updateEvents(for: person, changing: [updatedAppointment])
-        appointmentsTableView.reloadData()
     }
     
     

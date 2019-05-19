@@ -12,15 +12,15 @@ protocol RDAppointmentGraphDelegate: class {
 
 
 class RDAppointmentTimeGraph: CommonVC, RDNavigation, RDAppointmentGraphDelegate {
-    private let date: Date
     private let personsData: [PersonAppointments]
     private let appointmentsManager = RDAppointmentsManager()
     private var scrollView: UIScrollView!
     private var graph: RDTimeGraph!
+    private var settings: RDScheduledAppointmentSettings
     
     
-    init(personsData: [PersonAppointments], date: Date) {
-        self.date = date
+    init(personsData: [PersonAppointments], settings: RDScheduledAppointmentSettings) {
+        self.settings = settings
         self.personsData = personsData
         super.init(nibName: nil, bundle: nil)
     }
@@ -28,14 +28,14 @@ class RDAppointmentTimeGraph: CommonVC, RDNavigation, RDAppointmentGraphDelegate
     
     required init?(coder aDecoder: NSCoder) {
         self.personsData = []
-        self.date = Date()
+        self.settings = RDScheduledAppointmentSettings()
         super.init(coder: aDecoder)
     }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavigationBar(title: date.readableDateString(), bgColor: AppColors.incomingMessageColor)
+        setupNavigationBar(title: settings.date.readableDateString(), bgColor: AppColors.incomingMessageColor)
         setupBackground(AppColors.messengerBackgroundColor)
         setupViews()
     }
@@ -54,7 +54,7 @@ class RDAppointmentTimeGraph: CommonVC, RDNavigation, RDAppointmentGraphDelegate
         scrollView.isScrollEnabled = true
         scrollView.isUserInteractionEnabled = true
         
-        graph = RDTimeGraph(date: date)
+        graph = RDTimeGraph(settings: settings)
         scrollView.addSubview(graph)
         graph.translatesAutoresizingMaskIntoConstraints = false
         graph.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor).isActive = true
@@ -88,8 +88,8 @@ class RDAppointmentTimeGraph: CommonVC, RDNavigation, RDAppointmentGraphDelegate
         let updatedAppointment = RDAppointment(editModel: editModel)
         appointmentsManager.updateEvents(for: person, changing: [updatedAppointment])
         
-        if let updatedView = graph.innerAppointmentViews.first(where: { $0.appointment?.uid == editModel.uid }) {
-            updatedView.appointment = updatedAppointment
+        if let viewToBeUpdated = graph.innerAppointmentViews.first(where: { $0.appointment?.uid == editModel.uid }) {
+            viewToBeUpdated.appointment = updatedAppointment
         }
     }
 }
