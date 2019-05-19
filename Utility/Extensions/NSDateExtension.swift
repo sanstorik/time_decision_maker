@@ -169,6 +169,39 @@ extension Date {
     func sameDay(with date: Date) -> Bool {
         return compareDay(to: date) == .orderedSame
     }
+    
+    
+    static func stringFromTimeInterval(interval: TimeInterval) -> String {
+        let _interval = Int(interval)
+        
+        let minutes = (_interval / 60) % 60
+        let hours = (_interval / 3600)
+        
+        return String(format: "%0.2d:%0.2d:00", hours, minutes)
+    }
+    
+    
+    func retrieveHoursAndMinutes() -> (Int, Int) {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm:ss"
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        let timeInterval = formatter.string(from: self)
+        let parts = timeInterval.split(separator: ":")
+        
+        if parts.count == 3, let hours = Int(parts[0]), let minutes = Int(parts[1]) {
+            return (hours, minutes)
+        } else {
+            return (0, 0)
+        }
+    }
+    
+    
+    static func hoursMinutesFromTimeInterval(_ timeInterval: TimeInterval) -> Date? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm:ss"
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        return formatter.date(from: Date.stringFromTimeInterval(interval: timeInterval))
+    }
 }
 
 

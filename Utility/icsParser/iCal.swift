@@ -41,24 +41,43 @@ public enum iCal {
     
     private static func updatedCalendar(_ calendar: Calendar, with appointments: [RDAppointment]) -> Calendar {
         var updatedCalendar = calendar
+        var existingUIDs = [String]()
         var updatedComponents = [CalendarComponent]()
         
         for component in calendar.subComponents {
-            guard let event = component as? Event, let match = appointments.first(where: { $0.uid == event.uid }) else {
+            guard let event = component as? Event else {
                 updatedComponents.append(component)
                 continue
             }
             
-            var updatedEvent = event
-            updatedEvent.summary = match.title
-            updatedEvent.dtstart = match.start
-            updatedEvent.dtend = match.end
-            updatedEvent.isWholeDay = match.isWholeDay
-            updatedComponents.append(updatedEvent)
+            if let match = appointments.first(where: { $0.uid == event.uid }) {
+                updatedComponents.append(fillEvent(event, match))
+            } else {
+                updatedComponents.append(event)
+            }
+            
+            existingUIDs.append(event.uid)
+        }
+        
+        appointments.forEach {
+            if !existingUIDs.contains($0.uid) {
+                let createdEvent = Event(uid: $0.uid, dtstamp: Date())
+                updatedComponents.append(fillEvent(createdEvent, $0))
+            }
         }
         
         updatedCalendar.subComponents = updatedComponents
         return updatedCalendar
+    }
+    
+    
+    private static func fillEvent(_ event: Event, _ secondEvent: RDAppointment) -> Event {
+        var updatedEvent = event
+        updatedEvent.summary = secondEvent.title
+        updatedEvent.dtstart = secondEvent.start
+        updatedEvent.dtend = secondEvent.end
+        updatedEvent.isWholeDay = secondEvent.isWholeDay
+        return updatedEvent
     }
     
 

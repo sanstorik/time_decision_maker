@@ -29,9 +29,7 @@ class RDPersonAppoinmentsVC: CommonVC {
     
     
     required init?(coder aDecoder: NSCoder) {
-        self.person = RDPerson(appointmentsFilePath: nil)
-        self.date = Date()
-        super.init(coder: aDecoder)
+        fatalError()
     }
     
     
@@ -62,6 +60,8 @@ class RDPersonAppoinmentsVC: CommonVC {
     
     
     @objc private func didClickBookingButton() {
+        let bookingSettings = RDAppointmentSettingsVC(person: person)
+        navigationController?.pushViewController(bookingSettings, animated: true)
         bookingButton.runSelectColorAnimation()
     }
 }
@@ -73,7 +73,7 @@ extension RDPersonAppoinmentsVC: FullScreenTableViewHolder {
     
     private func setupViews() {
         bookingButton = ButtonActionView(offset: 0, iconMultiplier: 0)
-        bookingButton.label.text = "Book an appointment"
+        bookingButton.label.text = "Schedule an appointment"
         bookingButton.translatesAutoresizingMaskIntoConstraints = false
         bookingButton.type = .action
         

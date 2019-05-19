@@ -13,7 +13,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         
-        let entryVC = RDCalendarVC(person: RDPerson(filename: "A"))
+        guard let person = RDPerson(filename: "A") else {
+            fatalError("A.ics is missing")
+        }
+        
+        let entryVC = RDCalendarVC(person: person)
         let navigationController = UINavigationController(rootViewController: entryVC)
         window?.rootViewController = navigationController
         

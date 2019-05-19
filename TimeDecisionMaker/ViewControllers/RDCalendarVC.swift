@@ -17,8 +17,7 @@ class RDCalendarVC: CommonVC {
     
     
     required init?(coder aDecoder: NSCoder) {
-        self.person = RDPerson(appointmentsFilePath: nil)
-        super.init(coder: aDecoder)
+        fatalError()
     }
     
         
@@ -27,6 +26,8 @@ class RDCalendarVC: CommonVC {
         setupBackground(AppColors.messengerBackgroundColor)
         setupNavigationBar(title: "Calendar", bgColor: AppColors.incomingMessageColor)
         setupViews()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .add, target: self, action: #selector(newEvent))
     }
     
     
@@ -70,6 +71,18 @@ class RDCalendarVC: CommonVC {
     
     private func filterAppointmentsBy(date: Date) -> [RDAppointment] {
         return appointments.filterByDate(date)
+    }
+    
+    
+    @objc private func newEvent() {
+        let eventCreationVC = RDAppointmentCreationVC(
+            RDAppointment(uid: UUID().uuidString, title: nil, start: Date(), end: Date(), isWholeDay: false))
+        eventCreationVC.didChangeAppointment = { [unowned self] in
+            self.appointmentsManager.updateEvents(for: self.person, changing: [RDAppointment(editModel: $0)])
+        }
+        
+        let navigationVC = UINavigationController(rootViewController: eventCreationVC)
+        self.present(navigationVC, animated: true)
     }
 }
 

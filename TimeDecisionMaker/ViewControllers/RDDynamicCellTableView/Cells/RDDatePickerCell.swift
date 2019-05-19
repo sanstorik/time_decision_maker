@@ -13,6 +13,7 @@ class RDDatePickerData: RDCellData {
     let save: (Date) -> Void
     let retrieve: () -> Date?
     let isWholeDay: () -> Bool
+    var pickerMode: UIDatePicker.Mode?
     
     init(minimumDate: @escaping () -> Date?,
          maximumDate: @escaping () -> Date?, isWholeDay: @escaping () -> Bool,
@@ -47,7 +48,14 @@ class RDDatePickerCell: RDTemplateCell {
         datePicker.minimumDate = datePickerData.minimumDate()
         datePicker.maximumDate = datePickerData.maximumDate()
         datePicker.date = datePickerData.retrieve() ?? Date()
-        datePicker.datePickerMode = datePickerData.isWholeDay() ? .date : .dateAndTime
+        datePicker.minuteInterval = 5
+        datePicker.locale = Locale(identifier: "en_GB")
+        
+        if let pickerMode = datePickerData.pickerMode {
+            datePicker.datePickerMode = pickerMode
+        } else {
+            datePicker.datePickerMode = datePickerData.isWholeDay() ? .date : .dateAndTime
+        }
     }
     
     

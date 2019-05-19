@@ -6,11 +6,7 @@ import Foundation
 
 class RDAppointmentsManager {
     func loadEvents(for person: RDPerson) -> [RDAppointment] {
-        if let filePath = person.appointmentsFilePath {
-            return loadEvents(from: filePath)
-        } else {
-            return []
-        }
+        return loadEvents(from: person.appointmentsFilePath)
     }
     
     
@@ -35,14 +31,20 @@ class RDAppointmentsManager {
     
     
     func loadAllPersons() -> [(RDPerson, [RDAppointment])] {
-        return []
+        let fileExtension = "ics"
+        let filePaths = Bundle.main.paths(forResourcesOfType: fileExtension, inDirectory: nil)
+        var result = [(RDPerson, [RDAppointment])]()
+        
+        filePaths.forEach {
+            result.append((RDPerson(appointmentsFilePath: $0), loadEvents(from: $0)))
+        }
+        
+        return result
     }
     
     
     func updateEvents(for person: RDPerson, changing events: [RDAppointment]) {
-        guard let filePath = person.appointmentsFilePath else { return }
-        
-        let fileUrl = URL(fileURLWithPath: filePath)
+        let fileUrl = URL(fileURLWithPath: person.appointmentsFilePath)
         iCal.updateEvents(for: fileUrl, changing: events)
     }
 }

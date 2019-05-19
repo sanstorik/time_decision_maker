@@ -5,25 +5,25 @@ import Foundation
 
 
 class RDPerson {
-    private(set) var appointmentsFilePath: String?
+    private(set) var appointmentsFilePath: String
     
     
     var name: String? {
-        if let _filePath = appointmentsFilePath {
-            return URL(fileURLWithPath: _filePath).deletingPathExtension().lastPathComponent
-        }
-        
-        return nil
+        return URL(fileURLWithPath: appointmentsFilePath).deletingPathExtension().lastPathComponent
     }
     
     
-    init(appointmentsFilePath: String?) {
+    init(appointmentsFilePath: String) {
         self.appointmentsFilePath = appointmentsFilePath
     }
     
     
-    init(filename: String) {
-        self.appointmentsFilePath = Bundle.main.path(forResource: filename, ofType: ".ics")
+    init?(filename: String) {
+        if let path = Bundle.main.path(forResource: filename, ofType: ".ics") {
+            self.appointmentsFilePath = path
+        } else {
+            return nil
+        }
     }
     
     
