@@ -56,6 +56,7 @@
 		89153F7522919BD20000DF98 /* RDOptionPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89153F7422919BD20000DF98 /* RDOptionPicker.swift */; };
 		89153F772291AEC50000DF98 /* C.ics in Resources */ = {isa = PBXBuildFile; fileRef = 89153F762291AEC50000DF98 /* C.ics */; };
 		89153F7B2291B6CA0000DF98 /* RDAppointmentCreationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89153F7A2291B6CA0000DF98 /* RDAppointmentCreationVC.swift */; };
+		89153F7D2291C8B20000DF98 /* RDAppointmentsTimeGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89153F7C2291C8B20000DF98 /* RDAppointmentsTimeGraph.swift */; };
 		89D222A322909340007AC387 /* RDDateLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D222A222909340007AC387 /* RDDateLabelCell.swift */; };
 		89D222A5229093ED007AC387 /* ButtonActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D222A4229093ED007AC387 /* ButtonActionView.swift */; };
 		89D222A72290949B007AC387 /* DoubleSidedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D222A62290949B007AC387 /* DoubleSidedLabel.swift */; };
@@ -128,6 +129,7 @@
 		89153F7422919BD20000DF98 /* RDOptionPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RDOptionPicker.swift; sourceTree = "<group>"; };
 		89153F762291AEC50000DF98 /* C.ics */ = {isa = PBXFileReference; lastKnownFileType = text; path = C.ics; sourceTree = "<group>"; };
 		89153F7A2291B6CA0000DF98 /* RDAppointmentCreationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RDAppointmentCreationVC.swift; sourceTree = "<group>"; };
+		89153F7C2291C8B20000DF98 /* RDAppointmentsTimeGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RDAppointmentsTimeGraph.swift; sourceTree = "<group>"; };
 		89D222A222909340007AC387 /* RDDateLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RDDateLabelCell.swift; sourceTree = "<group>"; };
 		89D222A4229093ED007AC387 /* ButtonActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonActionView.swift; sourceTree = "<group>"; };
 		89D222A62290949B007AC387 /* DoubleSidedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleSidedLabel.swift; sourceTree = "<group>"; };
@@ -323,6 +325,7 @@
 				6064A54E228FECB700E54AB8 /* RDCalendarVC.swift */,
 				60DDA7AA22901E1900A42123 /* RDPersonAppointmentsVC.swift */,
 				89153F6D229191BF0000DF98 /* RDAppointmentSettingsVC.swift */,
+				89153F7C2291C8B20000DF98 /* RDAppointmentsTimeGraph.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -570,6 +573,7 @@
 				60DC4188228FF4940008DB8F /* Date.swift in Sources */,
 				60DC418E228FF4940008DB8F /* Calendar.swift in Sources */,
 				60DC4191228FF4940008DB8F /* UITableViewExtension.swift in Sources */,
+				89153F7D2291C8B20000DF98 /* RDAppointmentsTimeGraph.swift in Sources */,
 				89D222A5229093ED007AC387 /* ButtonActionView.swift in Sources */,
 				60DC4197228FF61B0008DB8F /* EventsCalendar.swift in Sources */,
 				89D222A322909340007AC387 /* RDDateLabelCell.swift in Sources */,

@@ -3,6 +3,7 @@
 import Foundation
 
 
+typealias PersonAppointments = (RDPerson, [RDAppointment])
 
 class RDAppointmentsManager {
     func loadEvents(for person: RDPerson) -> [RDAppointment] {
@@ -30,7 +31,7 @@ class RDAppointmentsManager {
     }
     
     
-    func loadAllPersons() -> [(RDPerson, [RDAppointment])] {
+    func loadAllPersons() -> [PersonAppointments] {
         let fileExtension = "ics"
         let filePaths = Bundle.main.paths(forResourcesOfType: fileExtension, inDirectory: nil)
         var result = [(RDPerson, [RDAppointment])]()
