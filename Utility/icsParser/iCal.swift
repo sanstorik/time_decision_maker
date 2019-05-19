@@ -34,6 +34,7 @@ public enum iCal {
                 icsResult.append($0.toCal())
             }
             
+            print(icsResult)
             try! icsResult.write(to: url, atomically: true, encoding: .utf8)
         }
     }

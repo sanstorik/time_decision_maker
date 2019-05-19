@@ -41,13 +41,24 @@ extension Event: CalendarComponent {
         if let descr = descr {
             str += "DESCRIPTION:\(descr)\n"
         }
-        if let dtstart = dtstart {
-            str += "DTSTART:\(dtstart.toString())\n"
+        
+        if isWholeDay {
+            /* DTSTART;VALUE=DATE:20190429 */
+            if let dtstart = dtstart {
+                str += "DTSTART;VALUE=DATE:\(dtstart.toWholeDayString())\n"
+            }
+            if let dtend = dtend {
+                str += "DTEND;VALUE=DATE:\(dtend.toWholeDayString())\n"
+            }
+        } else {
+            if let dtstart = dtstart {
+                str += "DTSTART:\(dtstart.toString())\n"
+            }
+            if let dtend = dtend {
+                str += "DTEND:\(dtend.toString())\n"
+            }
         }
-        if let dtend = dtend {
-            str += "DTEND:\(dtend.toString())\n"
-        }
-
+        
         for (key, val) in otherAttrs {
             str += "\(key):\(val)\n"
         }
@@ -78,6 +89,9 @@ extension Event: IcsElement {
             descr = value
         case "DTSTART;VALUE=DATE":
             dtstart = value.wholeDayToDate()
+            isWholeDay = true
+        case "DTEND;VALUE=DATE":
+            dtend = value.wholeDayToDate()
             isWholeDay = true
         default:
             otherAttrs[attr] = value
