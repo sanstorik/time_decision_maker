@@ -21,7 +21,9 @@ class RDButtonData: RDCellData {
 }
 
 
-class RDButtonCell: RDTemplateCell {
+class RDButtonCell: RDTemplateCell, HighlightableView {
+    var highlightAnimationRunning = false
+    
     override class var identifier: String { return "RDButtonCell" }
     override var canBecomeHighlighted: Bool { return true }
     private var buttonView: ButtonActionView!
@@ -60,12 +62,12 @@ class RDButtonCell: RDTemplateCell {
     
     
     override func didUnhighlight() {
-        buttonView.changeColorOnUnhighlight()
+        changeColorOnUnhighlight()
     }
     
     
     override func didSelect() {
-        buttonView.runSelectColorAnimation()
+        runSelectColorAnimation()
         (data as? RDButtonData)?.didSelect()
     }
 }

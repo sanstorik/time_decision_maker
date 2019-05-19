@@ -18,7 +18,9 @@ class RDBooleanData: RDCellData {
 }
 
 
-class RDBooleanCell: RDTemplateCell {
+class RDBooleanCell: RDTemplateCell, HighlightableView {
+    var highlightAnimationRunning = false
+    
     override class var identifier: String { return "RDBooleanCell" }
     override var canBecomeHighlighted: Bool { return true }
     private var labeledSwitch: LabeledSwitch!
@@ -53,11 +55,11 @@ class RDBooleanCell: RDTemplateCell {
     
     
     override func didUnhighlight() {
-        labeledSwitch.changeColorOnUnhighlight()
+        changeColorOnUnhighlight()
     }
     
     
     override func didSelect() {
-        labeledSwitch.runSelectColorAnimation()
+        runSelectColorAnimation()
     }
 }
