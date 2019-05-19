@@ -23,7 +23,7 @@ class RDAppointmentsManager {
         for calendar in calendars {
             for component in calendar.subComponents {
                 if let event = component as? Event {
-                    let appointment = RDAppointment(title: event.summary, start: event.dtstart,
+                    let appointment = RDAppointment(uid: event.uid, title: event.summary, start: event.dtstart,
                                                     end: event.dtend, isWholeDay: event.isWholeDay)
                     appointments.append(appointment)
                 }
@@ -36,5 +36,13 @@ class RDAppointmentsManager {
     
     func loadAllPersons() -> [(RDPerson, [RDAppointment])] {
         return []
+    }
+    
+    
+    func updateEvents(for person: RDPerson, changing events: [RDAppointment]) {
+        guard let filePath = person.appointmentsFilePath else { return }
+        
+        let fileUrl = URL(fileURLWithPath: filePath)
+        iCal.updateEvents(for: fileUrl, changing: events)
     }
 }

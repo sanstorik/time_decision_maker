@@ -23,6 +23,44 @@ public enum iCal {
         guard let string = String(data: data, encoding: encoding) else { throw iCalError.encoding }
         return load(string: string)
     }
+    
+    
+    static func updateEvents(for url: URL, changing appointments: [RDAppointment]) {
+        if let calendars = try? load(url: url) {
+            let updatedCalendars = calendars.map { updatedCalendar($0, with: appointments) }
+            
+            var icsResult = ""
+            updatedCalendars.forEach {
+                icsResult.append($0.toCal())
+            }
+            
+            try! icsResult.write(to: url, atomically: true, encoding: .utf8)
+        }
+    }
+    
+    
+    private static func updatedCalendar(_ calendar: Calendar, with appointments: [RDAppointment]) -> Calendar {
+        var updatedCalendar = calendar
+        var updatedComponents = [CalendarComponent]()
+        
+        for component in calendar.subComponents {
+            guard let event = component as? Event, let match = appointments.first(where: { $0.uid == event.uid }) else {
+                updatedComponents.append(component)
+                continue
+            }
+            
+            var updatedEvent = event
+            updatedEvent.summary = match.title
+            updatedEvent.dtstart = match.start
+            updatedEvent.dtend = match.end
+            updatedEvent.isWholeDay = match.isWholeDay
+            updatedComponents.append(updatedEvent)
+        }
+        
+        updatedCalendar.subComponents = updatedComponents
+        return updatedCalendar
+    }
+    
 
     private static func parse(_ icsContent: [String]) -> [Calendar] {
         let parser = Parser(icsContent)

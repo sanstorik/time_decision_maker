@@ -8,6 +8,7 @@ class RDPersonAppoinmentsVC: CommonVC {
     private let date: Date
     private var appointments = [[RDAppointment]]()
     private var appointmentsTableView: UITableView!
+    private let appointmentsManager = RDAppointmentsManager()
     
     private var navigationTitle: String {
         if let name = person.name {
@@ -42,13 +43,20 @@ class RDPersonAppoinmentsVC: CommonVC {
     
     
     private func updateModelFrom(appointments: [RDAppointment]) {
-        if self.appointments.count == 0 {
-            self.appointments = [[], []]
-        }
-        
+        self.appointments = []
         let (wholeDay, regular) = appointments.filterByDate(date).sortedByStartDate()
-        self.appointments[0] = wholeDay
-        self.appointments[1] = regular
+        if wholeDay.count > 0 { self.appointments.append(wholeDay) }
+        if regular.count > 0 { self.appointments.append(regular) }
+    }
+    
+    
+    private func didUpdateAppointment(_ editModel: RDAppointmentEditModel, at indexPath: IndexPath) {
+        let updatedAppointment = RDAppointment(editModel: editModel)
+        appointments[indexPath.section][indexPath.row] = updatedAppointment
+        
+        updateModelFrom(appointments: appointments.flatMap { $0 })
+        appointmentsManager.updateEvents(for: person, changing: [updatedAppointment])
+        appointmentsTableView.reloadData()
     }
 }
 
@@ -82,11 +90,7 @@ extension RDPersonAppoinmentsVC: UITableViewDelegate, UITableViewDataSource {
         
         let detailedAppointmentVC = RDDetailedAppointmentVC(appointments[indexPath.section][indexPath.row])
         detailedAppointmentVC.didChangeAppointment = { [weak self] in
-            guard let _self = self else { return }
-            
-            _self.appointments[indexPath.section][indexPath.row] = RDAppointment(editModel: $0)
-            _self.updateModelFrom(appointments: _self.appointments.flatMap { $0 })
-            _self.appointmentsTableView.reloadData()
+            self?.didUpdateAppointment($0, at: indexPath)
         }
         
         navigationController?.pushViewController(detailedAppointmentVC, animated: true)
@@ -112,9 +116,8 @@ extension RDPersonAppoinmentsVC: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 25
+        return section == 0 ? 20 : 25
     }
-    
     
     
     func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {

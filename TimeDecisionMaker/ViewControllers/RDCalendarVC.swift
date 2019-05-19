@@ -45,6 +45,7 @@ class RDCalendarVC: CommonVC {
         
         previouslySelectedDate = selectedDate
         calendar.selectDate(selectedDate)
+        calendar.reloadEventData()
     }
     
     

@@ -183,9 +183,9 @@ extension RDDetailedAppointmentVC: FullScreenTableViewHolder, UITableViewDataSou
             cell.didUnhighlight()
         }
     }
-    
+
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 25
+        return section == 0 ? 20 : 25
     }
 }

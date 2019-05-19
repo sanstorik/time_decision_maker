@@ -226,12 +226,12 @@ fileprivate class EventsCalendarCell: FSCalendarCell, EventsCalendarDateCell {
     
     override func configureAppearance() {
         super.configureAppearance()
-        
+    
         if isPlaceholder {
-            eventIndicator.isHidden = true
             titleLabel.textColor = UIColor.gray
-            todosEventsIndicator.shouldBeHidden = true
-        } else if isSelected {
+        }
+        
+        if isSelected {
             backgroundView?.backgroundColor = AppColors.alertSheetDarkButtonColor.withAlphaComponent(0.2)
         } else {
             self.backgroundView?.backgroundColor = AppColors.incomingMessageColor

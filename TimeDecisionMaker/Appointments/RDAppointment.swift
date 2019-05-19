@@ -9,8 +9,10 @@ class RDAppointmentEditModel {
     var start: Date?
     var end: Date?
     var isWholeDay: Bool
+    let uid: String
     
-    init(title: String?, start: Date?, end: Date?, isWholeDay: Bool) {
+    init(uid: String, title: String?, start: Date?, end: Date?, isWholeDay: Bool) {
+        self.uid = uid
         self.title = title
         self.start = start
         self.end = end
@@ -18,6 +20,7 @@ class RDAppointmentEditModel {
     }
     
     init(appointment: RDAppointment) {
+        self.uid = appointment.uid
         self.title = appointment.title
         self.start = appointment.start
         self.end = appointment.end
@@ -31,8 +34,10 @@ struct RDAppointment {
     let start: Date?
     let end: Date?
     let isWholeDay: Bool
+    let uid: String
     
-    init(title: String?, start: Date?, end: Date?, isWholeDay: Bool) {
+    init(uid: String, title: String?, start: Date?, end: Date?, isWholeDay: Bool) {
+        self.uid = uid
         self.title = title
         self.start = start
         self.end = end
@@ -40,6 +45,7 @@ struct RDAppointment {
     }
     
     init(editModel: RDAppointmentEditModel) {
+        self.uid = editModel.uid
         self.title = editModel.title
         self.start = editModel.start
         self.end = editModel.end
