@@ -139,6 +139,7 @@ extension RDPersonAppoinmentsVC: UITableViewDelegate, UITableViewDataSource {
                 fatalError()
         }
         
+        cell.date = date
         cell.appointment = appointments[indexPath.section][indexPath.row]
         cell.selectedBackgroundView = UIView()
         cell.selectedBackgroundView?.backgroundColor = AppColors.cellSelectionColor
@@ -170,15 +171,29 @@ fileprivate class RDAppointmentCell: UITableViewCell, HighlightableView {
     class var identifier: String { return "RDAppointmentCell" }
     
     var highlightAnimationRunning = false
+    var date: Date!
     var appointment: RDAppointment? {
         didSet {
             if let _appointment = appointment {
-                if _appointment.isWholeDay {
-                    timeLabel.text = "all-day"
-                } else {
-                    timeLabel.text = "Starts \n\(_appointment.start?.readableTimeString() ?? Date().readableTimeString())"
+                let dateType = _appointment.dateTypeFor(day: date)
+                
+                let dateTitle: String?
+                switch dateType {
+                case .startingAndEndingToday(let start, let end):
+                    dateTitle = "\(start.readableTimeString())\n\(end.readableTimeString())"
+                case .startingToday(let start):
+                    dateTitle = "Starts \n\(start.readableTimeString())"
+                case .endingToday(let end):
+                    dateTitle = "Ends \n\(end.readableTimeString())"
+                case .isBetween(let start, let end):
+                    dateTitle = "\(start.readableMonthAndDate())\n\(end.readableMonthAndDate())"
+                case .wholeDay:
+                    dateTitle = "all-day"
+                case .unknown:
+                    dateTitle = nil
                 }
                 
+                timeLabel.text = dateTitle
                 titleLabel.text = _appointment.title
             }
         }

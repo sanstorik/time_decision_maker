@@ -144,6 +144,14 @@ extension Date {
     }
     
     
+    func readableMonthAndDate() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd.MM"
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        return formatter.string(from: self)
+    }
+    
+    
     func isBetween(from start: Date, to end: Date) -> Bool {
         let comparisonResultWithStart = Foundation.Calendar.current.compare(self, to: start, toGranularity: .day)
         let comparisonResultWithEnd = Foundation.Calendar.current.compare(self, to: end, toGranularity: .day)

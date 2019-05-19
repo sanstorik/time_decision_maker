@@ -30,6 +30,15 @@ class RDAppointmentEditModel {
 
 
 struct RDAppointment {
+    enum EventDateType {
+        case startingAndEndingToday(Date, Date)
+        case startingToday(Date)
+        case endingToday(Date)
+        case isBetween(Date, Date)
+        case wholeDay
+        case unknown
+    }
+    
     let title: String?
     let start: Date?
     let end: Date?
@@ -50,6 +59,30 @@ struct RDAppointment {
         self.start = editModel.start
         self.end = editModel.end
         self.isWholeDay = editModel.isWholeDay
+    }
+    
+    
+    func dateTypeFor(day date: Date) -> EventDateType {
+        let type: EventDateType
+        if isWholeDay {
+            return .wholeDay
+        } else if let _start = start, let _end = end {
+            if _start.sameDay(with: date), _end.sameDay(with: date) {
+                type = .startingAndEndingToday(_start, _end)
+            } else if _start.sameDay(with: date) {
+                type = .startingToday(_start)
+            } else if _end.sameDay(with: date) {
+                type = .endingToday(_end)
+            } else if date.isBetween(from: _start, to: _end) {
+                type = .isBetween(_start, _end)
+            } else {
+                type = .unknown
+            }
+        } else {
+            type = .unknown
+        }
+        
+        return type
     }
 }
 
