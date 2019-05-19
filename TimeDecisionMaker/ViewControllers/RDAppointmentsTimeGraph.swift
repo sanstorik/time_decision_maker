@@ -88,6 +88,7 @@ class HourLine: UIView {
         let label = UILabel.defaultInit()
         label.textColor = UIColor.white
         label.font = UIFont.systemFont(ofSize: 13)
+        label.textAlignment = .right
         return label
     }()
     
@@ -117,10 +118,11 @@ class HourLine: UIView {
         addSubview(line)
         
         let constraints = [
+            hourLabel.widthAnchor.constraint(equalToConstant: 40),
             hourLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
             hourLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             
-            line.leadingAnchor.constraint(equalTo: hourLabel.trailingAnchor, constant: 4),
+            line.leadingAnchor.constraint(equalTo: hourLabel.trailingAnchor, constant: 8),
             line.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
             line.centerYAnchor.constraint(equalTo: centerYAnchor),
             line.heightAnchor.constraint(equalToConstant: 0.4)
