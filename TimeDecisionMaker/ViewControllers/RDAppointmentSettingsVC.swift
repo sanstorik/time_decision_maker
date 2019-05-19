@@ -83,7 +83,7 @@ class RDAppointmentSettingsVC: RDDynamicCellTableViewVC {
         }
         
         let thirdSection = [
-            RDButtonData(type: .action(title: "Select Appointment Time")) { [unowned self] in
+            RDButtonData(type: .action(title: "Set Appointment Time")) { [unowned self] in
                 if let _selectedPerson = self.selectedPerson {
                     let firstData = self.availablePersons.first { $0.0.appointmentsFilePath == _selectedPerson.appointmentsFilePath }
                     
@@ -140,5 +140,20 @@ class RDAppointmentSettingsVC: RDDynamicCellTableViewVC {
         
         tableView.deselectRow(at: indexPath, animated: false)
         tableView.reloadRows(at: indexPaths, with: .none)
+    }
+    
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        (view as? UITableViewHeaderFooterView)?.textLabel?.textColor = .white
+    }
+    
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return section == 1 ? "Select a person, with whom you would like to have an appointment" : nil
+    }
+    
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return section == 1 ? 60 : super.tableView(tableView, heightForHeaderInSection: section)
     }
 }
