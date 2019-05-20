@@ -18,6 +18,31 @@ class RDTimeDecisionMaker: NSObject {
     func suggestAppointments(organizerICS: String,
                              attendeeICS: String,
                              duration: TimeInterval) -> [DateInterval] {
+        let appoinmentsManager = RDAppointmentsManager()
+        let organizerPerson = appoinmentsManager.loadEvents(for: RDPerson(appointmentsFilePath: organizerICS))
+        let attendeePerson = appoinmentsManager.loadEvents(for: RDPerson(appointmentsFilePath: attendeeICS))
+        
+        var occupiedDateIntervals = [DateInterval]()
+        populateWithPersonAppointments(organizerPerson, intervals: &occupiedDateIntervals)
+        populateWithPersonAppointments(attendeePerson, intervals: &occupiedDateIntervals)
+        
+        return findDayFreeIntervalsFor(occupiedIntervals: occupiedDateIntervals)
+    }
+    
+    
+    func suggestAppointmentsFor(organizer: RDPerson, attended: RDPerson, duration: TimeInterval) -> [DateInterval] {
+        return suggestAppointments(organizerICS: organizer.appointmentsFilePath,
+                                   attendeeICS: attended.appointmentsFilePath,
+                                   duration: duration)
+    }
+    
+    
+    private func populateWithPersonAppointments(_ appointments: [RDAppointment], intervals: inout [DateInterval]) {
+        
+    }
+    
+    
+    private func findDayFreeIntervalsFor(occupiedIntervals: [DateInterval]) -> [DateInterval] {
         return []
     }
 }

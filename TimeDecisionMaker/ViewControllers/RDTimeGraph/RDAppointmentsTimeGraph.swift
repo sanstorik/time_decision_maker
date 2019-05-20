@@ -16,6 +16,7 @@ protocol RDAppointmentGraphDelegate: class {
 class RDAppointmentTimeGraph: CommonVC, RDNavigation, RDAppointmentGraphDelegate {
     private let personsData: [PersonAppointments]
     private let appointmentsManager = RDAppointmentsManager()
+    private let timeDecisionMaker = RDTimeDecisionMaker()
     private var scrollView: UIScrollView!
     private var graph: RDTimeGraph!
     private var settings: RDScheduledAppointmentSettings
@@ -82,11 +83,20 @@ class RDAppointmentTimeGraph: CommonVC, RDNavigation, RDAppointmentGraphDelegate
             }
         }
         
-        let freeInterval = RDGraphFreeIntervalView(inside: graph)
-        freeInterval.appointmentGraphDelegate = self
-        freeInterval.navigationDelegate = self
-        freeInterval.dateInterval = DateInterval(start: Date(timeIntervalSince1970: 1556604000 - 3600 * 5), duration: 60 * 60 * 2)
-        freeInterval.person = personsData[0].person
+        if personsData.count == 2 {
+            let organizer = personsData[0].person
+            let attendee = personsData[1].person
+            let suggestedFreeDateIntervals = timeDecisionMaker.suggestAppointmentsFor(
+                organizer: organizer, attended: attendee, duration: settings.duration)
+            
+            suggestedFreeDateIntervals.forEach {
+                let freeInterval = RDGraphFreeIntervalView(inside: graph)
+                freeInterval.appointmentGraphDelegate = self
+                freeInterval.navigationDelegate = self
+                freeInterval.dateInterval = $0
+                freeInterval.person = organizer
+            }
+        }
     }
     
     
