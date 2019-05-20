@@ -20,7 +20,7 @@
 		60DC418B228FF4940008DB8F /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DC4178228FF4940008DB8F /* Parser.swift */; };
 		60DC418C228FF4940008DB8F /* CalendarComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DC417A228FF4940008DB8F /* CalendarComponent.swift */; };
 		60DC418D228FF4940008DB8F /* IcsElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DC417B228FF4940008DB8F /* IcsElement.swift */; };
-		60DC418E228FF4940008DB8F /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DC417C228FF4940008DB8F /* Calendar.swift */; };
+		60DC418E228FF4940008DB8F /* RDCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DC417C228FF4940008DB8F /* RDCalendar.swift */; };
 		60DC418F228FF4940008DB8F /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DC417E228FF4940008DB8F /* ArrayExtensions.swift */; };
 		60DC4190228FF4940008DB8F /* NSDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DC417F228FF4940008DB8F /* NSDateExtension.swift */; };
 		60DC4191228FF4940008DB8F /* UITableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DC4180228FF4940008DB8F /* UITableViewExtension.swift */; };
@@ -92,7 +92,7 @@
 		60DC4178228FF4940008DB8F /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		60DC417A228FF4940008DB8F /* CalendarComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarComponent.swift; sourceTree = "<group>"; };
 		60DC417B228FF4940008DB8F /* IcsElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IcsElement.swift; sourceTree = "<group>"; };
-		60DC417C228FF4940008DB8F /* Calendar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
+		60DC417C228FF4940008DB8F /* RDCalendar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RDCalendar.swift; sourceTree = "<group>"; };
 		60DC417E228FF4940008DB8F /* ArrayExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtensions.swift; sourceTree = "<group>"; };
 		60DC417F228FF4940008DB8F /* NSDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateExtension.swift; sourceTree = "<group>"; };
 		60DC4180228FF4940008DB8F /* UITableViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITableViewExtension.swift; sourceTree = "<group>"; };
@@ -200,7 +200,7 @@
 				60DC4177228FF4940008DB8F /* Alarm.swift */,
 				60DC4178228FF4940008DB8F /* Parser.swift */,
 				60DC4179228FF4940008DB8F /* Protocols */,
-				60DC417C228FF4940008DB8F /* Calendar.swift */,
+				60DC417C228FF4940008DB8F /* RDCalendar.swift */,
 			);
 			path = icsParser;
 			sourceTree = "<group>";
@@ -596,7 +596,7 @@
 				60DC4193228FF4940008DB8F /* UIViewExtensions.swift in Sources */,
 				60DC4189228FF4940008DB8F /* String.swift in Sources */,
 				60DC4188228FF4940008DB8F /* Date.swift in Sources */,
-				60DC418E228FF4940008DB8F /* Calendar.swift in Sources */,
+				60DC418E228FF4940008DB8F /* RDCalendar.swift in Sources */,
 				60DC4191228FF4940008DB8F /* UITableViewExtension.swift in Sources */,
 				89153F7D2291C8B20000DF98 /* RDAppointmentsTimeGraph.swift in Sources */,
 				89D222A5229093ED007AC387 /* ButtonActionView.swift in Sources */,

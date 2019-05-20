@@ -8,12 +8,12 @@ internal class Parser {
         icsContent = ics
     }
 
-    func read() throws -> [Calendar] {
-        var completeCal = [Calendar?]()
+    func read() throws -> [RDCalendar] {
+        var completeCal = [RDCalendar?]()
 
         // Such state, much wow
         var inCalendar = false
-        var currentCalendar: Calendar?
+        var currentCalendar: RDCalendar?
         var inEvent = false
         var currentEvent: Event?
         var inAlarm = false
@@ -22,7 +22,7 @@ internal class Parser {
         for (_ , line) in icsContent.enumerated() {
             if line.contains("BEGIN:VCALENDAR") {
                 inCalendar = true
-                currentCalendar = Calendar(withComponents: nil)
+                currentCalendar = RDCalendar(withComponents: nil)
                 continue
             } else if line.contains("END:VCALENDAR") {
                 inCalendar = false

@@ -38,4 +38,43 @@ class TimeDecisionMakerTests: XCTestCase {
                                                                duration: 3_600).count,
                           "At least one appointment should exist")
     }
+    
+    
+    func testPerformanceForFindingSuggestions() {
+        let decisionMaker = RDTimeDecisionMaker()
+        let firstPath = createHugeICS(for: "Test1")
+        let secondPath = createHugeICS(for: "Test2")
+        
+        measure {
+            _ = decisionMaker.suggestAppointments(
+                organizerICS: firstPath,
+                attendeeICS: secondPath,
+                duration: 30)
+        }
+    }
+    
+    
+    private func createHugeICS(for name: String) -> String {
+        var events = [Event]()
+        var event = Event(uid: UUID().uuidString, dtstamp: Date())
+        
+        let startDate = Date()
+        var prevEnd = startDate
+        for i in 0..<1000 {
+            event.dtstart = prevEnd
+            prevEnd = Date(timeInterval: Double(i) * 60 * 5, since: startDate)
+            event.dtend = prevEnd
+            event.summary = "EXAMPLE"
+            event.isWholeDay = i % 10 == 0
+            events.append(event)
+        }
+        
+        var path = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+        path.appendPathComponent("\(name).ics")
+        
+        let calendar = RDCalendar(withComponents: events)
+        try? calendar.toCal().write(to: path, atomically: true, encoding: .utf8)
+        
+        return path.path
+    }
 }
