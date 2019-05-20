@@ -1,4 +1,4 @@
-A fully functional applications based on an iOS calendar application and ics data parsing.
+A fully functional application based on an iOS calendar application and ics data parsing.
 Suggestions finder algorithm perfomance was tested on customly created big .ics files.
 
 Application Supports:
