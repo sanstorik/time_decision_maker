@@ -9,14 +9,16 @@ class RDAppointmentEditModel {
     var start: Date?
     var end: Date?
     var isWholeDay: Bool
+    var isDeleted: Bool
     let uid: String
     
-    init(uid: String, title: String?, start: Date?, end: Date?, isWholeDay: Bool) {
+    init(uid: String, title: String?, start: Date?, end: Date?, isWholeDay: Bool, isDeleted: Bool = false) {
         self.uid = uid
         self.title = title
         self.start = start
         self.end = end
         self.isWholeDay = isWholeDay
+        self.isDeleted = isDeleted
     }
     
     init(appointment: RDAppointment) {
@@ -25,6 +27,7 @@ class RDAppointmentEditModel {
         self.start = appointment.start
         self.end = appointment.end
         self.isWholeDay = appointment.isWholeDay
+        self.isDeleted = appointment.isDeleted
     }
 }
 
@@ -44,13 +47,15 @@ struct RDAppointment {
     let end: Date?
     let isWholeDay: Bool
     let uid: String
+    let isDeleted: Bool
     
-    init(uid: String, title: String?, start: Date?, end: Date?, isWholeDay: Bool) {
+    init(uid: String, title: String?, start: Date?, end: Date?, isWholeDay: Bool, isDeleted: Bool = false) {
         self.uid = uid
         self.title = title
         self.start = start
         self.end = end
         self.isWholeDay = isWholeDay
+        self.isDeleted = isDeleted
     }
     
     init(editModel: RDAppointmentEditModel) {
@@ -59,6 +64,7 @@ struct RDAppointment {
         self.start = editModel.start
         self.end = editModel.end
         self.isWholeDay = editModel.isWholeDay
+        self.isDeleted = editModel.isDeleted
     }
     
     

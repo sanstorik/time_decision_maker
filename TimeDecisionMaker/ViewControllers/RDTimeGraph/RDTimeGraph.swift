@@ -59,6 +59,7 @@ class RDTimeGraph: UIView {
             heightConstant = 0
         }
         
+        view.summaryLabel.isHidden = heightConstant <= 50 * oneMinuteHeight
         view.topConstraint.constant = topConstant
         view.heightConstraint.constant = heightConstant
         view.setNeedsLayout()
@@ -83,6 +84,13 @@ class RDTimeGraph: UIView {
     func insertFreeInterval(_ view: RDGraphFreeIntervalView) {
         innerFreeIntervalViews.append(view)
         addSubview(view)
+    }
+    
+    
+    func removeDeletedAppointmentView(at index: Int) {
+        let view = innerAppointmentViews[index]
+        view.removeFromSuperview()
+        innerAppointmentViews.remove(at: index)
     }
     
     

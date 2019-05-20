@@ -154,6 +154,28 @@ extension UIView {
         view.heightAnchor.constraint(equalToConstant: height).isActive = true
         return view
     }
+    
+    
+    static func barButtonOverlayOfType(image: UIImage?, withTarget target: AnyObject?,
+                                       andSelector selector: Selector?) -> (UIView, UIImageView, UIButton) {
+        let size = 28
+        let holderView: UIView = UIView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: size, height: size)))
+        
+        let imageView: UIImageView = UIImageView(frame: holderView.frame)
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = image
+        
+        let buttonView: UIButton = UIButton(type: .custom)
+        buttonView.frame = holderView.frame
+        if target != nil && selector != nil {
+            buttonView.addTarget(target!, action: selector!, for: .touchUpInside)
+        }
+        
+        holderView.addSubview(imageView)
+        holderView.addSubview(buttonView)
+        
+        return (holderView, imageView, buttonView)
+    }
 }
 
 

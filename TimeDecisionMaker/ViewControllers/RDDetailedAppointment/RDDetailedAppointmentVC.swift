@@ -8,6 +8,7 @@ class RDDetailedAppointmentVC: RDDynamicCellTableViewVC {
     private(set) var editModel: RDAppointmentEditModel
     var isUpdatingSession: Bool { return true }
     var didChangeAppointment: ((RDAppointmentEditModel) -> Void)?
+    var didDeleteAppointment: ((RDAppointmentEditModel) -> Void)?
     
     override var navigationBarTitle: String? {
         return appointment.title
@@ -59,7 +60,9 @@ class RDDetailedAppointmentVC: RDDynamicCellTableViewVC {
         
         let fifthSection = [
             RDButtonData(type: .action(title: "Delete event")) { [unowned self] in
-                self.showAlert("ERROR-404", message: "Feature is not yet implemented")
+                self.editModel.isDeleted = true
+                self.didDeleteAppointment?(self.editModel)
+                self.navigationController?.popViewController(animated: true)
             }
         ]
         

@@ -48,7 +48,6 @@ class RDDatePickerCell: RDTemplateCell {
         datePicker.minimumDate = datePickerData.minimumDate()
         datePicker.maximumDate = datePickerData.maximumDate()
         datePicker.date = datePickerData.retrieve() ?? Date()
-        datePicker.minuteInterval = 5
         datePicker.locale = Locale(identifier: "en_GB")
         
         if let pickerMode = datePickerData.pickerMode {
@@ -56,6 +55,8 @@ class RDDatePickerCell: RDTemplateCell {
         } else {
             datePicker.datePickerMode = datePickerData.isWholeDay() ? .date : .dateAndTime
         }
+        
+        datePicker.minuteInterval = 5
     }
     
     

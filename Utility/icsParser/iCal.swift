@@ -54,8 +54,11 @@ public enum iCal {
                 continue
             }
             
+            /* Update existing appointments */
             if let match = appointments.first(where: { $0.uid == event.uid }) {
-                updatedComponents.append(fillEvent(event, match))
+                if !match.isDeleted {
+                    updatedComponents.append(fillEvent(event, match))
+                }
             } else {
                 updatedComponents.append(event)
             }
@@ -63,10 +66,11 @@ public enum iCal {
             existingUIDs.append(event.uid)
         }
         
-        appointments.forEach {
-            if !existingUIDs.contains($0.uid) {
-                let createdEvent = Event(uid: $0.uid, dtstamp: Date())
-                updatedComponents.append(fillEvent(createdEvent, $0))
+        /* Find user created appointments and populate a calendar with them */
+        for appointment in appointments where !appointment.isDeleted {
+            if !existingUIDs.contains(appointment.uid) {
+                let createdEvent = Event(uid: appointment.uid, dtstamp: Date())
+                updatedComponents.append(fillEvent(createdEvent, appointment))
             }
         }
         

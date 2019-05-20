@@ -37,6 +37,10 @@ class RDPersonAppoinmentsVC: CommonVC {
         setupViews()
         setupBackground(AppColors.messengerBackgroundColor)
         setupNavigationBar(title: navigationTitle, bgColor: AppColors.incomingMessageColor)
+        let graphModeButton = UIView.barButtonOverlayOfType(
+            image: UIImage(named: "graph_icon"),
+            withTarget: self, andSelector: #selector(didSelectGraphButton))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: graphModeButton.0)
     }
     
     
@@ -62,10 +66,21 @@ class RDPersonAppoinmentsVC: CommonVC {
     }
     
     
-    @objc private func didClickBookingButton() {
-        let bookingSettings = RDAppointmentSettingsVC(person: person, date: date)
-        navigationController?.pushViewController(bookingSettings, animated: true)
+    @objc private func didClickNewAppointmentButton() {
+        let appointmentSettings = RDAppointmentSettingsVC(person: person, date: date)
+        navigationController?.pushViewController(appointmentSettings, animated: true)
         bookingButton.runSelectColorAnimation()
+    }
+    
+    
+    @objc private func didSelectGraphButton() {
+        var settings = RDScheduledAppointmentSettings()
+        settings.duration = .greatestFiniteMagnitude
+        settings.date = date
+        
+        let joinedAppointments = Array(appointments.joined())
+        let graphVC = RDAppointmentTimeGraph(personsData: [(person, joinedAppointments)], settings: settings)
+        navigationController?.pushViewController(graphVC, animated: true)
     }
 }
 
@@ -86,7 +101,7 @@ extension RDPersonAppoinmentsVC: FullScreenTableViewHolder {
         bookingButton.bottomAnchor.constraint(equalTo: view.bottomSafeAnchorIOS11(self)).isActive = true
         bookingButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         bookingButton.backgroundColor = AppColors.incomingMessageColor
-        bookingButton.addTapClick(target: self, action: #selector(didClickBookingButton))
+        bookingButton.addTapClick(target: self, action: #selector(didClickNewAppointmentButton))
         
         let separator = UIView()
         separator.translatesAutoresizingMaskIntoConstraints = false
@@ -129,6 +144,10 @@ extension RDPersonAppoinmentsVC: UITableViewDelegate, UITableViewDataSource {
         
         let detailedAppointmentVC = RDDetailedAppointmentVC(appointments[indexPath.section][indexPath.row])
         detailedAppointmentVC.didChangeAppointment = { [weak self] in
+            self?.didUpdateAppointment($0, at: indexPath)
+        }
+        
+        detailedAppointmentVC.didDeleteAppointment = { [weak self] in
             self?.didUpdateAppointment($0, at: indexPath)
         }
         

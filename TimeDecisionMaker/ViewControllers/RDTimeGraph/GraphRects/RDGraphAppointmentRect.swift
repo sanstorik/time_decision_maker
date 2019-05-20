@@ -35,8 +35,8 @@ class RDGraphAppointmentView: RDGraphRect {
     }
     
     
-    private var labelSideConstraints: NSLayoutConstraint?
-    private let summaryLabel: UILabel = {
+    private var labelSideConstraints = [NSLayoutConstraint]()
+    let summaryLabel: UILabel = {
         let label = UILabel.defaultInit()
         label.textColor = UIColor.white
         label.font = UIFont.systemFont(ofSize: 14)
@@ -48,7 +48,7 @@ class RDGraphAppointmentView: RDGraphRect {
         let label = UILabel.defaultInit()
         label.textColor = AppColors.messengerUsernameColor
         label.font = UIFont.systemFont(ofSize: 14)
-        label.numberOfLines = 0
+        label.numberOfLines = 1
         return label
     }()
     
@@ -60,10 +60,11 @@ class RDGraphAppointmentView: RDGraphRect {
         addSubview(personNameLabel)
         
         let constraints = [
-            personNameLabel.centerXAnchor.constraint(equalTo: summaryLabel.centerXAnchor),
             personNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 5),
+            personNameLabel.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5, constant: 15),
             
-            summaryLabel.topAnchor.constraint(equalTo: personNameLabel.bottomAnchor, constant: 5)
+            summaryLabel.topAnchor.constraint(equalTo: personNameLabel.bottomAnchor, constant: 5),
+            summaryLabel.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5, constant: 15)
         ]
         
         addDetailedViewOnTap()
@@ -78,17 +79,23 @@ class RDGraphAppointmentView: RDGraphRect {
     
     
     private func updateLabelSideConstraint() {
-        labelSideConstraints?.isActive = false
+        labelSideConstraints.forEach { $0.isActive = false }
         
         if theme.textAlignment == .left {
-            labelSideConstraints = summaryLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10)
+            labelSideConstraints = [
+                summaryLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+                personNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10)
+            ]
         } else {
-            labelSideConstraints = summaryLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10)
+            labelSideConstraints = [
+                summaryLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+                personNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10)
+            ]
         }
         
-        bringSubviewToFront(summaryLabel)
+        personNameLabel.textAlignment = theme.textAlignment
         summaryLabel.textAlignment = theme.textAlignment
-        labelSideConstraints?.isActive = true
+        labelSideConstraints.forEach { $0.isActive = true }
     }
     
     
@@ -102,6 +109,12 @@ class RDGraphAppointmentView: RDGraphRect {
     @objc private func showDetailedView() {
         guard let _appointment = appointment else { return }
         let detailedVC = RDDetailedAppointmentVC(_appointment)
+        detailedVC.didDeleteAppointment = { [weak self] in
+            if let _person = self?.person {
+                self?.appointmentGraphDelegate?.didDeleteAppointment($0, person: _person)
+            }
+        }
+        
         detailedVC.didChangeAppointment = { [weak self] in
             if let _person = self?.person {
                 self?.appointmentGraphDelegate?.didChangeAppointment($0, person: _person)

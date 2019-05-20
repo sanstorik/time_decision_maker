@@ -9,6 +9,7 @@ protocol RDNavigation: class {
 protocol RDAppointmentGraphDelegate: class {
     func didSelectDateInterval(_ dateInterval: DateInterval, person: RDPerson)
     func didChangeAppointment(_ editModel: RDAppointmentEditModel, person: RDPerson)
+    func didDeleteAppointment(_ editModel: RDAppointmentEditModel, person: RDPerson)
 }
 
 
@@ -81,11 +82,11 @@ class RDAppointmentTimeGraph: CommonVC, RDNavigation, RDAppointmentGraphDelegate
             }
         }
         
-        /*let freeInterval = RDGraphFreeIntervalView(inside: graph)
+        let freeInterval = RDGraphFreeIntervalView(inside: graph)
         freeInterval.appointmentGraphDelegate = self
         freeInterval.navigationDelegate = self
-        freeInterval.dateInterval = DateInterval(start: Date(timeIntervalSince1970: 1556604000), duration: 60 * 60 * 3)
-        freeInterval.person = personsData[0].person*/
+        freeInterval.dateInterval = DateInterval(start: Date(timeIntervalSince1970: 1556604000 - 3600 * 5), duration: 60 * 60 * 2)
+        freeInterval.person = personsData[0].person
     }
     
     
@@ -109,7 +110,33 @@ class RDAppointmentTimeGraph: CommonVC, RDNavigation, RDAppointmentGraphDelegate
     }
     
     
-    func didSelectDateInterval(_ dateInterval: DateInterval, person: RDPerson) {
+    func didDeleteAppointment(_ editModel: RDAppointmentEditModel, person: RDPerson) {
+        let updatedAppointment = RDAppointment(editModel: editModel)
+        appointmentsManager.updateEvents(for: person, changing: [updatedAppointment])
         
+        if let deletedIndex = graph.innerAppointmentViews.firstIndex(where: { $0.appointment?.uid == editModel.uid }) {
+            graph.removeDeletedAppointmentView(at: deletedIndex)
+        }
+    }
+    
+    
+    func didSelectDateInterval(_ dateInterval: DateInterval, person: RDPerson) {
+        let eventCreationVC = RDAppointmentCreationVC(
+            RDAppointment(uid: UUID().uuidString, title: nil, start: dateInterval.start,
+                          end: dateInterval.start.addingTimeInterval(self.settings.duration), isWholeDay: false))
+        
+        eventCreationVC.didChangeAppointment = { [unowned self] in
+            let newAppointment = RDAppointment(editModel: $0)
+            self.appointmentsManager.updateEvents(for: person, changing: [newAppointment])
+            let appointmentView = RDGraphAppointmentView(inside: self.graph)
+            appointmentView.appointmentGraphDelegate = self
+            appointmentView.navigationDelegate = self
+            appointmentView.appointment = newAppointment
+            appointmentView.person = person
+            appointmentView.theme = .defaultTheme
+        }
+        
+        let navigationVC = UINavigationController(rootViewController: eventCreationVC)
+        self.present(navigationVC, animated: true)
     }
 }

@@ -186,5 +186,5 @@ struct AppColors {
     
     
     static let freeIntervalDateColor = UIColor(red: 155, green: 226, blue: 89).withAlphaComponent(0.2)
-    static let lightBlueColor = UIColor(red: 158, green: 234, blue: 255).withAlphaComponent(0.2)
+    static let lightBlueColor = UIColor(red: 158, green: 234, blue: 255).withAlphaComponent(0.4)
 }
