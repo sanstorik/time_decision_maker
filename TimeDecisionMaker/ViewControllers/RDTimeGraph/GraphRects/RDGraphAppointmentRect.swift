@@ -61,10 +61,10 @@ class RDGraphAppointmentView: RDGraphRect {
         
         let constraints = [
             personNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 5),
-            personNameLabel.widthAnchor.constraint(equalTo: widthAnchor),
+            personNameLabel.widthAnchor.constraint(equalTo: widthAnchor, constant: -10),
             
             summaryLabel.topAnchor.constraint(equalTo: personNameLabel.bottomAnchor, constant: 5),
-            summaryLabel.widthAnchor.constraint(equalTo: widthAnchor)
+            summaryLabel.widthAnchor.constraint(equalTo: widthAnchor, constant: -10)
         ]
         
         addDetailedViewOnTap()

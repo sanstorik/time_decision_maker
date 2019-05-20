@@ -69,11 +69,22 @@ class RDTimeGraph: UIView {
     func placeFreeIntervalView(_ view: RDGraphFreeIntervalView) {
         guard let dateInterval = view.dateInterval else { return }
         
-        let topConstant = appointmentStartingInsetFor(date: dateInterval.start)
         let maxConstant = zeroHourStartingHeight + 24 * oneHourHeight
-        view.topConstraint.constant = topConstant
-        view.heightConstraint.constant =
-            min(appointmentHeightFor(start: dateInterval.start, end: dateInterval.end), maxConstant - topConstant)
+        if dateInterval.start.sameDay(with: settings.date) {
+            let topConstant = appointmentStartingInsetFor(date: dateInterval.start)
+            view.topConstraint.constant = topConstant
+            view.heightConstraint.constant =
+                min(appointmentHeightFor(start: dateInterval.start, end: dateInterval.end), maxConstant - topConstant)
+        } else {
+            // then it started before and is taking place from the start of the day
+            if let dayStart = settings.date.changing(hour: 0, minute: 0, second: 0) {
+                view.topConstraint.constant = zeroHourStartingHeight
+                view.heightConstraint.constant =
+                    min(appointmentHeightFor(start: dayStart, end: dateInterval.end), maxConstant)
+                
+            }
+        }
+        
         
         view.setNeedsLayout()
     }
