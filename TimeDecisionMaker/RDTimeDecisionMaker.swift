@@ -26,9 +26,10 @@ class RDTimeDecisionMaker: NSObject {
         populateWithPersonAppointments(organizerPerson, intervals: &occupiedDateIntervals)
         populateWithPersonAppointments(attendeePerson, intervals: &occupiedDateIntervals)
         
-        return findDayFreeIntervalsFor(occupiedIntervals:
-            occupiedDateIntervals.sorted { $0.start < $1.start }
-            ).filter { $0.duration >= duration }
+        return findDayFreeIntervalsFor(
+            occupiedIntervals: occupiedDateIntervals.sorted { $0.start < $1.start },
+            expectedDuration: duration
+            )
     }
     
     
@@ -45,17 +46,20 @@ class RDTimeDecisionMaker: NSObject {
             
             if let _start = appointment.start, let _end = appointment.end {
                 let occupiedInterval = DateInterval(start: _start, end: _end)
-                
-                if intervals.first(where: { $0.contains(interval: occupiedInterval) }) == nil {
-                    intervals.removeAll { occupiedInterval.contains(interval: $0) }
-                    intervals.append(occupiedInterval)
-                }
+                intervals.append(occupiedInterval)
             }
         }
     }
     
     
-    private func findDayFreeIntervalsFor(occupiedIntervals: [DateInterval]) -> [DateInterval] {
+    private func findDayFreeIntervalsFor(
+        occupiedIntervals: [DateInterval],
+        expectedDuration duration: TimeInterval) -> [DateInterval] {
+        /**
+         *  Start date - first sorted day with HH:mm:ss set to 00:00:00
+         *  End date - last sorted day HH:mm:ss set to 23:59:59
+         *  28.04.18 00:00:00 - 30.04.18 23:59:59
+         */
         guard occupiedIntervals.count != 0,
             let dayStart = occupiedIntervals[0].start.changing(hour: 0, minute: 0, second: 0),
             let dayEnd = occupiedIntervals[occupiedIntervals.count - 1].end.changing(hour: 23, minute: 59, second: 59) else {
@@ -67,24 +71,22 @@ class RDTimeDecisionMaker: NSObject {
         
         for occupied in occupiedIntervals {
             if previousDate < occupied.start {
-                freeIntervals.append(DateInterval(start: previousDate, end: occupied.start))
+                let dt = DateInterval(start: previousDate, end: occupied.start)
+                if dt.duration >= duration {
+                    freeIntervals.append(dt)
+                }
             }
             
             previousDate = occupied.end
         }
         
         if previousDate <= dayEnd {
-            freeIntervals.append(DateInterval(start: previousDate, end: dayEnd))
+            let dt = DateInterval(start: previousDate, end: dayEnd)
+            if dt.duration >= duration {
+                freeIntervals.append(dt)
+            }
         }
         
         return freeIntervals
-    }
-}
-
-
-
-extension DateInterval {
-    func contains(interval other: DateInterval) -> Bool {
-        return start < other.start && end > other.end
     }
 }

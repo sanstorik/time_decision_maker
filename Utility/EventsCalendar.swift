@@ -28,8 +28,6 @@ class EventsCalendar: FSCalendar, ICalendar {
         
         appearance.weekdayTextColor = UIColor.white
         appearance.headerTitleColor = UIColor.white
-        
-        contentMode = .scaleAspectFit
     }
     
     
@@ -46,7 +44,6 @@ class EventsCalendar: FSCalendar, ICalendar {
     func reloadEventData() {
         reloadData()
     }
-    
     
     
     final func recalculateRowsHeight(for height: CGFloat) {
@@ -129,9 +126,7 @@ extension EventsCalendarDelegate {
 
 extension EventsCalendar: FSCalendarDataSource, FSCalendarDelegate , FSCalendarDelegateAppearance {
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        let timeSizeOffset = TimeInterval(exactly: NSTimeZone.local.secondsFromGMT()) ?? 0
-        let dateWithTimeZone = Date(timeInterval: timeSizeOffset, since: date)
-        eventsDelegate?.calendar(self, didSelect: dateWithTimeZone)
+        eventsDelegate?.calendar(self, didSelect: dateWithGMT(date))
     }
     
     
@@ -184,6 +179,12 @@ extension EventsCalendar: FSCalendarDataSource, FSCalendarDelegate , FSCalendarD
     
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleDefaultColorFor date: Date) -> UIColor? {
         return eventsDelegate?.calendar(self, titleDefaultColorFor: date)
+    }
+    
+    
+    private func dateWithGMT(_ date: Date) -> Date {
+        let timeSizeOffset = TimeInterval(exactly: NSTimeZone.local.secondsFromGMT()) ?? 0
+        return Date(timeInterval: timeSizeOffset, since: date)
     }
 }
 

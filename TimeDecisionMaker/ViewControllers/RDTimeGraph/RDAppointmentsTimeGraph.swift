@@ -110,7 +110,7 @@ class RDAppointmentTimeGraph: CommonVC, RDNavigation, RDAppointmentGraphDelegate
             setupFreeDatesSuggestions()
         }
     }
-    
+
     
     func didDeleteAppointment(_ editModel: RDAppointmentEditModel, person: RDPerson) {
         let updatedAppointment = RDAppointment(editModel: editModel)
@@ -138,6 +138,9 @@ class RDAppointmentTimeGraph: CommonVC, RDNavigation, RDAppointmentGraphDelegate
             appointmentView.appointment = newAppointment
             appointmentView.person = person
             appointmentView.theme = .defaultTheme
+            
+            self.graph.removeDatesSuggestions()
+            self.setupFreeDatesSuggestions()
         }
         
         let navigationVC = UINavigationController(rootViewController: eventCreationVC)
@@ -162,13 +165,23 @@ class RDAppointmentTimeGraph: CommonVC, RDNavigation, RDAppointmentGraphDelegate
                 let between = date.isBetween(from: $0.start, to: $0.end)
                 return sameDay || startingToday || endingToday || between
         }
-        
-        suggestedFreeDateIntervals.forEach {
+        if suggestedFreeDateIntervals.count == 0,
+            let startDate = self.settings.date.changing(hour: 0, minute: 0, second: 0),
+            let endDate = self.settings.date.changing(hour: 24, minute: 0, second: 0) {
+            
             let freeInterval = RDGraphFreeIntervalView(inside: graph)
             freeInterval.appointmentGraphDelegate = self
             freeInterval.navigationDelegate = self
-            freeInterval.dateInterval = $0
+            freeInterval.dateInterval = DateInterval(start: startDate, end: endDate)
             freeInterval.person = organizer
+        } else {
+            suggestedFreeDateIntervals.forEach {
+                let freeInterval = RDGraphFreeIntervalView(inside: graph)
+                freeInterval.appointmentGraphDelegate = self
+                freeInterval.navigationDelegate = self
+                freeInterval.dateInterval = $0
+                freeInterval.person = organizer
+            }
         }
     }
 }

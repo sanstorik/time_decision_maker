@@ -1,5 +1,14 @@
 import Foundation
 
+fileprivate let defaultCalendar: Foundation.Calendar = {
+    var calendar = Foundation.Calendar(identifier: .gregorian)
+    if let timeZone = TimeZone(secondsFromGMT: 0) {
+        calendar.timeZone = timeZone
+    }
+    return calendar
+}()
+
+
 fileprivate let microsecondsFormatter = MicrosecondPrecisionDateFormatter()
 fileprivate let dateFormatter: DateFormatter = {
     let formatter = DateFormatter()
@@ -92,7 +101,7 @@ extension NSDate {
     
     
     func sameDay(with date: Date) -> Bool {
-        return Foundation.Calendar.current.compare(self as Date, to: date, toGranularity: .day) == .orderedSame
+        return defaultCalendar.compare(self as Date, to: date, toGranularity: .day) == .orderedSame
     }
     
     
@@ -102,7 +111,7 @@ extension NSDate {
     
     
     func compareDay(to: Date) -> ComparisonResult {
-        return Foundation.Calendar.current.compare(self as Date, to: to, toGranularity: .day)
+        return defaultCalendar.compare(self as Date, to: to, toGranularity: .day)
     }
     
     
@@ -152,22 +161,30 @@ extension Date {
     }
     
     
-    func isBetween(from start: Date, to end: Date) -> Bool {
-        let comparisonResultWithStart = Foundation.Calendar.current.compare(self, to: start, toGranularity: .day)
-        let comparisonResultWithEnd = Foundation.Calendar.current.compare(self, to: end, toGranularity: .day)
+    func isBetween(from start: Date, to end: Date, useDefaultTimeZone: Bool = false) -> Bool {
+        let comparisonResultWithStart = useDefaultTimeZone ?
+            Foundation.Calendar.current.compare(self, to: start, toGranularity: .day)
+            :
+            defaultCalendar.compare(self, to: start, toGranularity: .day)
+        let comparisonResultWithEnd = useDefaultTimeZone ?
+            Foundation.Calendar.current.compare(self, to: end, toGranularity: .day)
+            :
+            defaultCalendar.compare(self, to: end, toGranularity: .day)
         
         return (comparisonResultWithStart == .orderedDescending || comparisonResultWithStart == .orderedSame)
             && (comparisonResultWithEnd == .orderedAscending || comparisonResultWithEnd == .orderedSame)
     }
     
     
-    func compareDay(to: Date) -> ComparisonResult {
-        return Foundation.Calendar.current.compare(self, to: to as Date, toGranularity: .day)
+    func compareDay(to: Date, useDefaultTimeZone: Bool = false) -> ComparisonResult {
+        return useDefaultTimeZone ?
+            Foundation.Calendar.current.compare(self, to: to, toGranularity: .day) :
+            defaultCalendar.compare(self, to: to, toGranularity: .day)
     }
     
     
-    func sameDay(with date: Date) -> Bool {
-        return compareDay(to: date) == .orderedSame
+    func sameDay(with date: Date, useDefaultTimeZone: Bool = false) -> Bool {
+        return compareDay(to: date, useDefaultTimeZone: useDefaultTimeZone) == .orderedSame
     }
     
     
@@ -205,16 +222,11 @@ extension Date {
     
     
     func changing(hour: Int, minute: Int, second: Int) -> Date? {
-        if let calendar = NSCalendar(identifier: .gregorian), let timeZone = TimeZone(secondsFromGMT: 0) {
-            calendar.timeZone = timeZone
-            var components = calendar.components([.year, .month, .day, .hour, .minute, .second], from: self)
-            components.hour = hour
-            components.minute = minute
-            components.second = second
-            return calendar.date(from: components)
-        } else {
-            return nil
-        }
+        var components = defaultCalendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: self)
+        components.hour = hour
+        components.minute = minute
+        components.second = second
+        return defaultCalendar.date(from: components)
     }
 }
 
