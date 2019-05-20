@@ -43,7 +43,7 @@
 		60DDA7BB2292918D00A42123 /* RDGraphFreeTimeInvervalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DDA7BA2292918D00A42123 /* RDGraphFreeTimeInvervalView.swift */; };
 		60DDA7BE2292943000A42123 /* RDGraphRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DDA7BD2292943000A42123 /* RDGraphRect.swift */; };
 		748F59A42270681B00B88B7D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748F59A32270681B00B88B7D /* AppDelegate.swift */; };
-		748F59AB2270681D00B88B7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 748F59AA2270681D00B88B7D /* Assets.xcassets */; };
+		748F59AB2270681D00B88B7D /* a.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 748F59AA2270681D00B88B7D /* a.xcassets */; };
 		748F59AE2270681D00B88B7D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 748F59AC2270681D00B88B7D /* LaunchScreen.storyboard */; };
 		748F59B92270681D00B88B7D /* TimeDecisionMakerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748F59B82270681D00B88B7D /* TimeDecisionMakerTests.swift */; };
 		748F59CA22706C6600B88B7D /* A.ics in Resources */ = {isa = PBXBuildFile; fileRef = 748F59C922706C6600B88B7D /* A.ics */; };
@@ -116,7 +116,7 @@
 		60DDA7BD2292943000A42123 /* RDGraphRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RDGraphRect.swift; sourceTree = "<group>"; };
 		748F59A02270681B00B88B7D /* TimeDecisionMaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeDecisionMaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		748F59A32270681B00B88B7D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		748F59AA2270681D00B88B7D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		748F59AA2270681D00B88B7D /* a.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = a.xcassets; sourceTree = "<group>"; };
 		748F59AD2270681D00B88B7D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		748F59AF2270681D00B88B7D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		748F59B42270681D00B88B7D /* TimeDecisionMakerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TimeDecisionMakerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -347,7 +347,7 @@
 		748F59C52270686400B88B7D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				748F59AA2270681D00B88B7D /* Assets.xcassets */,
+				748F59AA2270681D00B88B7D /* a.xcassets */,
 				748F59AF2270681D00B88B7D /* Info.plist */,
 			);
 			path = Resources;
@@ -501,7 +501,7 @@
 			files = (
 				748F59AE2270681D00B88B7D /* LaunchScreen.storyboard in Resources */,
 				748F59CE22706EB300B88B7D /* B.ics in Resources */,
-				748F59AB2270681D00B88B7D /* Assets.xcassets in Resources */,
+				748F59AB2270681D00B88B7D /* a.xcassets in Resources */,
 				748F59CA22706C6600B88B7D /* A.ics in Resources */,
 				89153F772291AEC50000DF98 /* C.ics in Resources */,
 			);
