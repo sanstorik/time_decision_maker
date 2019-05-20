@@ -72,6 +72,7 @@ class RDDatePickerCell: RDTemplateCell {
     
     
     @objc private func dateDidChange() {
+        print(datePicker.date, datePicker.date.readableTimeString())
         (data as? RDDatePickerData)?.save(datePicker.date)
     }
 }

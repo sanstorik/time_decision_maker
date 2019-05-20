@@ -28,6 +28,10 @@ class EventsCalendar: FSCalendar, ICalendar {
         
         appearance.weekdayTextColor = UIColor.white
         appearance.headerTitleColor = UIColor.white
+        
+        setValue(NSTimeZone(forSecondsFromGMT: 0), forKey: "_timeZone")
+        setValue(NSTimeZone(forSecondsFromGMT: 0), forKey: "timeZone")
+        perform(Selector(("invalidateDateTools")))
     }
     
     
@@ -131,12 +135,12 @@ extension EventsCalendar: FSCalendarDataSource, FSCalendarDelegate , FSCalendarD
     
     
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
-        return eventsDelegate?.calendar(self, numberOfEventsFor: date) ?? 0
+        return eventsDelegate?.calendar(self, numberOfEventsFor: dateWithGMT(date)) ?? 0
     }
     
     
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, eventDefaultColorsFor date: Date) -> [UIColor]? {
-        return eventsDelegate?.calendar(self, eventDefaultColorsFor: date)
+        return eventsDelegate?.calendar(self, eventDefaultColorsFor: dateWithGMT(date))
     }
     
     

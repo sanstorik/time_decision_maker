@@ -70,17 +70,7 @@ class RDCalendarVC: CommonVC {
     
     
     private func filterAppointmentsBy(date: Date) -> [RDAppointment] {
-        return appointments.filter {
-            if let start = $0.start, let end = $0.end {
-                return date.isBetween(from: start, to: end, useDefaultTimeZone: true)
-            } else if let start = $0.start {
-                return date.compareDay(to: start, useDefaultTimeZone: true) == .orderedSame
-            } else if let end = $0.end {
-                return date.compareDay(to: end, useDefaultTimeZone: true) == .orderedSame
-            }
-            
-            return false
-        }
+        return appointments.filterByDate(date)
     }
     
     

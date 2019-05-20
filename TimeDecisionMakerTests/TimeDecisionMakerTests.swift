@@ -25,7 +25,7 @@ class TimeDecisionMakerTests: XCTestCase {
                                                          duration: 24 * 60 * 60))
     }
 
-    // now this test failing, it should not fail
+    
     func testAtLeastOneHourAppointmentExist() {
         let decisionMaker = RDTimeDecisionMaker()
         guard let orgPath = organizerFilePath, let attendeePath = attendeeFilePath else {
