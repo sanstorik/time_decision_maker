@@ -5,11 +5,11 @@ import UIKit
 class RDGraphAppointmentView: RDGraphRect {
     struct Theme {
         let backgroundColor: UIColor
-        let textAlignment: NSTextAlignment
+        let mode: Mode
         
         static let defaultTheme = Theme(
             backgroundColor: AppColors.labelOrderFillerColor.withAlphaComponent(0.1),
-            textAlignment: .left)
+            mode: .full)
     }
     
     var theme: Theme = .defaultTheme {
@@ -61,10 +61,10 @@ class RDGraphAppointmentView: RDGraphRect {
         
         let constraints = [
             personNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 5),
-            personNameLabel.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5, constant: 15),
+            personNameLabel.widthAnchor.constraint(equalTo: widthAnchor),
             
             summaryLabel.topAnchor.constraint(equalTo: personNameLabel.bottomAnchor, constant: 5),
-            summaryLabel.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5, constant: 15)
+            summaryLabel.widthAnchor.constraint(equalTo: widthAnchor)
         ]
         
         addDetailedViewOnTap()
@@ -79,22 +79,24 @@ class RDGraphAppointmentView: RDGraphRect {
     
     
     private func updateLabelSideConstraint() {
+        self.mode = theme.mode
         labelSideConstraints.forEach { $0.isActive = false }
         
-        if theme.textAlignment == .left {
-            labelSideConstraints = [
-                summaryLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-                personNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10)
-            ]
-        } else {
+        switch theme.mode {
+        case .right:
             labelSideConstraints = [
                 summaryLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
                 personNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10)
             ]
+        default:
+            labelSideConstraints = [
+                summaryLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+                personNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10)
+            ]
         }
         
-        personNameLabel.textAlignment = theme.textAlignment
-        summaryLabel.textAlignment = theme.textAlignment
+        personNameLabel.textAlignment = theme.mode == .right ? .right : .left
+        summaryLabel.textAlignment = theme.mode == .right ? .right : .left
         labelSideConstraints.forEach { $0.isActive = true }
     }
     

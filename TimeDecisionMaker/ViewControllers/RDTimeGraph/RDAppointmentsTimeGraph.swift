@@ -77,9 +77,12 @@ class RDAppointmentTimeGraph: CommonVC, RDNavigation, RDAppointmentGraphDelegate
                 appointmentView.navigationDelegate = self
                 appointmentView.appointment = appointment
                 appointmentView.person = personData.person
-                appointmentView.theme = i % 2 == 0 ?
-                    .defaultTheme : RDGraphAppointmentView.Theme(backgroundColor:
-                        AppColors.lightBlueColor, textAlignment: .right)
+                
+                let isSender = i % 2 == 0
+                let bgColor = isSender ? AppColors.labelOrderFillerColor.withAlphaComponent(0.1) : AppColors.lightBlueColor
+                let mode: RDGraphRect.Mode = personsData.count == 1 ? .full : (isSender ? .left : .right)
+                let theme = RDGraphAppointmentView.Theme(backgroundColor: bgColor, mode: mode)
+                appointmentView.theme = theme
             }
         }
         

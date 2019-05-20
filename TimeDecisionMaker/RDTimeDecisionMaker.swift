@@ -19,8 +19,8 @@ class RDTimeDecisionMaker: NSObject {
                              attendeeICS: String,
                              duration: TimeInterval) -> [DateInterval] {
         let appoinmentsManager = RDAppointmentsManager()
-        let organizerPerson = appoinmentsManager.loadEvents(for: RDPerson(appointmentsFilePath: organizerICS))
-        let attendeePerson = appoinmentsManager.loadEvents(for: RDPerson(appointmentsFilePath: attendeeICS))
+        let organizerPerson = appoinmentsManager.loadEvents(from: organizerICS)
+        let attendeePerson = appoinmentsManager.loadEvents(from: attendeeICS)
         
         var occupiedDateIntervals = [DateInterval]()
         populateWithPersonAppointments(organizerPerson, intervals: &occupiedDateIntervals)
