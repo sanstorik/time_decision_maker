@@ -89,7 +89,7 @@ class RDAppointmentSettingsVC: RDDynamicCellTableViewVC {
                     let firstData = self.availablePersons.first { $0.0.appointmentsFilePath == _selectedPerson.appointmentsFilePath }
                     
                     guard let _firstData = firstData else { return }
-                    let timeGraph = RDAppointmentTimeGraph(personsData: [_firstData, self.currentPersonData], settings: self.settings)
+                    let timeGraph = RDAppointmentTimeGraph(personsData: [self.currentPersonData, _firstData], settings: self.settings)
                     self.navigationController?.pushViewController(timeGraph, animated: true)
                 } else {
                     self.showAlert("Missing data", message: "A person must be selected")

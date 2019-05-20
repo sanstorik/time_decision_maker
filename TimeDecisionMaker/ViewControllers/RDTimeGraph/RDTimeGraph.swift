@@ -69,8 +69,12 @@ class RDTimeGraph: UIView {
     func placeFreeIntervalView(_ view: RDGraphFreeIntervalView) {
         guard let dateInterval = view.dateInterval else { return }
         
-        view.topConstraint.constant = appointmentStartingInsetFor(date: dateInterval.start)
-        view.heightConstraint.constant = appointmentHeightFor(start: dateInterval.start, end: dateInterval.end)
+        let topConstant = appointmentStartingInsetFor(date: dateInterval.start)
+        let maxConstant = zeroHourStartingHeight + 24 * oneHourHeight
+        view.topConstraint.constant = topConstant
+        view.heightConstraint.constant =
+            min(appointmentHeightFor(start: dateInterval.start, end: dateInterval.end), maxConstant - topConstant)
+        
         view.setNeedsLayout()
     }
     
@@ -91,6 +95,15 @@ class RDTimeGraph: UIView {
         let view = innerAppointmentViews[index]
         view.removeFromSuperview()
         innerAppointmentViews.remove(at: index)
+    }
+    
+    
+    final func removeDatesSuggestions() {
+        innerFreeIntervalViews.forEach {
+            $0.removeFromSuperview()
+        }
+        
+        innerFreeIntervalViews = []
     }
     
     
@@ -116,11 +129,15 @@ class RDTimeGraph: UIView {
     
     
     private func appointmentHeightFor(start: Date, end: Date) -> CGFloat {
-        let (hour, minute) = start.retrieveHoursAndMinutes()
-        let (endHour, endMinute) = end.retrieveHoursAndMinutes()
-        
-        let durationInMinutes = (endHour * 60 + endMinute) - (hour * 60 + minute)
-        return CGFloat(durationInMinutes) * oneMinuteHeight
+        if start.sameDay(with: end) {
+            let (hour, minute) = start.retrieveHoursAndMinutes()
+            let (endHour, endMinute) = end.retrieveHoursAndMinutes()
+            
+            let durationInMinutes = (endHour * 60 + endMinute) - (hour * 60 + minute)
+            return CGFloat(durationInMinutes) * oneMinuteHeight
+        } else {
+            return CGFloat(end.timeIntervalSince(start)) * oneMinuteHeight
+        }
     }
     
     

@@ -71,6 +71,7 @@ class RDAppointmentTimeGraph: CommonVC, RDNavigation, RDAppointmentGraphDelegate
         for (i, personData) in self.personsData.enumerated() {
             if i == 4 { break }
             
+            let isSender = i % 2 == 0
             for appointment in personData.appointments {
                 let appointmentView = RDGraphAppointmentView(inside: graph)
                 appointmentView.appointmentGraphDelegate = self
@@ -78,7 +79,6 @@ class RDAppointmentTimeGraph: CommonVC, RDNavigation, RDAppointmentGraphDelegate
                 appointmentView.appointment = appointment
                 appointmentView.person = personData.person
                 
-                let isSender = i % 2 == 0
                 let bgColor = isSender ? AppColors.labelOrderFillerColor.withAlphaComponent(0.1) : AppColors.lightBlueColor
                 let mode: RDGraphRect.Mode = personsData.count == 1 ? .full : (isSender ? .left : .right)
                 let theme = RDGraphAppointmentView.Theme(backgroundColor: bgColor, mode: mode)
@@ -86,20 +86,7 @@ class RDAppointmentTimeGraph: CommonVC, RDNavigation, RDAppointmentGraphDelegate
             }
         }
         
-        if personsData.count == 2 {
-            let organizer = personsData[0].person
-            let attendee = personsData[1].person
-            let suggestedFreeDateIntervals = timeDecisionMaker.suggestAppointmentsFor(
-                organizer: organizer, attended: attendee, duration: settings.duration)
-            
-            suggestedFreeDateIntervals.forEach {
-                let freeInterval = RDGraphFreeIntervalView(inside: graph)
-                freeInterval.appointmentGraphDelegate = self
-                freeInterval.navigationDelegate = self
-                freeInterval.dateInterval = $0
-                freeInterval.person = organizer
-            }
-        }
+        setupFreeDatesSuggestions()
     }
     
     
@@ -119,6 +106,8 @@ class RDAppointmentTimeGraph: CommonVC, RDNavigation, RDAppointmentGraphDelegate
         
         if let viewToBeUpdated = graph.innerAppointmentViews.first(where: { $0.appointment?.uid == editModel.uid }) {
             viewToBeUpdated.appointment = updatedAppointment
+            graph.removeDatesSuggestions()
+            setupFreeDatesSuggestions()
         }
     }
     
@@ -129,6 +118,8 @@ class RDAppointmentTimeGraph: CommonVC, RDNavigation, RDAppointmentGraphDelegate
         
         if let deletedIndex = graph.innerAppointmentViews.firstIndex(where: { $0.appointment?.uid == editModel.uid }) {
             graph.removeDeletedAppointmentView(at: deletedIndex)
+            graph.removeDatesSuggestions()
+            setupFreeDatesSuggestions()
         }
     }
     
@@ -151,5 +142,33 @@ class RDAppointmentTimeGraph: CommonVC, RDNavigation, RDAppointmentGraphDelegate
         
         let navigationVC = UINavigationController(rootViewController: eventCreationVC)
         self.present(navigationVC, animated: true)
+    }
+    
+    
+    private func setupFreeDatesSuggestions() {
+        guard personsData.count == 2 else {
+            return
+        }
+        
+        let organizer = personsData[0].person
+        let attendee = personsData[1].person
+        let suggestedFreeDateIntervals = timeDecisionMaker.suggestAppointmentsFor(
+            organizer: organizer, attended: attendee, duration: settings.duration)
+            .filter {
+                let date = self.settings.date
+                let sameDay = $0.start.sameDay(with: date) && $0.end.sameDay(with: date)
+                let startingToday = $0.start.sameDay(with: date) && !$0.end.sameDay(with: date)
+                let endingToday = !$0.start.sameDay(with: date) && $0.end.sameDay(with: date)
+                let between = date.isBetween(from: $0.start, to: $0.end)
+                return sameDay || startingToday || endingToday || between
+        }
+        
+        suggestedFreeDateIntervals.forEach {
+            let freeInterval = RDGraphFreeIntervalView(inside: graph)
+            freeInterval.appointmentGraphDelegate = self
+            freeInterval.navigationDelegate = self
+            freeInterval.dateInterval = $0
+            freeInterval.person = organizer
+        }
     }
 }

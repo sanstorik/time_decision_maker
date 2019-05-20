@@ -202,6 +202,20 @@ extension Date {
         formatter.timeZone = TimeZone(secondsFromGMT: 0)
         return formatter.date(from: Date.stringFromTimeInterval(interval: timeInterval))
     }
+    
+    
+    func changing(hour: Int, minute: Int, second: Int) -> Date? {
+        if let calendar = NSCalendar(identifier: .gregorian), let timeZone = TimeZone(secondsFromGMT: 0) {
+            calendar.timeZone = timeZone
+            var components = calendar.components([.year, .month, .day, .hour, .minute, .second], from: self)
+            components.hour = hour
+            components.minute = minute
+            components.second = second
+            return calendar.date(from: components)
+        } else {
+            return nil
+        }
+    }
 }
 
 
