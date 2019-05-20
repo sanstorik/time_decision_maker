@@ -14,6 +14,7 @@ class RDTimeGraph: UIView {
     let settings: RDScheduledAppointmentSettings
     
     private(set) var innerAppointmentViews = [RDGraphAppointmentView]()
+    private(set) var innerFreeIntervalViews = [RDGraphFreeIntervalView]()
     
     init(settings: RDScheduledAppointmentSettings) {
         self.settings = settings
@@ -64,8 +65,23 @@ class RDTimeGraph: UIView {
     }
     
     
+    func placeFreeIntervalView(_ view: RDGraphFreeIntervalView) {
+        guard let dateInterval = view.dateInterval else { return }
+        
+        view.topConstraint.constant = appointmentStartingInsetFor(date: dateInterval.start)
+        view.heightConstraint.constant = appointmentHeightFor(start: dateInterval.start, end: dateInterval.end)
+        view.setNeedsLayout()
+    }
+    
+    
     func insertAppointment(_ view: RDGraphAppointmentView) {
         innerAppointmentViews.append(view)
+        addSubview(view)
+    }
+    
+    
+    func insertFreeInterval(_ view: RDGraphFreeIntervalView) {
+        innerFreeIntervalViews.append(view)
         addSubview(view)
     }
     

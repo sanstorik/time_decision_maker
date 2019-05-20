@@ -7,6 +7,7 @@ protocol RDNavigation: class {
 }
 
 protocol RDAppointmentGraphDelegate: class {
+    func didSelectDateInterval(_ dateInterval: DateInterval, person: RDPerson)
     func didChangeAppointment(_ editModel: RDAppointmentEditModel, person: RDPerson)
 }
 
@@ -64,13 +65,27 @@ class RDAppointmentTimeGraph: CommonVC, RDNavigation, RDAppointmentGraphDelegate
         graph.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
         graph.createHourLines(linkedTo: scrollView.bottomAnchor)
         
-        self.personsData[0].appointments.forEach {
-            let appointmentView = RDGraphAppointmentView(inside: graph)
-            appointmentView.appointmentGraphDelegate = self
-            appointmentView.navigationDelegate = self
-            appointmentView.appointment = $0
-            appointmentView.person = personsData[0].person
+        
+        for (i, personData) in self.personsData.enumerated() {
+            if i == 4 { break }
+            
+            for appointment in personData.appointments {
+                let appointmentView = RDGraphAppointmentView(inside: graph)
+                appointmentView.appointmentGraphDelegate = self
+                appointmentView.navigationDelegate = self
+                appointmentView.appointment = appointment
+                appointmentView.person = personData.person
+                appointmentView.theme = i % 2 == 0 ?
+                    .defaultTheme : RDGraphAppointmentView.Theme(backgroundColor:
+                        AppColors.lightBlueColor, textAlignment: .right)
+            }
         }
+        
+        /*let freeInterval = RDGraphFreeIntervalView(inside: graph)
+        freeInterval.appointmentGraphDelegate = self
+        freeInterval.navigationDelegate = self
+        freeInterval.dateInterval = DateInterval(start: Date(timeIntervalSince1970: 1556604000), duration: 60 * 60 * 3)
+        freeInterval.person = personsData[0].person*/
     }
     
     
@@ -91,5 +106,10 @@ class RDAppointmentTimeGraph: CommonVC, RDNavigation, RDAppointmentGraphDelegate
         if let viewToBeUpdated = graph.innerAppointmentViews.first(where: { $0.appointment?.uid == editModel.uid }) {
             viewToBeUpdated.appointment = updatedAppointment
         }
+    }
+    
+    
+    func didSelectDateInterval(_ dateInterval: DateInterval, person: RDPerson) {
+        
     }
 }

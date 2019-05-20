@@ -40,8 +40,9 @@
 		60DDA7B522904F7C00A42123 /* RDTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DDA7B422904F7C00A42123 /* RDTextFieldCell.swift */; };
 		60DDA7B7229057C900A42123 /* LabeledSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DDA7B6229057C900A42123 /* LabeledSwitch.swift */; };
 		60DDA7B92290582B00A42123 /* RDBooleanCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DDA7B82290582B00A42123 /* RDBooleanCell.swift */; };
+		60DDA7BB2292918D00A42123 /* RDGraphFreeTimeInvervalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DDA7BA2292918D00A42123 /* RDGraphFreeTimeInvervalView.swift */; };
+		60DDA7BE2292943000A42123 /* RDGraphRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DDA7BD2292943000A42123 /* RDGraphRect.swift */; };
 		748F59A42270681B00B88B7D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748F59A32270681B00B88B7D /* AppDelegate.swift */; };
-		748F59A62270681B00B88B7D /* RDDecisionMakerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748F59A52270681B00B88B7D /* RDDecisionMakerVC.swift */; };
 		748F59AB2270681D00B88B7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 748F59AA2270681D00B88B7D /* Assets.xcassets */; };
 		748F59AE2270681D00B88B7D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 748F59AC2270681D00B88B7D /* LaunchScreen.storyboard */; };
 		748F59B92270681D00B88B7D /* TimeDecisionMakerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748F59B82270681D00B88B7D /* TimeDecisionMakerTests.swift */; };
@@ -62,7 +63,6 @@
 		89D222A72290949B007AC387 /* DoubleSidedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D222A62290949B007AC387 /* DoubleSidedLabel.swift */; };
 		89D222A922909CF3007AC387 /* RDDatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D222A822909CF3007AC387 /* RDDatePickerCell.swift */; };
 		89D222AB2290B411007AC387 /* RDButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D222AA2290B411007AC387 /* RDButtonCell.swift */; };
-		89D222AD2290D0F3007AC387 /* LaunchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D222AC2290D0F3007AC387 /* LaunchVC.swift */; };
 		89EEF8592291F8AD00C0E0B0 /* RDGraphHourLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89EEF8582291F8AD00C0E0B0 /* RDGraphHourLine.swift */; };
 		89EEF85B2291F8DB00C0E0B0 /* RDGraphAppointmentRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89EEF85A2291F8DB00C0E0B0 /* RDGraphAppointmentRect.swift */; };
 		89EEF85D2291F94C00C0E0B0 /* RDTimeGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89EEF85C2291F94C00C0E0B0 /* RDTimeGraph.swift */; };
@@ -112,9 +112,10 @@
 		60DDA7B422904F7C00A42123 /* RDTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RDTextFieldCell.swift; sourceTree = "<group>"; };
 		60DDA7B6229057C900A42123 /* LabeledSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabeledSwitch.swift; sourceTree = "<group>"; };
 		60DDA7B82290582B00A42123 /* RDBooleanCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RDBooleanCell.swift; sourceTree = "<group>"; };
+		60DDA7BA2292918D00A42123 /* RDGraphFreeTimeInvervalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RDGraphFreeTimeInvervalView.swift; sourceTree = "<group>"; };
+		60DDA7BD2292943000A42123 /* RDGraphRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RDGraphRect.swift; sourceTree = "<group>"; };
 		748F59A02270681B00B88B7D /* TimeDecisionMaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeDecisionMaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		748F59A32270681B00B88B7D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		748F59A52270681B00B88B7D /* RDDecisionMakerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RDDecisionMakerVC.swift; sourceTree = "<group>"; };
 		748F59AA2270681D00B88B7D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		748F59AD2270681D00B88B7D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		748F59AF2270681D00B88B7D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -138,7 +139,6 @@
 		89D222A62290949B007AC387 /* DoubleSidedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleSidedLabel.swift; sourceTree = "<group>"; };
 		89D222A822909CF3007AC387 /* RDDatePickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RDDatePickerCell.swift; sourceTree = "<group>"; };
 		89D222AA2290B411007AC387 /* RDButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RDButtonCell.swift; sourceTree = "<group>"; };
-		89D222AC2290D0F3007AC387 /* LaunchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchVC.swift; sourceTree = "<group>"; };
 		89EEF8582291F8AD00C0E0B0 /* RDGraphHourLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RDGraphHourLine.swift; sourceTree = "<group>"; };
 		89EEF85A2291F8DB00C0E0B0 /* RDGraphAppointmentRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RDGraphAppointmentRect.swift; sourceTree = "<group>"; };
 		89EEF85C2291F94C00C0E0B0 /* RDTimeGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RDTimeGraph.swift; sourceTree = "<group>"; };
@@ -269,6 +269,16 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		60DDA7BC2292941000A42123 /* GraphRects */ = {
+			isa = PBXGroup;
+			children = (
+				60DDA7BD2292943000A42123 /* RDGraphRect.swift */,
+				89EEF85A2291F8DB00C0E0B0 /* RDGraphAppointmentRect.swift */,
+				60DDA7BA2292918D00A42123 /* RDGraphFreeTimeInvervalView.swift */,
+			);
+			path = GraphRects;
+			sourceTree = "<group>";
+		};
 		748F59972270681B00B88B7D = {
 			isa = PBXGroup;
 			children = (
@@ -316,7 +326,6 @@
 			isa = PBXGroup;
 			children = (
 				748F59AC2270681D00B88B7D /* LaunchScreen.storyboard */,
-				89D222AC2290D0F3007AC387 /* LaunchVC.swift */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -328,7 +337,6 @@
 				89153F6C22918EC60000DF98 /* RDDynamicCellTableView */,
 				60DDA7B022904F3600A42123 /* RDDetailedAppointment */,
 				6064A550228FED0400E54AB8 /* Common */,
-				748F59A52270681B00B88B7D /* RDDecisionMakerVC.swift */,
 				6064A54E228FECB700E54AB8 /* RDCalendarVC.swift */,
 				60DDA7AA22901E1900A42123 /* RDPersonAppointmentsVC.swift */,
 				89153F6D229191BF0000DF98 /* RDAppointmentSettingsVC.swift */,
@@ -380,9 +388,9 @@
 		89EEF8572291F88200C0E0B0 /* RDTimeGraph */ = {
 			isa = PBXGroup;
 			children = (
+				60DDA7BC2292941000A42123 /* GraphRects */,
 				89153F7C2291C8B20000DF98 /* RDAppointmentsTimeGraph.swift */,
 				89EEF8582291F8AD00C0E0B0 /* RDGraphHourLine.swift */,
-				89EEF85A2291F8DB00C0E0B0 /* RDGraphAppointmentRect.swift */,
 				89EEF85C2291F94C00C0E0B0 /* RDTimeGraph.swift */,
 			);
 			path = RDTimeGraph;
@@ -596,14 +604,13 @@
 				89D222A322909340007AC387 /* RDDateLabelCell.swift in Sources */,
 				6064A552228FED1B00E54AB8 /* CommonVC.swift in Sources */,
 				60DC418B228FF4940008DB8F /* Parser.swift in Sources */,
+				60DDA7BB2292918D00A42123 /* RDGraphFreeTimeInvervalView.swift in Sources */,
 				60DDA7B322904F5A00A42123 /* RDTemplateCell.swift in Sources */,
 				89153F6B22918EBC0000DF98 /* RDDynamicCellTableViewVC.swift in Sources */,
 				60DC4190228FF4940008DB8F /* NSDateExtension.swift in Sources */,
-				89D222AD2290D0F3007AC387 /* LaunchVC.swift in Sources */,
 				60DC4192228FF4940008DB8F /* DeviceSizesExtensions.swift in Sources */,
 				60DDA7AB22901E1900A42123 /* RDPersonAppointmentsVC.swift in Sources */,
 				60DC418C228FF4940008DB8F /* CalendarComponent.swift in Sources */,
-				748F59A62270681B00B88B7D /* RDDecisionMakerVC.swift in Sources */,
 				89153F7522919BD20000DF98 /* RDOptionPicker.swift in Sources */,
 				60DDA7B522904F7C00A42123 /* RDTextFieldCell.swift in Sources */,
 				89153F73229194FB0000DF98 /* RDPickerHolderData.swift in Sources */,
@@ -629,6 +636,7 @@
 				60DDA7B92290582B00A42123 /* RDBooleanCell.swift in Sources */,
 				89153F6E229191BF0000DF98 /* RDAppointmentSettingsVC.swift in Sources */,
 				89EEF85B2291F8DB00C0E0B0 /* RDGraphAppointmentRect.swift in Sources */,
+				60DDA7BE2292943000A42123 /* RDGraphRect.swift in Sources */,
 				89D222AB2290B411007AC387 /* RDButtonCell.swift in Sources */,
 				60DC4195228FF4940008DB8F /* UIExtensions.swift in Sources */,
 				60DC4194228FF4940008DB8F /* StringExtension.swift in Sources */,

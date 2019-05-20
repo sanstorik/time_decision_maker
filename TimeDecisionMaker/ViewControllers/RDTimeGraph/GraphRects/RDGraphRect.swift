@@ -1,27 +1,9 @@
 
+
 import UIKit
 
 
-class RDGraphAppointmentView: UIView {
-    var person: RDPerson?
-    var appointment: RDAppointment? {
-        didSet {
-            if let _appointment = appointment {
-                graph?.placeAppointmentView(self)
-                summaryLabel.text = _appointment.title
-            }
-        }
-    }
-    
-    
-    private let summaryLabel: UILabel = {
-        let label = UILabel.defaultInit()
-        label.textColor = UIColor.white
-        label.font = UIFont.systemFont(ofSize: 14)
-        return label
-    }()
-    
-    
+class RDGraphRect: UIView {
     private let leftSeparator: UIView = {
         let line = UIView()
         line.translatesAutoresizingMaskIntoConstraints = false
@@ -32,7 +14,7 @@ class RDGraphAppointmentView: UIView {
     
     weak var appointmentGraphDelegate: RDAppointmentGraphDelegate?
     weak var navigationDelegate: RDNavigation?
-    private weak var graph: RDTimeGraph?
+    private(set) weak var graph: RDTimeGraph?
     private(set) var topConstraint: NSLayoutConstraint!
     private(set) var heightConstraint: NSLayoutConstraint!
     
@@ -40,24 +22,21 @@ class RDGraphAppointmentView: UIView {
     init(inside graph: RDTimeGraph) {
         self.graph = graph
         super.init(frame: .zero)
-        commonInit()
+        setupViews()
     }
     
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError()
+        super.init(coder: aDecoder)
     }
     
     
-    private func commonInit() {
-        backgroundColor = AppColors.labelOrderFillerColor.withAlphaComponent(0.1)
+    open func setupViews() {
         translatesAutoresizingMaskIntoConstraints = false
         
         guard let _graph = graph else { return }
         addSubview(leftSeparator)
-        addSubview(summaryLabel)
-        
-        _graph.insertAppointment(self)
+        addSubviewToTheGraph(_graph)
         self.heightConstraint = heightAnchor.constraint(equalToConstant: 0)
         self.topConstraint = topAnchor.constraint(equalTo: _graph.topAnchor, constant: _graph.zeroHourStartingHeight)
         
@@ -67,9 +46,6 @@ class RDGraphAppointmentView: UIView {
             topConstraint!,
             heightConstraint!,
             
-            summaryLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            summaryLabel.topAnchor.constraint(equalTo: topAnchor, constant: 5),
-            
             leftSeparator.leadingAnchor.constraint(equalTo: leadingAnchor),
             leftSeparator.heightAnchor.constraint(equalTo: heightAnchor),
             leftSeparator.topAnchor.constraint(equalTo: topAnchor),
@@ -77,25 +53,9 @@ class RDGraphAppointmentView: UIView {
         ]
         
         NSLayoutConstraint.activate(constraints)
-        addDetailedViewOnTap()
     }
     
     
-    private func addDetailedViewOnTap() {
-        let tap = UITapGestureRecognizer()
-        tap.addTarget(self, action: #selector(showDetailedView))
-        addGestureRecognizer(tap)
-    }
-    
-    
-    @objc private func showDetailedView() {
-        guard let _appointment = appointment else { return }
-        let detailedVC = RDDetailedAppointmentVC(_appointment)
-        detailedVC.didChangeAppointment = { [weak self] in
-            if let _person = self?.person {
-                self?.appointmentGraphDelegate?.didChangeAppointment($0, person: _person)
-            }
-        }
-        navigationDelegate?.pushViewContoller(detailedVC)
-    }
+    open func addSubviewToTheGraph(_ graph: RDTimeGraph) { }
 }
+

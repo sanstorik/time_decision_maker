@@ -183,4 +183,8 @@ struct AppColors {
     
     static let alertSheetDarkButtonColor = UIColor(red: 49, green: 164, blue: 236)
     static let cellSelectionColor = UIColor.black.withAlphaComponent(0.3)
+    
+    
+    static let freeIntervalDateColor = UIColor(red: 155, green: 226, blue: 89).withAlphaComponent(0.2)
+    static let lightBlueColor = UIColor(red: 158, green: 234, blue: 255).withAlphaComponent(0.2)
 }
