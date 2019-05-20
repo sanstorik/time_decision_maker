@@ -26,7 +26,7 @@ class RDTimeDecisionMaker: NSObject {
         populateWithPersonAppointments(organizerPerson, intervals: &occupiedDateIntervals)
         populateWithPersonAppointments(attendeePerson, intervals: &occupiedDateIntervals)
         
-        return findDayFreeIntervalsFor(
+        return findFreeIntervalsFor(
             occupiedIntervals: occupiedDateIntervals.sorted { $0.start < $1.start },
             expectedDuration: duration
             )
@@ -52,7 +52,7 @@ class RDTimeDecisionMaker: NSObject {
     }
     
     
-    private func findDayFreeIntervalsFor(
+    private func findFreeIntervalsFor(
         occupiedIntervals: [DateInterval],
         expectedDuration duration: TimeInterval) -> [DateInterval] {
         /**

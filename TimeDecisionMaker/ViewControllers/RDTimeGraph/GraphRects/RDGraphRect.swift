@@ -17,7 +17,7 @@ class RDGraphRect: UIView {
     
     var mode: Mode = .full {
         didSet {
-            updateSideAnchor()
+            updateModeConstraints()
         }
     }
     
@@ -90,7 +90,7 @@ class RDGraphRect: UIView {
     open func addSubviewToTheGraph(_ graph: RDTimeGraph) { }
     
     
-    private func updateSideAnchor() {
+    private func updateModeConstraints() {
         if previousMode != mode {
             modeConstraints[previousMode]?.forEach { $0.isActive = false }
             modeConstraints[mode]?.forEach { $0.isActive = true }
