@@ -29,7 +29,7 @@ class RDTimeDecisionMaker: NSObject {
         return findFreeIntervalsFor(
             occupiedIntervals: occupiedDateIntervals.sorted { $0.start < $1.start },
             expectedDuration: duration
-            )
+        )
     }
     
     
@@ -77,6 +77,7 @@ class RDTimeDecisionMaker: NSObject {
                 if !occupied.start.sameDay(with: occupied.end) {
                     
                     // add first and last dates
+                    
                     if let _startDate = occupied.start.changing(hour: 0, minute: 0, second: 0) {
                         let interval = DateInterval(start: _startDate, end: occupied.start)
                         addIfNeededTo(&freeIntervals, interval: interval, expected: duration)
@@ -89,18 +90,18 @@ class RDTimeDecisionMaker: NSObject {
                     
                     
                     // add all next days
-                    var currentDay: Date = previousDate
+                    guard var currentDay = previousDate.nextDay() else { break }
                     
                     while currentDay < occupied.start {
+                        if let _endDate = currentDay.changing(hour: 23, minute: 59, second: 59) {
+                            let interval = DateInterval(start: currentDay, end: _endDate)
+                            addIfNeededTo(&freeIntervals, interval: interval, expected: duration)
+                        }
+                        
                         if let _nextDate = currentDay.nextDay() {
                             currentDay = _nextDate
                         } else {
                             break
-                        }
-                        
-                        if let _endDate = currentDay.changing(hour: 23, minute: 59, second: 59) {
-                            let interval = DateInterval(start: currentDay, end: _endDate)
-                            addIfNeededTo(&freeIntervals, interval: interval, expected: duration)
                         }
                     }
                 } else {
