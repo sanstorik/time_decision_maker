@@ -69,9 +69,36 @@ class RDTimeDecisionMaker: NSObject {
         
         for occupied in occupiedIntervals {
             if previousDate < occupied.start {
+                /** Break long intervals into single day pieces
+                 *  That happens when the difference between previous and next appointments
+                 *  is bigger than 1 day.
+                 */
                 let dt = DateInterval(start: previousDate, end: occupied.start)
-                if dt.duration >= duration {
-                    freeIntervals.append(dt)
+                if !occupied.start.sameDay(with: occupied.end) {
+                    
+                    // add first and last dates
+                    freeIntervals.append(
+                        DateInterval(start: occupied.start.changing(hour: 0, minute: 0, second: 0)!,
+                                     end: occupied.start)
+                    )
+                    freeIntervals.append(
+                        DateInterval(start: occupied.end, end: occupied.end.changing(hour: 23, minute: 59, second: 59)!)
+                    )
+                    
+                    
+                    // add all next days
+                    var currentDay: Date = previousDate.nextDay()!
+                    
+                    while !currentDay.sameDay(with: occupied.start) {
+                        freeIntervals.append(
+                            DateInterval(start: currentDay, end: currentDay.changing(hour: 23, minute: 59, second: 59)!)
+                        )
+                        currentDay = currentDay.nextDay()!
+                    }
+                } else {
+                    if dt.duration >= duration {
+                        freeIntervals.append(dt)
+                    }
                 }
             }
             

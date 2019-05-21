@@ -188,6 +188,11 @@ extension Date {
     }
     
     
+    func nextDay() -> Date? {
+        return defaultCalendar.date(byAdding: .day, value: 1, to: self)?.changing(hour: 0, minute: 0, second: 0)
+    }
+    
+    
     static func stringFromTimeInterval(interval: TimeInterval) -> String {
         let _interval = Int(interval)
         

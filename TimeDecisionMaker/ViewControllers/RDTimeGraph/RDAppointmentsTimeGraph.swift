@@ -168,7 +168,7 @@ class RDAppointmentTimeGraph: CommonVC, RDNavigation, RDAppointmentGraphDelegate
             organizer: organizer, attended: attendee, duration: settings.duration)
             .filter { shouldDateIntervalBeDisplayed($0, for: settings.date) }
         
-        if suggestedFreeDateIntervals.count == 0,
+        if suggestedFreeDateIntervals.count == -1,
             let startDate = self.settings.date.changing(hour: 0, minute: 0, second: 0),
             let endDate = self.settings.date.changing(hour: 24, minute: 0, second: 0) {
             createFreeInterval(dateInterval: DateInterval(start: startDate, end: endDate), person: organizer)

@@ -50,7 +50,8 @@ class RDTimeGraph: UIView {
             let (hours, minutes) = start.retrieveHoursAndMinutes()
             heightConstant = appointmentHeightFor(minutes: 24 * 60 - (hours * 60 + minutes))
         case .isBetween(_, _):
-            fallthrough
+            topConstant = zeroHourStartingHeight
+            heightConstant = 24 * oneHourHeight
         case .wholeDay:
             fallthrough
         case .unknown:
