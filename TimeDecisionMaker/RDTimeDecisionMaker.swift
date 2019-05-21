@@ -77,23 +77,28 @@ class RDTimeDecisionMaker: NSObject {
                 if !occupied.start.sameDay(with: occupied.end) {
                     
                     // add first and last dates
-                    freeIntervals.append(
-                        DateInterval(start: occupied.start.changing(hour: 0, minute: 0, second: 0)!,
-                                     end: occupied.start)
-                    )
-                    freeIntervals.append(
-                        DateInterval(start: occupied.end, end: occupied.end.changing(hour: 23, minute: 59, second: 59)!)
-                    )
+                    if let _startDate = occupied.start.changing(hour: 0, minute: 0, second: 0) {
+                        freeIntervals.append(DateInterval(start: _startDate, end: occupied.start))
+                    }
+                    
+                    if let _endDate = occupied.end.changing(hour: 23, minute: 59, second: 59) {
+                        freeIntervals.append(DateInterval(start: occupied.end, end: _endDate))
+                    }
                     
                     
                     // add all next days
-                    var currentDay: Date = previousDate.nextDay()!
+                    var currentDay: Date = previousDate
                     
                     while currentDay < occupied.start {
-                        freeIntervals.append(
-                            DateInterval(start: currentDay, end: currentDay.changing(hour: 23, minute: 59, second: 59)!)
-                        )
-                        currentDay = currentDay.nextDay()!
+                        if let _nextDate = currentDay.nextDay() {
+                            currentDay = _nextDate
+                        } else {
+                            break
+                        }
+                        
+                        if let _endDate = currentDay.changing(hour: 23, minute: 59, second: 59) {
+                            freeIntervals.append(DateInterval(start: currentDay, end: _endDate))
+                        }
                     }
                 } else {
                     if dt.duration >= duration {
