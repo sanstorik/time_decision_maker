@@ -78,11 +78,13 @@ class RDTimeDecisionMaker: NSObject {
                     
                     // add first and last dates
                     if let _startDate = occupied.start.changing(hour: 0, minute: 0, second: 0) {
-                        freeIntervals.append(DateInterval(start: _startDate, end: occupied.start))
+                        let interval = DateInterval(start: _startDate, end: occupied.start)
+                        addIfNeededTo(&freeIntervals, interval: interval, expected: duration)
                     }
                     
                     if let _endDate = occupied.end.changing(hour: 23, minute: 59, second: 59) {
-                        freeIntervals.append(DateInterval(start: occupied.end, end: _endDate))
+                        let interval = DateInterval(start: occupied.end, end: _endDate)
+                        addIfNeededTo(&freeIntervals, interval: interval, expected: duration)
                     }
                     
                     
@@ -97,7 +99,8 @@ class RDTimeDecisionMaker: NSObject {
                         }
                         
                         if let _endDate = currentDay.changing(hour: 23, minute: 59, second: 59) {
-                            freeIntervals.append(DateInterval(start: currentDay, end: _endDate))
+                            let interval = DateInterval(start: currentDay, end: _endDate)
+                            addIfNeededTo(&freeIntervals, interval: interval, expected: duration)
                         }
                     }
                 } else {
@@ -114,9 +117,7 @@ class RDTimeDecisionMaker: NSObject {
         
         if previousDate <= dayEnd {
             let dt = DateInterval(start: previousDate, end: dayEnd)
-            if dt.duration >= duration {
-                freeIntervals.append(dt)
-            }
+            addIfNeededTo(&freeIntervals, interval: dt, expected: duration)
         }
         
         return freeIntervals
@@ -125,5 +126,12 @@ class RDTimeDecisionMaker: NSObject {
     
     private func getRealEndDateFor(dateIntervals: [DateInterval]) -> Date? {
         return dateIntervals.max { $0.end > $1.end }?.start
+    }
+    
+    
+    private func addIfNeededTo(_ dateIntervals: inout [DateInterval], interval: DateInterval, expected duration: TimeInterval) {
+        if interval.duration >= duration {
+            dateIntervals.append(interval)
+        }
     }
 }
