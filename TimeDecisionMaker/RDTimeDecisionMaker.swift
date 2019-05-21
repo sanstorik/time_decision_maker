@@ -41,12 +41,9 @@ class RDTimeDecisionMaker: NSObject {
     
     
     private func populateWithPersonAppointments(_ appointments: [RDAppointment], intervals: inout [DateInterval]) {
-        for appointment in appointments {
-            if appointment.isWholeDay || appointment.isDeleted { continue }
-            
+        for appointment in appointments where !appointment.isWholeDay && !appointment.isDeleted {
             if let _start = appointment.start, let _end = appointment.end {
-                let occupiedInterval = DateInterval(start: _start, end: _end)
-                intervals.append(occupiedInterval)
+                intervals.append(DateInterval(start: _start, end: _end))
             }
         }
     }
@@ -62,7 +59,8 @@ class RDTimeDecisionMaker: NSObject {
          */
         guard occupiedIntervals.count != 0,
             let dayStart = occupiedIntervals[0].start.changing(hour: 0, minute: 0, second: 0),
-            let dayEnd = occupiedIntervals[occupiedIntervals.count - 1].end.changing(hour: 23, minute: 59, second: 59) else {
+            let dayEnd = occupiedIntervals[occupiedIntervals.count - 1].end.changing(hour: 23, minute: 59, second: 59)
+            else {
                 return []
         }
         

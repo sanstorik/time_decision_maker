@@ -67,7 +67,6 @@ class RDAppointmentTimeGraph: CommonVC, RDNavigation, RDAppointmentGraphDelegate
         graph.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
         graph.createHourLines(linkedTo: scrollView.bottomAnchor)
         
-        
         for (i, personData) in self.personsData.enumerated() {
             if i == 4 { break }
             
@@ -125,9 +124,19 @@ class RDAppointmentTimeGraph: CommonVC, RDNavigation, RDAppointmentGraphDelegate
     
     
     func didSelectDateInterval(_ dateInterval: DateInterval, person: RDPerson) {
+        let isEndingToday = !dateInterval.start.sameDay(with: settings.date)
+            && dateInterval.end.sameDay(with: settings.date)
+        
+        var startingDate: Date = dateInterval.start
+        if isEndingToday {
+            if let _startOfTheDay = dateInterval.end.changing(hour: 0, minute: 0, second: 0) {
+                startingDate = _startOfTheDay
+            }
+        }
+        
         let eventCreationVC = RDAppointmentCreationVC(
-            RDAppointment(uid: UUID().uuidString, title: nil, start: dateInterval.start,
-                          end: dateInterval.start.addingTimeInterval(self.settings.duration), isWholeDay: false))
+            RDAppointment(uid: UUID().uuidString, title: nil, start: startingDate,
+                          end: startingDate.addingTimeInterval(self.settings.duration), isWholeDay: false))
         
         eventCreationVC.didChangeAppointment = { [unowned self] in
             let newAppointment = RDAppointment(editModel: $0)
@@ -157,31 +166,34 @@ class RDAppointmentTimeGraph: CommonVC, RDNavigation, RDAppointmentGraphDelegate
         let attendee = personsData[1].person
         let suggestedFreeDateIntervals = timeDecisionMaker.suggestAppointmentsFor(
             organizer: organizer, attended: attendee, duration: settings.duration)
-            .filter {
-                let date = self.settings.date
-                let sameDay = $0.start.sameDay(with: date) && $0.end.sameDay(with: date)
-                let startingToday = $0.start.sameDay(with: date) && !$0.end.sameDay(with: date)
-                let endingToday = !$0.start.sameDay(with: date) && $0.end.sameDay(with: date)
-                let between = date.isBetween(from: $0.start, to: $0.end)
-                return sameDay || startingToday || endingToday || between
-        }
+            .filter { shouldDateIntervalBeDisplayed($0, for: settings.date) }
+        
         if suggestedFreeDateIntervals.count == 0,
             let startDate = self.settings.date.changing(hour: 0, minute: 0, second: 0),
             let endDate = self.settings.date.changing(hour: 24, minute: 0, second: 0) {
-            
-            let freeInterval = RDGraphFreeIntervalView(inside: graph)
-            freeInterval.appointmentGraphDelegate = self
-            freeInterval.navigationDelegate = self
-            freeInterval.dateInterval = DateInterval(start: startDate, end: endDate)
-            freeInterval.person = organizer
+            createFreeInterval(dateInterval: DateInterval(start: startDate, end: endDate), person: organizer)
         } else {
             suggestedFreeDateIntervals.forEach {
-                let freeInterval = RDGraphFreeIntervalView(inside: graph)
-                freeInterval.appointmentGraphDelegate = self
-                freeInterval.navigationDelegate = self
-                freeInterval.dateInterval = $0
-                freeInterval.person = organizer
+                createFreeInterval(dateInterval: $0, person: organizer)
             }
         }
+    }
+    
+    
+    private func createFreeInterval(dateInterval: DateInterval, person: RDPerson) {
+        let freeInterval = RDGraphFreeIntervalView(inside: graph)
+        freeInterval.appointmentGraphDelegate = self
+        freeInterval.navigationDelegate = self
+        freeInterval.dateInterval = dateInterval
+        freeInterval.person = person
+    }
+    
+    
+    private func shouldDateIntervalBeDisplayed(_ dateInterval: DateInterval, for date: Date) -> Bool {
+        let sameDay = dateInterval.start.sameDay(with: date) && dateInterval.end.sameDay(with: date)
+        let startingToday = dateInterval.start.sameDay(with: date) && !dateInterval.end.sameDay(with: date)
+        let endingToday = !dateInterval.start.sameDay(with: date) && dateInterval.end.sameDay(with: date)
+        let between = date.isBetween(from: dateInterval.start, to: dateInterval.end)
+        return sameDay || startingToday || endingToday || between
     }
 }
