@@ -75,7 +75,9 @@ class RDTimeDecisionMaker: NSObject {
                 }
             }
             
-            previousDate = occupied.end
+            if previousDate <= occupied.end {
+                previousDate = occupied.end
+            }
         }
         
         if previousDate <= dayEnd {

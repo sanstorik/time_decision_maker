@@ -130,17 +130,17 @@ extension EventsCalendarDelegate {
 
 extension EventsCalendar: FSCalendarDataSource, FSCalendarDelegate , FSCalendarDelegateAppearance {
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        eventsDelegate?.calendar(self, didSelect: dateWithGMT(date))
+        eventsDelegate?.calendar(self, didSelect: date)
     }
     
     
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
-        return eventsDelegate?.calendar(self, numberOfEventsFor: dateWithGMT(date)) ?? 0
+        return eventsDelegate?.calendar(self, numberOfEventsFor: date) ?? 0
     }
     
     
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, eventDefaultColorsFor date: Date) -> [UIColor]? {
-        return eventsDelegate?.calendar(self, eventDefaultColorsFor: dateWithGMT(date))
+        return eventsDelegate?.calendar(self, eventDefaultColorsFor: date)
     }
     
     
