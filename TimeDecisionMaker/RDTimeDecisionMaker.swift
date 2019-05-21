@@ -59,7 +59,7 @@ class RDTimeDecisionMaker: NSObject {
          */
         guard occupiedIntervals.count != 0,
             let dayStart = occupiedIntervals[0].start.changing(hour: 0, minute: 0, second: 0),
-            let dayEnd = occupiedIntervals[occupiedIntervals.count - 1].end.changing(hour: 23, minute: 59, second: 59)
+            let dayEnd = getRealEndDateFor(dateIntervals: occupiedIntervals)
             else {
                 return []
         }
@@ -89,7 +89,7 @@ class RDTimeDecisionMaker: NSObject {
                     // add all next days
                     var currentDay: Date = previousDate.nextDay()!
                     
-                    while !currentDay.sameDay(with: occupied.start) {
+                    while currentDay < occupied.start {
                         freeIntervals.append(
                             DateInterval(start: currentDay, end: currentDay.changing(hour: 23, minute: 59, second: 59)!)
                         )
@@ -102,7 +102,9 @@ class RDTimeDecisionMaker: NSObject {
                 }
             }
             
-            previousDate = occupied.end
+            if previousDate < occupied.end {
+                previousDate = occupied.end
+            }
         }
         
         if previousDate <= dayEnd {
@@ -113,5 +115,10 @@ class RDTimeDecisionMaker: NSObject {
         }
         
         return freeIntervals
+    }
+    
+    
+    private func getRealEndDateFor(dateIntervals: [DateInterval]) -> Date? {
+        return dateIntervals.max { $0.end > $1.end }?.start
     }
 }
