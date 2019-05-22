@@ -126,7 +126,7 @@ class RDTimeDecisionMaker: NSObject {
     
     
     private func getRealEndDateFor(dateIntervals: [DateInterval]) -> Date? {
-        return dateIntervals.max { $0.end > $1.end }?.start
+        return dateIntervals.max { $0.end < $1.end }?.end.changing(hour: 23, minute: 59, second: 59)
     }
     
     
