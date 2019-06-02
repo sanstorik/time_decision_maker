@@ -69,45 +69,37 @@ class RDTimeDecisionMaker: NSObject {
         
         for occupied in occupiedIntervals {
             if previousDate < occupied.start {
-                /** Break long intervals into single day pieces
-                 *  That happens when the difference between previous and next appointments
-                 *  is bigger than 1 day.
-                 */
                 let dt = DateInterval(start: previousDate, end: occupied.start)
                 if !occupied.start.sameDay(with: occupied.end) {
+                    /**
+                     *  For Appointments that last for more than 1 day we take start day free interval
+                     *  plus ending day free interval. Disperse interval (previous date - start date)
+                     *  into single day pieces.
+                     */
                     
-                    // add first and last dates
-                    
-                    if let _startDate = occupied.start.changing(hour: 0, minute: 0, second: 0) {
-                        let interval = DateInterval(start: _startDate, end: occupied.start)
+                    if let startingDate = dt.start.sameDay(with: occupied.start) ? occupied.start :
+                        occupied.start.changing(hour: 0, minute: 0, second: 0) {
+                        let interval = DateInterval(start: startingDate, end: occupied.start)
                         addIfNeededTo(&freeIntervals, interval: interval, expected: duration)
                     }
+                    
                     
                     if let _endDate = occupied.end.changing(hour: 23, minute: 59, second: 59) {
                         let interval = DateInterval(start: occupied.end, end: _endDate)
                         addIfNeededTo(&freeIntervals, interval: interval, expected: duration)
                     }
                     
+                    freeIntervals += breakLongIntervalIntoSingleDayPieces(dt, expected: duration)
+                } else if !dt.start.sameDay(with: dt.end) {
+                    /**
+                     *  Break long intervals into single day pieces
+                     *  That happens when the difference between previous and next appointments
+                     *  is bigger than 1 day.
+                     */
                     
-                    // add all next days
-                    guard var currentDay = previousDate.nextDay() else { break }
-                    
-                    while currentDay < occupied.start {
-                        if let _endDate = currentDay.changing(hour: 23, minute: 59, second: 59) {
-                            let interval = DateInterval(start: currentDay, end: _endDate)
-                            addIfNeededTo(&freeIntervals, interval: interval, expected: duration)
-                        }
-                        
-                        if let _nextDate = currentDay.nextDay() {
-                            currentDay = _nextDate
-                        } else {
-                            break
-                        }
-                    }
+                    freeIntervals += breakLongIntervalIntoSingleDayPieces(dt, expected: duration)
                 } else {
-                    if dt.duration >= duration {
-                        freeIntervals.append(dt)
-                    }
+                    addIfNeededTo(&freeIntervals, interval: dt, expected: duration)
                 }
             }
             
@@ -134,5 +126,26 @@ class RDTimeDecisionMaker: NSObject {
         if interval.duration >= duration {
             dateIntervals.append(interval)
         }
+    }
+    
+    
+    private func breakLongIntervalIntoSingleDayPieces(_ interval: DateInterval, expected duration: TimeInterval) -> [DateInterval] {
+        guard var currentDay = interval.start.nextDay() else { return [] }
+        var singleDayIntervals = [DateInterval]()
+        
+        while !currentDay.sameDay(with: interval.end) {
+            if let _endDate = currentDay.changing(hour: 23, minute: 59, second: 59) {
+                let singleDayInterval = DateInterval(start: currentDay, end: _endDate)
+                addIfNeededTo(&singleDayIntervals, interval: singleDayInterval, expected: duration)
+            }
+            
+            if let _nextDate = currentDay.nextDay() {
+                currentDay = _nextDate
+            } else {
+                return singleDayIntervals
+            }
+        }
+        
+        return singleDayIntervals
     }
 }

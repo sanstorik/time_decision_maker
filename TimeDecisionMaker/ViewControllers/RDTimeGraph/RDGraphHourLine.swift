@@ -44,7 +44,7 @@ class RDGraphHourLine: UIView {
             line.leadingAnchor.constraint(equalTo: hourLabel.trailingAnchor, constant: 8),
             line.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
             line.centerYAnchor.constraint(equalTo: centerYAnchor),
-            line.heightAnchor.constraint(equalToConstant: 0.4)
+            line.heightAnchor.constraint(equalToConstant: 0.6)
         ]
         
         NSLayoutConstraint.activate(constraints)
