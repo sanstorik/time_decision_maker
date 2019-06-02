@@ -69,48 +69,42 @@ class RDTimeDecisionMaker: NSObject {
         
         for occupied in occupiedIntervals {
             if previousDate < occupied.start {
-                let dt = DateInterval(start: previousDate, end: occupied.start)
+                let expectedFreeInterval = DateInterval(start: previousDate, end: occupied.start)
                 if !occupied.start.sameDay(with: occupied.end) {
                     /**
-                     *  For appointments that last for more than 1 day we take start day free interval
+                     *  For appointments that last more than 1 day we take starting day free interval
                      *  plus ending day free interval. Disperse interval (previous date - start date)
                      *  into single day pieces.
                      */
                     
-                    if let startingDate = dt.start.sameDay(with: occupied.start) ? dt.start :
-                        occupied.start.changing(hour: 0, minute: 0, second: 0) {
-                        let interval = DateInterval(start: startingDate, end: occupied.start)
+                    if let _startingDate = expectedFreeInterval.start.sameDay(with: occupied.start) ?
+                        expectedFreeInterval.start : occupied.start.changing(hour: 0, minute: 0, second: 0) {
+                        let interval = DateInterval(start: _startingDate, end: occupied.start)
                         addIfNeededTo(&freeIntervals, interval: interval, expected: duration)
                     }
                     
-                    
-                    if let _endDate = occupied.end.changing(hour: 23, minute: 59, second: 59) {
-                        let interval = DateInterval(start: occupied.end, end: _endDate)
-                        addIfNeededTo(&freeIntervals, interval: interval, expected: duration)
-                    }
-                    
-                    freeIntervals += breakLongIntervalIntoSingleDayPieces(dt, expected: duration)
-                } else if !dt.start.sameDay(with: dt.end) {
+                    freeIntervals += breakLongIntervalIntoSingleDayPieces(expectedFreeInterval, expected: duration)
+                } else if !expectedFreeInterval.start.sameDay(with: expectedFreeInterval.end) {
                     /**
                      *  Break long intervals into single day pieces
                      *  That happens when the difference between the previous and the next appointment
                      *  is bigger than 1 day.
                      */
                     
-                    if let _endingDate = dt.start.changing(hour: 23, minute: 59, second: 59) {
-                        let interval = DateInterval(start: dt.start, end: _endingDate)
+                    if let _endingDate = expectedFreeInterval.start.changing(hour: 23, minute: 59, second: 59) {
+                        let interval = DateInterval(start: expectedFreeInterval.start, end: _endingDate)
                         addIfNeededTo(&freeIntervals, interval: interval, expected: duration)
                     }
                     
                     
-                    if let _startingDate = dt.end.changing(hour: 0, minute: 0, second: 0) {
-                        let interval = DateInterval(start: _startingDate, end: dt.end)
+                    if let _startingDate = expectedFreeInterval.end.changing(hour: 0, minute: 0, second: 0) {
+                        let interval = DateInterval(start: _startingDate, end: expectedFreeInterval.end)
                         addIfNeededTo(&freeIntervals, interval: interval, expected: duration)
                     }
                     
-                    freeIntervals += breakLongIntervalIntoSingleDayPieces(dt, expected: duration)
+                    freeIntervals += breakLongIntervalIntoSingleDayPieces(expectedFreeInterval, expected: duration)
                 } else {
-                    addIfNeededTo(&freeIntervals, interval: dt, expected: duration)
+                    addIfNeededTo(&freeIntervals, interval: expectedFreeInterval, expected: duration)
                 }
             }
             
