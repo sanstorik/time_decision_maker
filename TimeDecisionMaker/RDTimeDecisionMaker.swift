@@ -72,14 +72,21 @@ class RDTimeDecisionMaker: NSObject {
                 let expectedFreeInterval = DateInterval(start: previousDate, end: occupied.start)
                 if !occupied.start.sameDay(with: occupied.end) {
                     /**
-                     *  For appointments that last more than 1 day we take starting day free interval
-                     *  plus ending day free interval. Disperse interval (previous date - start date)
-                     *  into single day pieces.
+                     *  For appointments that last for more than 1 day we take the starting day free interval
+                     *  plus the ending day free interval. Disperse the interval (previous date - start date)
+                     *  into single day pieces. Calculating start / end of the day free intervals depending on
+                     *  whether previous and current occupied intervals take place in one day.
                      */
                     
-                    if let _startingDate = expectedFreeInterval.start.sameDay(with: occupied.start) ?
-                        expectedFreeInterval.start : occupied.start.changing(hour: 0, minute: 0, second: 0) {
-                        let interval = DateInterval(start: _startingDate, end: occupied.start)
+                    if !expectedFreeInterval.start.sameDay(with: expectedFreeInterval.end),
+                        let _firstIntervalEnd = expectedFreeInterval.start.changing(hour: 23, minute: 59, second: 59)  {
+                        let interval = DateInterval(start: expectedFreeInterval.start, end: _firstIntervalEnd)
+                        addIfNeededTo(&freeIntervals, interval: interval, expected: duration)
+                    }
+                    
+                    if let _lastIntervalStart = expectedFreeInterval.start.sameDay(with: expectedFreeInterval.end) ?
+                        expectedFreeInterval.start : expectedFreeInterval.end.changing(hour: 0, minute: 0, second: 0) {
+                        let interval = DateInterval(start: _lastIntervalStart, end: expectedFreeInterval.end)
                         addIfNeededTo(&freeIntervals, interval: interval, expected: duration)
                     }
                     
@@ -90,15 +97,14 @@ class RDTimeDecisionMaker: NSObject {
                      *  That happens when the difference between the previous and the next appointment
                      *  is bigger than 1 day.
                      */
-                    
-                    if let _endingDate = expectedFreeInterval.start.changing(hour: 23, minute: 59, second: 59) {
-                        let interval = DateInterval(start: expectedFreeInterval.start, end: _endingDate)
+
+                    if let _firstIntervalEnd = expectedFreeInterval.start.changing(hour: 23, minute: 59, second: 59) {
+                        let interval = DateInterval(start: expectedFreeInterval.start, end: _firstIntervalEnd)
                         addIfNeededTo(&freeIntervals, interval: interval, expected: duration)
                     }
                     
-                    
-                    if let _startingDate = expectedFreeInterval.end.changing(hour: 0, minute: 0, second: 0) {
-                        let interval = DateInterval(start: _startingDate, end: expectedFreeInterval.end)
+                    if let _lastIntervalStart = expectedFreeInterval.end.changing(hour: 0, minute: 0, second: 0) {
+                        let interval = DateInterval(start: _lastIntervalStart, end: expectedFreeInterval.end)
                         addIfNeededTo(&freeIntervals, interval: interval, expected: duration)
                     }
                     
