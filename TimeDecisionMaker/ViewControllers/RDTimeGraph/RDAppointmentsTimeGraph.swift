@@ -165,7 +165,7 @@ class RDAppointmentTimeGraph: CommonVC, RDNavigation, RDAppointmentGraphDelegate
         let organizer = personsData[0].person
         let attendee = personsData[1].person
         let suggestedFreeDateIntervals = timeDecisionMaker.suggestAppointmentsFor(
-            organizer: organizer, attended: attendee, duration: settings.duration)
+            organizer: organizer, attendee: attendee, duration: settings.duration)
             .filter { shouldDateIntervalBeDisplayed($0, for: settings.date) }
         
         suggestedFreeDateIntervals.forEach {

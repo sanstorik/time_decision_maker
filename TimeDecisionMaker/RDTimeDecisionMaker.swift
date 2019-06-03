@@ -33,9 +33,9 @@ class RDTimeDecisionMaker: NSObject {
     }
     
     
-    func suggestAppointmentsFor(organizer: RDPerson, attended: RDPerson, duration: TimeInterval) -> [DateInterval] {
+    func suggestAppointmentsFor(organizer: RDPerson, attendee: RDPerson, duration: TimeInterval) -> [DateInterval] {
         return suggestAppointments(organizerICS: organizer.appointmentsFilePath,
-                                   attendeeICS: attended.appointmentsFilePath,
+                                   attendeeICS: attendee.appointmentsFilePath,
                                    duration: duration)
     }
     
@@ -59,7 +59,7 @@ class RDTimeDecisionMaker: NSObject {
          */
         guard occupiedIntervals.count != 0,
             let dayStart = occupiedIntervals[0].start.changing(hour: 0, minute: 0, second: 0),
-            let dayEnd = getRealEndDateFor(dateIntervals: occupiedIntervals)
+            let dayEnd = realEndDate(dateIntervals: occupiedIntervals)
             else {
                 return []
         }
@@ -70,7 +70,7 @@ class RDTimeDecisionMaker: NSObject {
         for occupied in occupiedIntervals {
             if previousDate < occupied.start {
                 let expectedFreeInterval = DateInterval(start: previousDate, end: occupied.start)
-                if !occupied.start.sameDay(with: occupied.end) {
+                if !occupied.occursInOneDay() {
                     /**
                      *  For appointments that last for more than 1 day we take the starting day free interval
                      *  plus the ending day free interval. Disperse the interval (previous date - start date)
@@ -78,36 +78,22 @@ class RDTimeDecisionMaker: NSObject {
                      *  whether previous and current occupied intervals take place in one day.
                      */
                     
-                    if !expectedFreeInterval.start.sameDay(with: expectedFreeInterval.end),
-                        let _firstIntervalEnd = expectedFreeInterval.start.changing(hour: 23, minute: 59, second: 59)  {
-                        let interval = DateInterval(start: expectedFreeInterval.start, end: _firstIntervalEnd)
+                    if expectedFreeInterval.occursInOneDay() {
+                        let interval = DateInterval(start: expectedFreeInterval.start, end: expectedFreeInterval.end)
                         addIfNeededTo(&freeIntervals, interval: interval, expected: duration)
-                    }
-                    
-                    if let _lastIntervalStart = expectedFreeInterval.start.sameDay(with: expectedFreeInterval.end) ?
-                        expectedFreeInterval.start : expectedFreeInterval.end.changing(hour: 0, minute: 0, second: 0) {
-                        let interval = DateInterval(start: _lastIntervalStart, end: expectedFreeInterval.end)
-                        addIfNeededTo(&freeIntervals, interval: interval, expected: duration)
+                    } else {
+                        addDifferentDayBoundaryIntevals(for: expectedFreeInterval, in: &freeIntervals, expected: duration)
                     }
                     
                     freeIntervals += breakLongIntervalIntoSingleDayPieces(expectedFreeInterval, expected: duration)
-                } else if !expectedFreeInterval.start.sameDay(with: expectedFreeInterval.end) {
+                } else if !expectedFreeInterval.occursInOneDay() {
                     /**
                      *  Break long intervals into single day pieces
                      *  That happens when the difference between the previous and the next appointment
                      *  is bigger than 1 day.
                      */
 
-                    if let _firstIntervalEnd = expectedFreeInterval.start.changing(hour: 23, minute: 59, second: 59) {
-                        let interval = DateInterval(start: expectedFreeInterval.start, end: _firstIntervalEnd)
-                        addIfNeededTo(&freeIntervals, interval: interval, expected: duration)
-                    }
-                    
-                    if let _lastIntervalStart = expectedFreeInterval.end.changing(hour: 0, minute: 0, second: 0) {
-                        let interval = DateInterval(start: _lastIntervalStart, end: expectedFreeInterval.end)
-                        addIfNeededTo(&freeIntervals, interval: interval, expected: duration)
-                    }
-                    
+                    addDifferentDayBoundaryIntevals(for: expectedFreeInterval, in: &freeIntervals, expected: duration)
                     freeIntervals += breakLongIntervalIntoSingleDayPieces(expectedFreeInterval, expected: duration)
                 } else {
                     addIfNeededTo(&freeIntervals, interval: expectedFreeInterval, expected: duration)
@@ -125,18 +111,6 @@ class RDTimeDecisionMaker: NSObject {
         }
         
         return freeIntervals
-    }
-    
-    
-    private func getRealEndDateFor(dateIntervals: [DateInterval]) -> Date? {
-        return dateIntervals.max { $0.end < $1.end }?.end.changing(hour: 23, minute: 59, second: 59)
-    }
-    
-    
-    private func addIfNeededTo(_ dateIntervals: inout [DateInterval], interval: DateInterval, expected duration: TimeInterval) {
-        if interval.duration >= duration {
-            dateIntervals.append(interval)
-        }
     }
     
     
@@ -158,5 +132,32 @@ class RDTimeDecisionMaker: NSObject {
         }
         
         return singleDayIntervals
+    }
+    
+    
+    private func addDifferentDayBoundaryIntevals(for expectedFreeInterval: DateInterval,
+                                                     in freeIntervals: inout [DateInterval],
+                                                     expected duration: TimeInterval) {
+        if let _firstIntervalEnd = expectedFreeInterval.start.changing(hour: 23, minute: 59, second: 59) {
+            let interval = DateInterval(start: expectedFreeInterval.start, end: _firstIntervalEnd)
+            addIfNeededTo(&freeIntervals, interval: interval, expected: duration)
+        }
+        
+        if let _lastIntervalStart = expectedFreeInterval.end.changing(hour: 0, minute: 0, second: 0) {
+            let interval = DateInterval(start: _lastIntervalStart, end: expectedFreeInterval.end)
+            addIfNeededTo(&freeIntervals, interval: interval, expected: duration)
+        }
+    }
+    
+    
+    private func realEndDate(dateIntervals: [DateInterval]) -> Date? {
+        return dateIntervals.max { $0.end < $1.end }?.end.changing(hour: 23, minute: 59, second: 59)
+    }
+    
+    
+    private func addIfNeededTo(_ dateIntervals: inout [DateInterval], interval: DateInterval, expected duration: TimeInterval) {
+        if interval.duration >= duration {
+            dateIntervals.append(interval)
+        }
     }
 }

@@ -293,3 +293,10 @@ fileprivate final class MicrosecondPrecisionDateFormatter: DateFormatter {
         return dateWithMicroseconds
     }
 }
+
+
+extension DateInterval {
+    func occursInOneDay() -> Bool {
+        return start.sameDay(with: end)
+    }
+}
