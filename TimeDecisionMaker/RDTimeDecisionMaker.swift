@@ -70,30 +70,14 @@ class RDTimeDecisionMaker: NSObject {
         for occupied in occupiedIntervals {
             if previousDate < occupied.start {
                 let expectedFreeInterval = DateInterval(start: previousDate, end: occupied.start)
-                if !occupied.occursInOneDay() {
-                    /**
-                     *  For appointments that last for more than 1 day we take the starting day free interval
-                     *  plus the ending day free interval. Disperse the interval (previous date - start date)
-                     *  into single day pieces. Calculating start / end of the day free intervals depending on
-                     *  whether previous and current occupied intervals take place in one day.
-                     */
-                    
-                    if expectedFreeInterval.occursInOneDay() {
-                        let interval = DateInterval(start: expectedFreeInterval.start, end: expectedFreeInterval.end)
-                        addIfNeededTo(&freeIntervals, interval: interval, expected: duration)
-                    } else {
-                        addDifferentDayBoundaryIntevals(for: expectedFreeInterval, in: &freeIntervals, expected: duration)
-                    }
-                    
-                    freeIntervals += breakLongIntervalIntoSingleDayPieces(expectedFreeInterval, expected: duration)
-                } else if !expectedFreeInterval.occursInOneDay() {
+                if !expectedFreeInterval.occursInOneDay() {
                     /**
                      *  Break long intervals into single day pieces
                      *  That happens when the difference between the previous and the next appointment
                      *  is bigger than 1 day.
                      */
-
-                    addDifferentDayBoundaryIntevals(for: expectedFreeInterval, in: &freeIntervals, expected: duration)
+                    
+                    addDifferentDayBoundaryIntervals(for: expectedFreeInterval, in: &freeIntervals, expected: duration)
                     freeIntervals += breakLongIntervalIntoSingleDayPieces(expectedFreeInterval, expected: duration)
                 } else {
                     addIfNeededTo(&freeIntervals, interval: expectedFreeInterval, expected: duration)
@@ -115,7 +99,7 @@ class RDTimeDecisionMaker: NSObject {
     
     
     private func breakLongIntervalIntoSingleDayPieces(_ interval: DateInterval, expected duration: TimeInterval) -> [DateInterval] {
-        guard var currentDay = interval.start.nextDay(), !interval.start.sameDay(with: interval.end) else { return [] }
+        guard var currentDay = interval.start.nextDay(), !interval.occursInOneDay() else { return [] }
         var singleDayIntervals = [DateInterval]()
         
         while !currentDay.sameDay(with: interval.end) {
@@ -135,7 +119,7 @@ class RDTimeDecisionMaker: NSObject {
     }
     
     
-    private func addDifferentDayBoundaryIntevals(for expectedFreeInterval: DateInterval,
+    private func addDifferentDayBoundaryIntervals(for expectedFreeInterval: DateInterval,
                                                      in freeIntervals: inout [DateInterval],
                                                      expected duration: TimeInterval) {
         if let _firstIntervalEnd = expectedFreeInterval.start.changing(hour: 23, minute: 59, second: 59) {
